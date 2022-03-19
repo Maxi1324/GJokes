@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\0School\\Githubdings\\ads\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {}
+    "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {}
   },
   "projects": {
-    "D:\\0School\\Githubdings\\ads\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {
+    "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\0School\\Githubdings\\ads\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
+        "projectUniqueName": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
         "projectName": "GStatsFaker",
-        "projectPath": "D:\\0School\\Githubdings\\ads\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
+        "projectPath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
         "packagesPath": "C:\\Users\\maxie\\.nuget\\packages\\",
-        "outputPath": "D:\\0School\\Githubdings\\ads\\GStatsFaker\\GStatsFaker\\obj\\",
+        "outputPath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.3, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.3, )"
@@ -68,6 +72,10 @@
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.3, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.16.0, )"
             },
             "System.Management": {
               "target": "Package",
