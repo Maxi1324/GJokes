@@ -4,6 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace GStatsFaker.Repository.Implementations
 {
@@ -18,10 +20,13 @@ namespace GStatsFaker.Repository.Implementations
 
         public string? Authenticate(string Email, string password)
         {
-            if(GSFContext.Users.Any((u) => u.Email == Email && u.Password == password)){
+            if (GSFContext.Users.Any((u) => u.Email == Email && u.Password == password) &&
+                GSFContext.Users.Any((u=>u.EmalVerifikations.Any(e => e.IsVerifiziert)))) 
+            { 
+                
                 JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
               
-                byte[] tokenKey = Encoding.UTF8.GetBytes(Config.key);
+                byte[] tokenKey = Encoding.ASCII.GetBytes(Config.key);
                 SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new Claim[] {

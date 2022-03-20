@@ -894,3 +894,10 @@ D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\refi
 D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GStatsFaker.pdb
 D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GStatsFaker.genruntimeconfig.cache
 D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\ref\GStatsFaker.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll

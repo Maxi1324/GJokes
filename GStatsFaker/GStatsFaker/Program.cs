@@ -2,6 +2,7 @@ using GStatsFaker;
 using GStatsFaker.DBContexts;
 using GStatsFaker.Repository;
 using GStatsFaker.Repository.Implementations;
+using GStatsFaker.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,10 +17,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<JwtAuthenticationManager>();
-builder.Services.AddSingleton<StatsFaker>();
+builder.Services.AddScoped<IJwtAuthenticationManager,JwtAuthenticationManager>();
+builder.Services.AddScoped<IStatsFaker, StatsFaker>();
+builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 
-builder.Services.AddDbContext<GSFContext>(o => o.UseSqlite("Data source=App.db"));
+builder.Services.AddDbContext<GSFContext>(o => o.UseSqlite("Data Source=App.db"));
 
 builder.Services.AddAuthentication(x =>
 {
@@ -27,11 +29,12 @@ builder.Services.AddAuthentication(x =>
     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(x =>
 {
+    x.RequireHttpsMetadata = false;
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Config.key)),
+        ValidateIssuerSigningKey = true, 
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Config.key)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -44,6 +47,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseAuthentication();
+
 
     app.UseAuthorization();
 }

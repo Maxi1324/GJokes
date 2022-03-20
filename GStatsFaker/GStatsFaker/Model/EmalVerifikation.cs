@@ -8,6 +8,8 @@
 
         public bool IsVerifiziert { get; set; }
 
+        public string Code { get; set; } = string.Empty;
+
         public int UserId { get; set; }
         public User User { get; set; } = default!;
 
