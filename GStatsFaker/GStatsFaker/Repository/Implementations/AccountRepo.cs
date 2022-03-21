@@ -6,11 +6,14 @@ namespace GStatsFaker.Repository.Implementations
 {
     public class AccountRepo : IAccountRepo
     {
-        public GSFContext Context { get; set; } 
 
-        public AccountRepo(GSFContext Context)
+        public GSFContext Context { get; set; } 
+        public IMailManager MailManager { get; set; }
+
+        public AccountRepo(GSFContext Context,IMailManager MailManager)
         {
             this.Context = Context; 
+            this.MailManager = MailManager;
         }
 
         public int ActivateAccount(int UserID, string code)
@@ -36,7 +39,7 @@ namespace GStatsFaker.Repository.Implementations
             {
                 R = - 4;
             }
-            else if (IsValidEmail(Email))
+            else if (!IsValidEmail(Email))
             {
                 R = - 2;
             }
@@ -87,9 +90,11 @@ namespace GStatsFaker.Repository.Implementations
 
             int Code = new Random().Next();
 
-            EmalVerifikation EV = new EmalVerifikation() {Code = Code+"wow", Erstellt = DateTime.Now };
-            
-            u.EmalVerifikations.Add(EV);
+            EmalVerifikation EV = new EmalVerifikation() {Code = Code+"wow", Erstellt = DateTime.Now ,User=u,UserId=u.Id};
+
+            MailManager.SendCodeMail(u.Email, EV.Code);
+
+            Context.EmalVerifikations.Add(EV);
             Context.SaveChanges();
 
             return 1;

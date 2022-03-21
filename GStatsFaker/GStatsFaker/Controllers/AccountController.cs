@@ -47,7 +47,7 @@ namespace GStatsFaker.Controllers
                 case -4:
                     return UnprocessableEntity(new Respone() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 default:
-                    return Ok(new Respone() { Code = r, Desc = "User Id" });
+                    return Ok(new Respone() { Code = r, Desc = "Alles ok returned UserID" });
             }
         }
 
