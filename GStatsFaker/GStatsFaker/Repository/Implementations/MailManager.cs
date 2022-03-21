@@ -58,8 +58,8 @@ namespace GStatsFaker.Repository.Implementations
                 @"
 <html>
                 <link rel='preconnect' href='https://fonts.googleapis.com'>
-< link rel = 'preconnect'' href = 'https://fonts.gstatic.com' crossorigin >
-     < link href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap' rel = 'stylesheet' >
+                <link rel = 'preconnect'' href = 'https://fonts.gstatic.com' crossorigin >
+                <link href = 'https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap' rel = 'stylesheet' >
                         " + @$"
                 <div class='Red'>
                     <div class='dings' style='border: solid;
@@ -73,7 +73,7 @@ namespace GStatsFaker.Repository.Implementations
                         box-shadow: 0px 0px 10rem rgb(255, 255, 255);
                         border-width: .1rem;
                         font-family: "+"\"Roboto\""+$@", sans-serif;'>
-                        <h1 class=''>Dear Max,</h1>
+                        <h1 class=''>Dear User,</h1>
                         <p>
                             {str}
                         </p>
