@@ -2,20 +2,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-html,
-body,
-app-root {
-  height: 100%;
-}
-body {
-  margin-bottom: 0;
-  margin-top: 0;
-}
 app-footer {
-  height: 24px;
-  margin-top: -36px;
+  @apply mt-auto;
+  @apply mb-0;
 }
 app-homepage{
-    height: 100%;
+    flex: 1;
 }
