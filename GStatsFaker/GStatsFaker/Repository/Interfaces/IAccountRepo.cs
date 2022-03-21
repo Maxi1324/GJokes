@@ -23,6 +23,7 @@
         /// <returns>
         /// r == 1 Alles OK
         /// r == -1 User not found
+        /// r == -2 Zuviele Requests Email ist gesperrt
         /// </returns>
         public int SendEmailVerfikation(int userId);
 

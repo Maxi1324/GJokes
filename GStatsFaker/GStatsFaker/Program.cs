@@ -21,6 +21,8 @@ builder.Services.AddScoped<IJwtAuthenticationManager,JwtAuthenticationManager>()
 builder.Services.AddScoped<IStatsFaker, StatsFaker>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
 
+builder.Services.AddSingleton<IMailManager>(new MailManager());
+
 builder.Services.AddDbContext<GSFContext>(o => o.UseSqlite("Data Source=App.db"));
 
 builder.Services.AddAuthentication(x =>

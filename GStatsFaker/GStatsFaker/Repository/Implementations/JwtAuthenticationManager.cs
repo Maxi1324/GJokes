@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using GStatsFaker.Model;
 
 namespace GStatsFaker.Repository.Implementations
 {
@@ -20,10 +21,12 @@ namespace GStatsFaker.Repository.Implementations
 
         public string? Authenticate(string Email, string password)
         {
-            if (GSFContext.Users.Any((u) => u.Email == Email && u.Password == password) &&
-                GSFContext.Users.Any((u=>u.EmalVerifikations.Any(e => e.IsVerifiziert)))) 
+            User? u1 = GSFContext.Users.SingleOrDefault((u) => u.Email == Email);
+            if (u1 == null) return null;
+            User u = u1 ?? default!;
+            bool PasswordCorrect = SecurePasswordHasher.Verify(password, u.Password);
+            if (PasswordCorrect&& GSFContext.Users.Include(u=>u.EmalVerifikations).Any((u=>u.EmalVerifikations.Any(e => e.IsVerifiziert)))) 
             { 
-                
                 JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
               
                 byte[] tokenKey = Encoding.ASCII.GetBytes(Config.key);

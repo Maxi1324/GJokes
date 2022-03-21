@@ -1,31 +1,38 @@
 ﻿using GStatsFaker.DBContexts;
 using GStatsFaker.Model;
 using GStatsFaker.Repository.Interfaces;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace GStatsFaker.Repository.Implementations
 {
     public class AccountRepo : IAccountRepo
     {
-        public GSFContext Context { get; set; } 
 
-        public AccountRepo(GSFContext Context)
+        public GSFContext Context { get; set; } 
+        public IMailManager MailManager { get; set; }
+
+        public AccountRepo(GSFContext Context,IMailManager MailManager)
         {
             this.Context = Context; 
+            this.MailManager = MailManager;
         }
 
         public int ActivateAccount(int UserID, string code)
         {
-            User? userN = FindUser(UserID);
+            User? userN = FindUser(UserID,true);
             if (userN == null) return -1;
             User user = userN ?? default!;
 
-            EmalVerifikation? SEVN = user.EmalVerifikations.FirstOrDefault(e => e.Code == code);
+            EmalVerifikation ? SEVN = user.EmalVerifikations.FirstOrDefault(e => e.Code == code);
             if (SEVN == null) return -2;
             EmalVerifikation SVE = SEVN ?? default!;
 
             if (!(DateTime.Now.Subtract(SVE.Erstellt).TotalHours < Config.EmailVerExireTime)) return -3;
 
             SVE.IsVerifiziert = true;
+
+            Context.SaveChanges();
             return 1;
         }
 
@@ -36,7 +43,7 @@ namespace GStatsFaker.Repository.Implementations
             {
                 R = - 4;
             }
-            else if (IsValidEmail(Email))
+            else if (!IsValidEmail(Email))
             {
                 R = - 2;
             }
@@ -50,7 +57,8 @@ namespace GStatsFaker.Repository.Implementations
             }
             else
             {
-                User u = new User() { Created = DateTime.Now, Email = Email, Password = Password };
+                string Hash = SecurePasswordHasher.Hash(Password);
+                User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next() };
                 Context.Users.Add(u);
                 Context.SaveChanges();
                 R = u.Id;
@@ -81,15 +89,23 @@ namespace GStatsFaker.Repository.Implementations
 
         public int SendEmailVerfikation(int UserId)
         {
-            User? uN = FindUser(UserId);
+            User? uN = FindUser(UserId,true);
             if (uN == null) return -1;
             User u = uN ?? default!;
 
+            int EVS = u.EmalVerifikations.Count();
+            if(EVS > Config.MaxMailRequests)
+            {
+                return -2;
+            }
+
             int Code = new Random().Next();
 
-            EmalVerifikation EV = new EmalVerifikation() {Code = Code+"wow", Erstellt = DateTime.Now };
-            
-            u.EmalVerifikations.Add(EV);
+            EmalVerifikation EV = new EmalVerifikation() {Code = Code+"wow", Erstellt = DateTime.Now ,User=u,UserId=u.Id};
+
+            MailManager.SendCodeMail(u.Email, EV.Code);
+
+            Context.EmalVerifikations.Add(EV);
             Context.SaveChanges();
 
             return 1;
@@ -100,9 +116,9 @@ namespace GStatsFaker.Repository.Implementations
             throw new NotImplementedException();
         }
 
-        public User? FindUser(int UserID)
+        public User? FindUser(int UserID, bool Include = false)
         {
-            return Context.Users.FirstOrDefault(u=>u.Id == UserID);
+            return (Include)?Context.Users.Include(u=>u.EmalVerifikations).FirstOrDefault(u => u.Id == UserID) : Context.Users.FirstOrDefault(u=>u.Id == UserID);
         }
 
         //kopiert von https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address

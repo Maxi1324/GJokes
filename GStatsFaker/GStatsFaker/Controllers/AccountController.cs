@@ -47,7 +47,7 @@ namespace GStatsFaker.Controllers
                 case -4:
                     return UnprocessableEntity(new Respone() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 default:
-                    return Ok(new Respone() { Code = r, Desc = "User Id" });
+                    return Ok(new Respone() { Code = r, Desc = "Alles ok returned UserID" });
             }
         }
 
@@ -60,6 +60,8 @@ namespace GStatsFaker.Controllers
             {
                 case -1:
                     return UnprocessableEntity(new Respone() { Code = r, Desc = "User not found" });
+                case -2:
+                    return UnprocessableEntity(new Respone() { Code = r, Desc = "To many requests. Email is blocked" });
                 default:
                     return Ok(new Respone() { Code = r, Desc = "Email has been sent" });
             }
@@ -73,7 +75,7 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case 1:
-                    return Ok(new Respone() { Code = r, Desc = "Email has been sent" });
+                    return Ok(new Respone() { Code = r, Desc = "Account has been Activated" });
                 case -2:
                     return UnprocessableEntity(new Respone() { Code = r, Desc = "Code invalid" });
                 case -3:
@@ -83,6 +85,22 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        //get user If from Email
+        [AllowAnonymous]
+        [HttpGet("GetUserIdFromMail")]
+        public Respone GetUserIdFromMail(string Mail)
+        {
+            int r = AccountRepo.FindUserId(Mail);
+
+            if(r >= 0)
+            {
+                return new Respone() { Code = r, Desc = "User ID" };
+            }
+            else
+            {
+                return new Respone() { Code = r, Desc = "There is no User with this Email" };
+            }
+        }
+
+        //get user Id from Email
     }
 }
