@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AmbienceComponent } from './ambience/ambience.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
-  { path: 'config', component: AmbienceComponent } 
+  { path: 'config', component: AmbienceComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'register', component: HomepageComponent },
+  { path: 'login', component: HomepageComponent },
 ];
 
 @NgModule({

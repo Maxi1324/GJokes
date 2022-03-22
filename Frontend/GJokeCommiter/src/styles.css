@@ -9,3 +9,42 @@ app-footer {
 app-homepage{
     flex: 1;
 }
+#cover{
+  @apply z-40;
+  @apply fixed;
+  @apply inset-0;
+  @apply bg-blue-400;
+  @apply opacity-75;
+  @apply p-4;
+  @apply flex;
+  @apply items-center;
+  @apply justify-center;
+}
+.login-form{
+  @apply z-50;
+  @apply fixed;
+  @apply mx-auto;
+  @apply max-w-xs;
+  @apply p-4;
+  @apply rounded-lg;
+  @apply bg-white;
+  top: 20%;
+  right: 10%;
+  left: 10%;
+  bottom: 20%;
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply justify-start;
+}
+
+.bg-1{
+  @apply bg-blue-400;
+}
+.bg-2{
+  @apply bg-blue-500;
+}
+
+.hidden-strong{
+  display: none !important;
+}

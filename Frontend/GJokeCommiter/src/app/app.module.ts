@@ -9,6 +9,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { AmbienceComponent } from './ambience/ambience.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AmbienceComponent } from './ambience/ambience.component';
     HomepageComponent,
     RegisterComponent,
     LoginComponent,
-    AmbienceComponent
+    AmbienceComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
