@@ -101,6 +101,6 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        //get user Id from Email
+        //Passwort vergessen
     }
 }

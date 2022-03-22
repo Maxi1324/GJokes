@@ -58,6 +58,19 @@ namespace GStatsFaker.Repository.Implementations
             else
             {
                 string Hash = SecurePasswordHasher.Hash(Password);
+
+                Random Rand = new Random();
+                int ID = 0;
+                int MaxTries = 10;
+                for(int i = 0; i < MaxTries; i++)
+                {
+                    ID = Rand.Next();
+                    if(Context.Users.FirstOrDefault(u=> u.Id == ID)== null)
+                    {
+                        break;
+                    }
+                }
+
                 User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next() };
                 Context.Users.Add(u);
                 Context.SaveChanges();

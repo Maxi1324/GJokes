@@ -13,5 +13,7 @@
         public const string Mail = "gjokesapi@gmail.com";
 
         public const int MaxMailRequests = 10;
+
+        public const string Token = "";
     }
 }
