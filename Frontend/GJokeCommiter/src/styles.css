@@ -9,6 +9,10 @@ app-footer {
 app-homepage{
     flex: 1;
 }
+body{
+  @apply bg-2;
+}
+
 #cover{
   @apply z-40;
   @apply fixed;
