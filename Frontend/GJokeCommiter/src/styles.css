@@ -31,7 +31,6 @@ app-homepage{
   top: 20%;
   right: 10%;
   left: 10%;
-  bottom: 20%;
   @apply flex;
   @apply flex-col;
   @apply items-center;
@@ -47,4 +46,30 @@ app-homepage{
 
 .hidden-strong{
   display: none !important;
+}
+
+.input{
+  @apply p-2;
+  @apply rounded-lg;
+  @apply border-2;
+  @apply border-gray-200;
+  @apply focus:border-blue-500;
+  @apply focus:outline-none;
+  @apply w-full;
+}
+
+.btn-register, .btn-login{
+  @apply p-2;
+  @apply rounded-lg;
+  @apply border-2;
+  @apply border-gray-200;
+  @apply focus:border-blue-500;
+  @apply focus:outline-none;
+  @apply w-full;
+  @apply text-center;
+  @apply text-white;
+  @apply bg-blue-400;
+  @apply hover:bg-blue-500;
+  @apply transition;
+  @apply mt-2;
 }
