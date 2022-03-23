@@ -1,0 +1,11 @@
+.about-title{
+    @apply text-white;
+    @apply font-bold;
+    @apply text-2xl;
+    @apply mb-4;  
+}
+.about-text{
+    @apply text-gray-700;
+    @apply text-lg;
+    @apply mb-4;
+}
