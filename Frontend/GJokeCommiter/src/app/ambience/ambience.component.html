@@ -1,13 +1,64 @@
 <div class="p-4">
-    <h1>Config</h1>
-    <h2>Joke Settings</h2>
-    <div class="flex flex-row">
-        <div><label for="">GitHub Account</label><input type="text" class="input" min="0"></div>
-        <div><label for="">Jokes Min</label><input type="number" class="input" min="0"></div>
-        <div><label for="">Jokes Max</label><input type="number" class="input" min="0"></div>
+  <h1 class="text-center text-4xl font-bold text-white">Config</h1>
+  <div class="flex flex-col justify-center">
+    <div class="settings-group">
+      <h2 class="settings-title">GitHub Settings</h2>
+      <p class="settings-text">
+        This is the settings for the GitHub Implementation.
+      </p>
+      <div class="grid grid-cols-2">
+        <div class="mr-2">
+          <label for="">GitHub Account</label
+          ><input type="text" class="input" min="0" />
+        </div>
+        <div class="ml-2">
+          <label for="">GitHub E-Mail</label
+          ><input type="email" class="input" />
+        </div>
+      </div>
+      <div class="flex">
+        <p class="mr-1">Feedback:</p>
+        <b class="text-green-500">GitHub is working!</b>
+      </div>
     </div>
-    <h2>Account Settings</h2>
-    <div>
-
+    <div class="settings-group">
+      <h2 class="settings-title">Joke Settings</h2>
+      <p>This settings are used to generate a random joke.</p>
+      <div class="grid grid-cols-2">
+        <div class="mr-2">
+          <label for="">Jokes Min</label
+          ><input type="text" class="input" min="0" value="{{jmin}}"/>
+        </div>
+        <div class="ml-2">
+          <label for="">Jokes Max</label><input type="email" class="input" />
+        </div>
+      </div>
+      <div class="flex">
+        <p class="mr-1">Feedback:</p>
+        <b class="text-green-500">Setting Saved!</b>
+      </div>
     </div>
+    <div class="settings-group">
+      <h2 class="settings-title">Account Settings</h2>
+      <p>This settings are for the Account.</p>
+      <div>
+        <h2>Change Password</h2>
+        <div>
+          <label for="">Old Password</label><input type="text" class="input" />
+        </div>
+        <div>
+          <label for="">New Password</label><input type="text" class="input" />
+        </div>
+        <button class="button">Change Password</button>
+        <h2>Delete Account</h2>
+        <p></p>
+        <div>
+          <label for="">Password</label><input type="text" class="input" />
+          <label for="">Type: "Gitty" to confirm.</label
+          ><input type="text" class="input" />
+          <button class="button">Delete Account</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

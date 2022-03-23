@@ -1,0 +1,30 @@
+.settings-group{
+    @apply mx-auto;
+    @apply max-w-xl;
+    @apply p-4;
+    @apply rounded-lg;
+    @apply bg-white;
+    @apply border-2;
+    @apply border-gray-200;
+    @apply mt-4;
+    @apply focus-within:border-pink-400;
+    @apply hover:border-pink-400;
+}
+
+.settings-title{
+    @apply p-2;
+    @apply font-bold;
+    @apply text-xl;
+    @apply mb-2;
+    @apply mx-auto;
+}
+
+.settings-text{
+    @apply mb-2;
+    @apply text-gray-600;
+    @apply text-sm;
+}
+
+.input{
+    @apply mb-2;
+}

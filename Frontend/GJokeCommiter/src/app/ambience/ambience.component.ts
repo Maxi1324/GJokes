@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-ambience',
@@ -12,4 +12,6 @@ export class AmbienceComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @Input()
+  public jmin: number = 0;
 }

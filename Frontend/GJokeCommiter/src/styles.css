@@ -55,6 +55,18 @@ body{
   @apply focus:outline-none;
   @apply w-full;
 }
+.button{
+  @apply p-2;
+  @apply rounded-lg;
+  @apply border-2;
+  @apply border-gray-200;
+  @apply focus:border-blue-500;
+  @apply w-full;
+  @apply cursor-pointer;
+  @apply text-white;
+  @apply bg-blue-500;
+  @apply hover:bg-blue-600;
+}
 
 .btn-register, .btn-login{
   @apply p-2;
