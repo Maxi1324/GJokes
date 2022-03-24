@@ -1,4 +1,5 @@
 ﻿using GStatsFaker.DBContexts;
+using GStatsFaker.Model;
 using GStatsFaker.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,7 +7,7 @@ namespace GStatsFaker.Repository.Implementations
 {
     public class ContManager:IContManager
     {
-        public Dictionary<string, IStatsFaker> Fakers = new Dictionary<string, IStatsFaker>();
+        public Dictionary<int, IStatsFaker> Fakers = new Dictionary<int, IStatsFaker>();
         public IServiceScopeFactory Factory { get; set; }
         public ContManager(IServiceScopeFactory scopeFactory)
         {
@@ -47,18 +48,7 @@ namespace GStatsFaker.Repository.Implementations
                 if (Context == null) throw new Exception("Funktioniert nicht");
                     Context.Users.AsEnumerable().ToList().ForEach(u =>
                     {
-                        string Email = u.Email;
-                        IStatsFaker Faker = default!;
-                        if (Fakers.ContainsKey(Email))
-                        {
-                            Faker = Fakers[Email];
-                        }
-                        else
-                        {
-                            Faker = new StatsFaker(u.RepoName);
-                            Fakers.Add(Email, Faker);
-                            Faker.SetUpCredentials(Email, Email);
-                        }
+                        IStatsFaker Faker = GetStatsFaker(u);
                         int Conts = random.Next(u.MaxCon - u.MinCon) + u.MinCon;
                         Faker.AddActivity(Conts);
                     });
@@ -66,9 +56,20 @@ namespace GStatsFaker.Repository.Implementations
             return;
         }
 
-        public IStatsFaker GetStatsFaker(string mail)
+        public IStatsFaker GetStatsFaker(User u)
         {
-            return Fakers[mail];
+            IStatsFaker Faker = default!;
+            if (Fakers.ContainsKey(u.Id))
+            {
+                Faker = Fakers[u.Id];
+            }
+            else
+            {
+                Faker = new StatsFaker(u.RepoName);
+                Fakers.Add(u.Id, Faker);
+            }
+            Faker.SetUpCredentials(u.GithubEmail, u.GithubUsername);
+            return Faker;
         }
     }
 }

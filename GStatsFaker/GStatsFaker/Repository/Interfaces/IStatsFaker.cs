@@ -20,6 +20,10 @@ namespace GStatsFaker.Repository
 
         public void Invite(string Username);
 
-        public bool CheckIfInvited(string Username);
+        public bool InRepository(string Username);
+
+        public void Delete();
+
+        public void Rename(string Reponame);
     }
 }

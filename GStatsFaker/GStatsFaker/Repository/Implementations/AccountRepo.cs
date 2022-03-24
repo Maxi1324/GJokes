@@ -46,8 +46,7 @@ namespace GStatsFaker.Repository.Implementations
                 }
             }
 
-            IStatsFaker Faker = ContManager.GetStatsFaker(user.Email);
-            Faker.InitRep(user.RepoName);
+            IStatsFaker Faker = ContManager.GetStatsFaker(user);
 
             Context.SaveChanges();
             return 1;
@@ -152,7 +151,7 @@ namespace GStatsFaker.Repository.Implementations
         }
 
         //kopiert von https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address
-        private bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             var trimmedEmail = email.Trim();
 

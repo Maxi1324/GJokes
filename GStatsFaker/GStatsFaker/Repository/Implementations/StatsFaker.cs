@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace GStatsFaker.Repository
 {
@@ -6,6 +7,7 @@ namespace GStatsFaker.Repository
     {
         public const string Repos = "Repos";
         public PowerShell PS { get; private set; }
+        public Pipeline PL { get; private set; }
 
         public string HomePath { get => ""+Directory.GetCurrentDirectory()+"\\Repos\\"+Username+"\\"+RepoName; }
 
@@ -13,19 +15,22 @@ namespace GStatsFaker.Repository
         public string RepoName { get; private set; } = "";
         public string Token { get; private set; } = "";
 
-        public StatsFaker(string RepoName)
+        public StatsFaker(string RepoName):this()
         {
-            PS = PowerShell.Create();
             InitRep(RepoName);
         }
 
         public StatsFaker()
         {
             PS = PowerShell.Create();
+            var rs = RunspaceFactory.CreateRunspace();
+            rs.Open();
+            PL = rs.CreatePipeline();
         }
 
         public void InitRep(string RepoName)
         {
+            PS.Commands.Clear();
             this.Username = Config.GAccountName;
             this.RepoName = RepoName;
             this.Token = Config.GToken;
@@ -40,14 +45,16 @@ namespace GStatsFaker.Repository
             PS.Invoke();
         }
 
-        public void SetUpCredentials(string Email)
+        public void SetUpCredentials(string Email, string UUsername)
         {
-            PS.AddScript($"cd {HomePath}; git config user.name \"{Username}\";git config user.email \"{Email}\"");
+            PS.Commands.Clear();
+            PS.AddScript($"cd {HomePath}; git config user.name \"{UUsername}\";git config user.email \"{Email}\"");
             PS.Invoke();
         }
 
         public void AddActivity(int n = 1)
         {
+            PS.Commands.Clear();
             for (int i = 0; i < n; i++)
             {
                 int r = new Random().Next(2000000);
@@ -61,26 +68,40 @@ namespace GStatsFaker.Repository
             }
         }
 
-        public void Invite(string UserName)
+        public void Invite(string UUserName)
         {
-            PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{Username} --method=PUT");
+            PS.Commands.Clear();
+            PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
             PS.Invoke();
         }
 
-        public bool CheckIfInvited(string Username)
+        public bool InRepository(string UUsername)
         {
-            PS.AddCommand($"$i = .\\gh.exe api /repos/Dingsi1/Dummy/collaborators/Maxasdasd;$i");
-            var str = PS.Invoke();
-            var dings = str[0];
-            string s1 = str.ToString();
-
-            return false;
+            PS.Commands.Clear();
+            bool inRepo = false;
+            PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
+            var R = PL.Invoke();
+            if (R.Count == 0)
+            {
+                inRepo = true;
+            }
+            return inRepo;
 
         }
 
-        public void SetUpCredentials(string Email, string Username)
+        public void Delete()
         {
-            throw new NotImplementedException();
+            PS.Commands.Clear();
+            PS.AddScript($"del {HomePath}");
+            RepoName = string.Empty;
+            PS.Invoke();
+        }
+
+        public void Rename(string Reponame)
+        {
+            PS.Commands.Clear();
+            PS.AddScript($".\\gh.exe repo rename {Reponame} -R https://github.com/{Config.GAccountName}/{this.RepoName}");
+            PS.Invoke();
         }
     }
 }

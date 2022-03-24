@@ -41,12 +41,12 @@ namespace GStatsFaker.Controllers
             switch (R)
             {
                 case (1):
-                    return Ok(new Respone(R, "Alles OK"));
+                    return Ok(new Response(R, "Alles OK"));
                 case (-1):
-                    return UnprocessableEntity(new Respone() { Code = R, Desc = "MinCon oder MaxCon sind kleiner als 0" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "MinCon oder MaxCon sind kleiner als 0" });
 
                 case (-2):
-                    return UnprocessableEntity(new Respone() { Code = R, Desc = "Min Con ist größergleich MaxCon" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Min Con ist größergleich MaxCon" });
 
                 default:throw new Exception("Internal Server Error");
             }
@@ -59,21 +59,50 @@ namespace GStatsFaker.Controllers
             switch (R)
             {
                 case (1):
-                    return Ok(new Respone(R, "Alles OK"));
+                    return Ok(new Response(R, "Alles OK"));
                 case (-1):
-                    return UnprocessableEntity(new Respone() { Code = R, Desc = "Name bereitsvergeben" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Name bereitsvergeben" });
                 default: throw new Exception("Internal Server Error");
             }
         }
 
-        [AllowAnonymous]
-        [HttpGet("Create Repo")]
-        public string CreateRepo()
+       [HttpPost("SetGithubAccountSettings")]
+        public object SetGAS(GithubAccountSettings GAS)
         {
-            Faker.InitRep("HAAAAAAALLO");
-            Faker.CheckIfInvited("Maxi13254");
-            return "asd";
+            //Überprüfen ob der Nutzer so verwendet werden kann.
+           
+            int R = Config.SetGAS(GAS, Config.FindUser(User));
+            switch (R)
+            {
+                case (1):
+                    return Ok(new Response(R, "Alles OK"));
+                case (-1):
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "EmailNotValid" });
+                case -2:
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "No Username was entered" });
+                default: throw new Exception("Internal Server Error");
+            }
+        }
+
+        [HttpGet("SendInvite")]
+        public Response SendInvite()
+        {
+            int R = Config.Invite(Config.FindUser(User));
+            switch (R)
+            {
+                case (1):
+                    return new Response(R, "AllesOK");
+
+                case (-1):
+                    return new Response(R, "Github Email must be set");
+
+                case (-2):
+                    return new Response(R, "Github Username must be set");
+                default: throw new Exception("Internal Server Error");
+            }
         }
     }
-    //SetRepoName
+    //SetRepoName mehr testen
+    //Sichtbarmachen
+
 }

@@ -8,10 +8,12 @@ namespace GStatsFaker.Repository.Implementations
     public class ConfigRepo : IConfigRepo
     {
         public GSFContext Context { get; set; }
+        public IContManager ContManager { get; set; }
 
-        public ConfigRepo(GSFContext Context)
+        public ConfigRepo(GSFContext Context, IContManager ContManager)
         {
             this.Context = Context;
+            this.ContManager = ContManager;
         }
 
         public User FindUser(ClaimsPrincipal User)
@@ -23,13 +25,13 @@ namespace GStatsFaker.Repository.Implementations
 
         public ConfigInfos GetUserConfigData(User User)
         {
-            ConfigInfos configInfos = new ConfigInfos() { Erstellung = User.Created, MaxCon = User.MaxCon, MinCon = User.MinCon, RepoName = User.RepoName };
+            ConfigInfos configInfos = new ConfigInfos() { Erstellung = User.Created, MaxCon = User.MaxCon, MinCon = User.MinCon, RepoName = User.RepoName,GithubEmail = User.GithubEmail,GithubUsername = User.GithubUsername };
             return configInfos;
         }
 
         public int SetConRange(User User,int Min, int Max)
         {
-            if(Min <= Max)
+            if(Min >= Max)
             {
                 return -2;
             }
@@ -48,26 +50,55 @@ namespace GStatsFaker.Repository.Implementations
 
         public int SetRepoName(User User,string repoName)
         {
-            //Old StatsFaker instanz löschen
-            //Delete Old Repo ornder
-            //Check if already InRepo
             repoName = NormString(repoName);
-            if (Context.Users.FirstOrDefault(u=>u.RepoName == repoName) != null || repoName == string.Empty) return -1;
+            if (Context.Users.Any(u=>u.RepoName == repoName)|| repoName == string.Empty) return -1;
             User.RepoName = repoName;
+            IStatsFaker F = ContManager.GetStatsFaker(User);
+            F.Rename(repoName);
+            F.Delete();
+            F.InitRep(repoName);
+            F.AddActivity(3);
             Context.SaveChanges();
             return 1;
         }
 
-        public static string NormString(string str)
+        public static string NormString(string str1)
         {
-            for (int i = 0; i < str.Length; i++)
+
+            string str = "";
+            for (int i = 0; i < str1.Length; i++)
             {
-                if (char.IsLetterOrDigit(str[i]))
+                if (char.IsLetterOrDigit(str1[i]))
                 {
-                    str += str[i];
+                    str += str1[i];
                 }
             }
             return str;
+        }
+
+        public int SetGAS(GithubAccountSettings GAS, User user)
+        {
+            if (!AccountRepo.IsValidEmail(GAS.GithubEmail))
+            {
+                return -1;
+            }
+            if(GAS.GithubUserName == string.Empty)
+            {
+                return -2;
+            }
+            user.GithubEmail = GAS.GithubEmail;
+            user.GithubUsername = GAS.GithubUserName;
+            Context.SaveChanges();
+            return 1;
+        }
+
+        public int Invite(User user)
+        {
+            if(!AccountRepo.IsValidEmail(user.GithubEmail))return -1;
+            if(user.GithubUsername == string.Empty)return -2;
+            IStatsFaker Faker = ContManager.GetStatsFaker(user);
+            Faker.Invite(user.GithubUsername);
+            return 1;
         }
     }
 }

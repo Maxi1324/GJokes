@@ -25,6 +25,8 @@ namespace GStatsFaker.Model
             set { _MaxCon = (value >= 0 && value <= Config.MaxCont) ? value : throw new ArgumentException("Inpute Fehlerhaft"); }
         }
 
+        public string GithubEmail { get; set; } = string.Empty;
+        public string GithubUsername { get; set; } = string.Empty;
 
         public string RepoName { get; set; }= "Dummy";
 

@@ -34,5 +34,26 @@ namespace GStatsFaker.Repository.Interfaces
         /// <param name="Email"></param>
         /// <returns></returns>
         public User FindUser(ClaimsPrincipal Email);
+
+        /// <summary>
+        /// Set GAS
+        /// </summary>
+        /// <param name="GAS"></param>
+        /// <returns>
+        /// R == -1 GithubEmail not valid
+        /// R == 1 Hatfunktioniert
+        /// </returns>
+        public int SetGAS(GithubAccountSettings GAS, User user);
+
+        /// <summary>
+        /// Invited einen user
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>
+        /// R== 1 AllesOk
+        /// R == -1 Github Email must be set
+        /// R == -2 Github Username must be set
+        /// </returns>
+        public int Invite(User user);
     }
 }

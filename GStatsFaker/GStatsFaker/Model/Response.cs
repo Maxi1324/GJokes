@@ -1,17 +1,17 @@
 ﻿namespace GStatsFaker.Model
 {
-    public class Respone
+    public class Response
     {
         
         public int Code { get; set; }
         public string Desc { get; set; } = string.Empty;
 
-        public Respone()
+        public Response()
         {
             
         }
 
-        public Respone(int Code, string Desc)
+        public Response(int Code, string Desc)
         {
             this.Desc = Desc;
             this.Code = Code;
