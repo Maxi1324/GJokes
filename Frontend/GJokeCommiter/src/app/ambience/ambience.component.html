@@ -1,17 +1,17 @@
 <div class="p-4">
   <h1 class="text-center text-4xl font-bold text-white">Config</h1>
   <div class="flex flex-col justify-center">
-    <div class="settings-group">
+    <div class="settings-group xl:w-1/2 w-full mx-2">
       <h2 class="settings-title">GitHub Settings</h2>
       <p class="settings-text">
         This settings are used for the GitHub Implementation.
       </p>
-      <div class="grid grid-cols-2">
-        <div class="mr-2">
+      <div class="grid sm:grid-cols-2 grid-cols-1">
+        <div class="mx-2">
           <label for="github-username">GitHub Username</label
           ><input id="github-username" name="github-username" type="text" class="input" value="{{ gusername }}" />
         </div>
-        <div class="ml-2">
+        <div class="mx-2">
           <label for="">GitHub E-Mail</label
           ><input id="github-email" name="github-email" type="email" class="input" value="{{ gemail }}" />
         </div>
@@ -22,17 +22,17 @@
         <b class="text-green-500">GitHub is working!</b>
       </div>
     </div>
-    <div class="settings-group">
+    <div class="settings-group xl:w-1/2 w-full mx-2">
       <h2 class="settings-title">Joke Settings</h2>
       <p class="settings-text">
         This settings are used to generate a random joke.
       </p>
-      <div class="grid grid-cols-2">
-        <div class="mr-2">
+      <div class="grid sm:grid-cols-2 grid-cols-1">
+        <div class="mx-2">
           <label for="j-min">Jokes Min</label
           ><input id="j-min" name="j-min" type="number" class="input" min="0" value="{{ jmin }}" />
         </div>
-        <div class="ml-2">
+        <div class="mx-2">
           <label for="j-max">Jokes Max</label><input id="j-max" name="j-max" type="number" class="input" min="0" value="{{ jmax }}"/>
         </div>
       </div>
@@ -42,7 +42,7 @@
         <b class="text-green-500">Setting Saved!</b>
       </div>
     </div>
-    <div class="settings-group">
+    <div class="settings-group xl:w-1/2 w-full mx-2">
       <h2 class="settings-title">Account Settings</h2>
       <p class="settings-text">This settings are for the Account.</p>
       <div>
