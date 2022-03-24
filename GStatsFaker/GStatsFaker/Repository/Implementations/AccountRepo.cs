@@ -11,11 +11,13 @@ namespace GStatsFaker.Repository.Implementations
 
         public GSFContext Context { get; set; } 
         public IMailManager MailManager { get; set; }
+        public IContManager ContManager;
 
-        public AccountRepo(GSFContext Context,IMailManager MailManager)
+        public AccountRepo(GSFContext Context,IMailManager MailManager, IContManager ContManager)
         {
             this.Context = Context; 
             this.MailManager = MailManager;
+            this.ContManager = ContManager;
         }
 
         public int ActivateAccount(int UserID, string code)
@@ -31,6 +33,21 @@ namespace GStatsFaker.Repository.Implementations
             if (!(DateTime.Now.Subtract(SVE.Erstellt).TotalHours < Config.EmailVerExireTime)) return -3;
 
             SVE.IsVerifiziert = true;
+
+            Random Rand = new Random();
+            
+            for(int i = 0; i < 10; i++)
+            {
+                string Name = Rand.Next() + "";
+                if (!Context.Users.Any((u) => u.RepoName == Name))
+                {
+                    user.RepoName = Name;
+                    break;
+                }
+            }
+
+            IStatsFaker Faker = ContManager.GetStatsFaker(user.Email);
+            Faker.InitRep(user.RepoName);
 
             Context.SaveChanges();
             return 1;

@@ -1,4 +1,5 @@
 ﻿using GStatsFaker.Model;
+using GStatsFaker.Repository;
 using GStatsFaker.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -75,7 +76,7 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case 1:
-                    return Ok(new Respone() { Code = r, Desc = "Account has been Activated" });
+                    return Ok(new Respone() { Code = r, Desc = "Account has been Activated Repository Invite has been send" });
                 case -2:
                     return UnprocessableEntity(new Respone() { Code = r, Desc = "Code invalid" });
                 case -3:

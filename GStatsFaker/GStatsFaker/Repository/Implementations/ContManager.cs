@@ -55,16 +55,20 @@ namespace GStatsFaker.Repository.Implementations
                         }
                         else
                         {
-                            Faker = new StatsFaker();
+                            Faker = new StatsFaker(u.RepoName);
                             Fakers.Add(Email, Faker);
-                            Faker.InitRep(Email, Config.Token, u.RepoName);
-                            Faker.SetUpCredentials(Email, Email.Split("@")[0]);
+                            Faker.SetUpCredentials(Email, Email);
                         }
                         int Conts = random.Next(u.MaxCon - u.MinCon) + u.MinCon;
                         Faker.AddActivity(Conts);
                     });
             }
             return;
+        }
+
+        public IStatsFaker GetStatsFaker(string mail)
+        {
+            return Fakers[mail];
         }
     }
 }

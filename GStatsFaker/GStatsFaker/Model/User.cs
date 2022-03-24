@@ -14,7 +14,7 @@ namespace GStatsFaker.Model
         public int MinCon
         {
             get { return _MinCon; }
-            set { _MinCon = (value >= 0)?value:throw new ArgumentException("Inpute Fehlerhaft"); }
+            set { _MinCon = (value >= 0 && value <= Config.MaxCont)?value:throw new ArgumentException("Inpute Fehlerhaft"); }
         }
 
         private int _MaxCon;
@@ -22,7 +22,7 @@ namespace GStatsFaker.Model
         public int MaxCon
         {
             get { return _MaxCon; }
-            set { _MaxCon = (value >= 0) ? value : throw new ArgumentException("Inpute Fehlerhaft"); }
+            set { _MaxCon = (value >= 0 && value <= Config.MaxCont) ? value : throw new ArgumentException("Inpute Fehlerhaft"); }
         }
 
 

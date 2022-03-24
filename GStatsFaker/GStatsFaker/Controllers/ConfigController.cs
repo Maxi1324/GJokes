@@ -19,10 +19,12 @@ namespace GStatsFaker.Controllers
     public class ConfigController : ControllerBase
     {
         public IConfigRepo Config { get; set; }
+        public IStatsFaker Faker;
 
-        public ConfigController(IConfigRepo Config)
+        public ConfigController(IConfigRepo Config, IStatsFaker Faker)
         {
             this.Config = Config;
+            this.Faker = Faker;
         }
 
         [HttpGet("GetUserInfo")]
@@ -63,7 +65,15 @@ namespace GStatsFaker.Controllers
                 default: throw new Exception("Internal Server Error");
             }
         }
-    }
 
+        [AllowAnonymous]
+        [HttpGet("Create Repo")]
+        public string CreateRepo()
+        {
+            Faker.InitRep("HAAAAAAALLO");
+            Faker.CheckIfInvited("Maxi13254");
+            return "asd";
+        }
+    }
     //SetRepoName
 }

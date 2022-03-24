@@ -39,7 +39,7 @@ namespace GStatsFaker.Repository.Implementations
                 User.MaxCon = Max;
                 Context.SaveChanges();
             }
-            catch(ArgumentException ex)
+            catch
             {
                 return -1;   
             }
@@ -48,6 +48,9 @@ namespace GStatsFaker.Repository.Implementations
 
         public int SetRepoName(User User,string repoName)
         {
+            //Old StatsFaker instanz löschen
+            //Delete Old Repo ornder
+            //Check if already InRepo
             repoName = NormString(repoName);
             if (Context.Users.FirstOrDefault(u=>u.RepoName == repoName) != null || repoName == string.Empty) return -1;
             User.RepoName = repoName;

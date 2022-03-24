@@ -20,6 +20,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IJwtAuthenticationManager,JwtAuthenticationManager>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IConfigRepo, ConfigRepo>();
 
 builder.Services.AddSingleton<IStatsFaker>(new StatsFaker());
 builder.Services.AddSingleton<IMailManager>(new MailManager());

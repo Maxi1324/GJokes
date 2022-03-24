@@ -14,6 +14,10 @@
 
         public const int MaxMailRequests = 10;
 
-        public const string Token = "";
+        public const int MaxCont = 50;
+
+        public const string GToken = "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";
+
+        public const string GAccountName = "Dingsi";
     }
 }
