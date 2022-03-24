@@ -11,11 +11,13 @@ namespace GStatsFaker.Repository.Implementations
 
         public GSFContext Context { get; set; } 
         public IMailManager MailManager { get; set; }
+        public IContManager ContManager;
 
-        public AccountRepo(GSFContext Context,IMailManager MailManager)
+        public AccountRepo(GSFContext Context,IMailManager MailManager, IContManager ContManager)
         {
             this.Context = Context; 
             this.MailManager = MailManager;
+            this.ContManager = ContManager;
         }
 
         public int ActivateAccount(int UserID, string code)
@@ -31,6 +33,20 @@ namespace GStatsFaker.Repository.Implementations
             if (!(DateTime.Now.Subtract(SVE.Erstellt).TotalHours < Config.EmailVerExireTime)) return -3;
 
             SVE.IsVerifiziert = true;
+
+            Random Rand = new Random();
+            
+            for(int i = 0; i < 10; i++)
+            {
+                string Name = Rand.Next() + "";
+                if (!Context.Users.Any((u) => u.RepoName == Name))
+                {
+                    user.RepoName = Name;
+                    break;
+                }
+            }
+
+            IStatsFaker Faker = ContManager.GetStatsFaker(user);
 
             Context.SaveChanges();
             return 1;
@@ -58,6 +74,19 @@ namespace GStatsFaker.Repository.Implementations
             else
             {
                 string Hash = SecurePasswordHasher.Hash(Password);
+
+                Random Rand = new Random();
+                int ID = 0;
+                int MaxTries = 10;
+                for(int i = 0; i < MaxTries; i++)
+                {
+                    ID = Rand.Next();
+                    if(Context.Users.FirstOrDefault(u=> u.Id == ID)== null)
+                    {
+                        break;
+                    }
+                }
+
                 User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next() };
                 Context.Users.Add(u);
                 Context.SaveChanges();
@@ -122,7 +151,7 @@ namespace GStatsFaker.Repository.Implementations
         }
 
         //kopiert von https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address
-        private bool IsValidEmail(string email)
+        public static bool IsValidEmail(string email)
         {
             var trimmedEmail = email.Trim();
 

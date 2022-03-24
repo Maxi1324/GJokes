@@ -1,4 +1,5 @@
 ﻿using GStatsFaker.Model;
+using GStatsFaker.Repository;
 using GStatsFaker.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -39,15 +40,15 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case -1:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Email is already in use" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Email is already in use" });
                 case -2:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Email is not valid" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Email is not valid" });
                 case -3:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Password is to short, must be longer than 5 chars" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password is to short, must be longer than 5 chars" });
                 case -4:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Body is wrong, Email or Password is null" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 default:
-                    return Ok(new Respone() { Code = r, Desc = "Alles ok returned UserID" });
+                    return Ok(new Response() { Code = r, Desc = "Alles ok returned UserID" });
             }
         }
 
@@ -59,11 +60,11 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case -1:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "User not found" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "User not found" });
                 case -2:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "To many requests. Email is blocked" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "To many requests. Email is blocked" });
                 default:
-                    return Ok(new Respone() { Code = r, Desc = "Email has been sent" });
+                    return Ok(new Response() { Code = r, Desc = "Email has been sent" });
             }
         }
 
@@ -75,32 +76,32 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case 1:
-                    return Ok(new Respone() { Code = r, Desc = "Account has been Activated" });
+                    return Ok(new Response() { Code = r, Desc = "Account has been Activated Repository" });
                 case -2:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Code invalid" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Code invalid" });
                 case -3:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "Code expired" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Code expired" });
                 default:
-                    return UnprocessableEntity(new Respone() { Code = r, Desc = "User does not exist" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "User does not exist" });
             }
         }
 
         [AllowAnonymous]
         [HttpGet("GetUserIdFromMail")]
-        public Respone GetUserIdFromMail(string Mail)
+        public Response GetUserIdFromMail(string Mail)
         {
             int r = AccountRepo.FindUserId(Mail);
 
             if(r >= 0)
             {
-                return new Respone() { Code = r, Desc = "User ID" };
+                return new Response() { Code = r, Desc = "User ID" };
             }
             else
             {
-                return new Respone() { Code = r, Desc = "There is no User with this Email" };
+                return new Response() { Code = r, Desc = "There is no User with this Email" };
             }
         }
 
-        //get user Id from Email
+        //Passwort vergessen
     }
 }

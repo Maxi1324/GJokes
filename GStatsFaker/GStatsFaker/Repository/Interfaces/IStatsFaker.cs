@@ -12,10 +12,18 @@ namespace GStatsFaker.Repository
         public string RepoName { get;   }
         public string Token { get;  }
 
-        public void InitRep(string Username, string Token, string RepoName);
+        public void InitRep(string RepoName);
 
         public void SetUpCredentials(string Email, string Username);
 
         public void AddActivity(int n = 1);
+
+        public void Invite(string Username);
+
+        public bool InRepository(string Username);
+
+        public void Delete();
+
+        public void Rename(string Reponame);
     }
 }

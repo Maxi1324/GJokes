@@ -5,6 +5,7 @@ using GStatsFaker.Repository.Implementations;
 using GStatsFaker.Repository.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -18,12 +19,15 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IJwtAuthenticationManager,JwtAuthenticationManager>();
-builder.Services.AddScoped<IStatsFaker, StatsFaker>();
 builder.Services.AddScoped<IAccountRepo, AccountRepo>();
+builder.Services.AddScoped<IConfigRepo, ConfigRepo>();
 
+builder.Services.AddSingleton<IStatsFaker>(new StatsFaker());
 builder.Services.AddSingleton<IMailManager>(new MailManager());
 
 builder.Services.AddDbContext<GSFContext>(o => o.UseSqlite("Data Source=App.db"));
+
+builder.Services.AddSingleton<IContManager, ContManager>();
 
 builder.Services.AddAuthentication(x =>
 {

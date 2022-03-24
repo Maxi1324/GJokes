@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 
 namespace GStatsFaker.Repository
 {
@@ -6,6 +7,7 @@ namespace GStatsFaker.Repository
     {
         public const string Repos = "Repos";
         public PowerShell PS { get; private set; }
+        public Pipeline PL { get; private set; }
 
         public string HomePath { get => ""+Directory.GetCurrentDirectory()+"\\Repos\\"+Username+"\\"+RepoName; }
 
@@ -13,16 +15,28 @@ namespace GStatsFaker.Repository
         public string RepoName { get; private set; } = "";
         public string Token { get; private set; } = "";
 
+        public StatsFaker(string RepoName):this()
+        {
+            InitRep(RepoName);
+        }
+
         public StatsFaker()
         {
             PS = PowerShell.Create();
+            var rs = RunspaceFactory.CreateRunspace();
+            rs.Open();
+            PL = rs.CreatePipeline();
         }
 
-        public void InitRep(string Username, string Token, string RepoName)
+        public void InitRep(string RepoName)
         {
-            this.Username = Username;
+            PS.Commands.Clear();
+            this.Username = Config.GAccountName;
             this.RepoName = RepoName;
-            this.Token = Token;
+            this.Token = Config.GToken;
+
+            PS.AddScript($"cd {HomePath};.\\gh.exe repo create {RepoName} --private");
+            PS.Invoke();
 
             string s = "cd " + Directory.GetCurrentDirectory();
             PS.AddScript("(cd " + Directory.GetCurrentDirectory() + $");(mkdir Repos)");
@@ -31,14 +45,16 @@ namespace GStatsFaker.Repository
             PS.Invoke();
         }
 
-        public void SetUpCredentials(string Email, string Username)
+        public void SetUpCredentials(string Email, string UUsername)
         {
-            PS.AddScript($"cd {HomePath}; git config user.name \"{Username}\";git config user.email \"{Email}\"");
+            PS.Commands.Clear();
+            PS.AddScript($"cd {HomePath}; git config user.name \"{UUsername}\";git config user.email \"{Email}\"");
             PS.Invoke();
         }
 
         public void AddActivity(int n = 1)
         {
+            PS.Commands.Clear();
             for (int i = 0; i < n; i++)
             {
                 int r = new Random().Next(2000000);
@@ -50,6 +66,42 @@ namespace GStatsFaker.Repository
                 PS.AddScript($"{s};git push https://{Token}@github.com/{Username}/{RepoName}.git");
                 PS.Invoke();
             }
+        }
+
+        public void Invite(string UUserName)
+        {
+            PS.Commands.Clear();
+            PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
+            PS.Invoke();
+        }
+
+        public bool InRepository(string UUsername)
+        {
+            PS.Commands.Clear();
+            bool inRepo = false;
+            PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
+            var R = PL.Invoke();
+            if (R.Count == 0)
+            {
+                inRepo = true;
+            }
+            return inRepo;
+
+        }
+
+        public void Delete()
+        {
+            PS.Commands.Clear();
+            PS.AddScript($"del {HomePath}");
+            RepoName = string.Empty;
+            PS.Invoke();
+        }
+
+        public void Rename(string Reponame)
+        {
+            PS.Commands.Clear();
+            PS.AddScript($".\\gh.exe repo rename {Reponame} -R https://github.com/{Config.GAccountName}/{this.RepoName}");
+            PS.Invoke();
         }
     }
 }
