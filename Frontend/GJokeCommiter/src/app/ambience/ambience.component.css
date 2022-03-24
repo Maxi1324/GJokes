@@ -16,7 +16,13 @@
     @apply font-bold;
     @apply text-xl;
     @apply mb-2;
-    @apply mx-auto;
+}
+
+.settings-title-2{
+    @apply p-1;
+    @apply font-bold;
+    @apply text-lg;
+    @apply mb-1;
 }
 
 .settings-text{

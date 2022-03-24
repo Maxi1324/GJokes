@@ -4,18 +4,19 @@
     <div class="settings-group">
       <h2 class="settings-title">GitHub Settings</h2>
       <p class="settings-text">
-        This is the settings for the GitHub Implementation.
+        This settings are used for the GitHub Implementation.
       </p>
       <div class="grid grid-cols-2">
         <div class="mr-2">
-          <label for="">GitHub Account</label
-          ><input type="text" class="input" min="0" />
+          <label for="github-username">GitHub Username</label
+          ><input id="github-username" name="github-username" type="text" class="input" value="{{ gusername }}" />
         </div>
         <div class="ml-2">
           <label for="">GitHub E-Mail</label
-          ><input type="email" class="input" />
+          ><input id="github-email" name="github-email" type="email" class="input" value="{{ gemail }}" />
         </div>
       </div>
+      <button class="button" (click)="save_github_settings($event, gusername, gemail)">Save Changes</button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
         <b class="text-green-500">GitHub is working!</b>
@@ -23,16 +24,19 @@
     </div>
     <div class="settings-group">
       <h2 class="settings-title">Joke Settings</h2>
-      <p>This settings are used to generate a random joke.</p>
+      <p class="settings-text">
+        This settings are used to generate a random joke.
+      </p>
       <div class="grid grid-cols-2">
         <div class="mr-2">
-          <label for="">Jokes Min</label
-          ><input type="text" class="input" min="0" value="{{jmin}}"/>
+          <label for="j-min">Jokes Min</label
+          ><input id="j-min" name="j-min" type="number" class="input" min="0" value="{{ jmin }}" />
         </div>
         <div class="ml-2">
-          <label for="">Jokes Max</label><input type="email" class="input" />
+          <label for="j-max">Jokes Max</label><input id="j-max" name="j-max" type="number" class="input" min="0" value="{{ jmax }}"/>
         </div>
       </div>
+      <button class="button" (click)="save_jokes_settings($event, jmin, jmax)">Save Changes</button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
         <b class="text-green-500">Setting Saved!</b>
@@ -40,9 +44,9 @@
     </div>
     <div class="settings-group">
       <h2 class="settings-title">Account Settings</h2>
-      <p>This settings are for the Account.</p>
+      <p class="settings-text">This settings are for the Account.</p>
       <div>
-        <h2>Change Password</h2>
+        <h2 class="settings-title-2">Change Password</h2>
         <div>
           <label for="">Old Password</label><input type="text" class="input" />
         </div>
@@ -50,7 +54,7 @@
           <label for="">New Password</label><input type="text" class="input" />
         </div>
         <button class="button">Change Password</button>
-        <h2>Delete Account</h2>
+        <h2 class="settings-title-2">Delete Account</h2>
         <p></p>
         <div>
           <label for="">Password</label><input type="text" class="input" />
