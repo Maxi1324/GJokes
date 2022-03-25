@@ -3,7 +3,7 @@
 namespace GStatsFaker.Repository.Implementations
 {
     /// <summary>
-    /// copyd from https://stackoverflow.com/questions/4181198/how-to-hash-a-password
+    /// copyed from https://stackoverflow.com/questions/4181198/how-to-hash-a-password
     /// </summary>
     public static class SecurePasswordHasher
     {

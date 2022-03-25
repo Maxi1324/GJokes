@@ -41,6 +41,8 @@ namespace GStatsFaker.Repository
             string s = "cd " + Directory.GetCurrentDirectory();
             PS.AddScript("(cd " + Directory.GetCurrentDirectory() + $");(mkdir Repos)");
             PS.AddScript("(cd " + Directory.GetCurrentDirectory()+$"\\Repos);(mkdir " + $"{Username})");
+       
+
             PS.AddScript($"(cd {Directory.GetCurrentDirectory()+ "\\Repos\\" + Username+"\\"});(git clone https://{Token}@github.com/{Username}/{RepoName}.git)");
             PS.Invoke();
         }
@@ -68,11 +70,20 @@ namespace GStatsFaker.Repository
             }
         }
 
-        public void Invite(string UUserName)
+        public int Invite(string UUserName)
         {
             PS.Commands.Clear();
-            PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
-            PS.Invoke();
+            if (InRepository(UUserName))
+            {
+                return -1;
+            }
+            else
+            {
+                PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
+                PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
+                PS.Invoke();
+                return 1;
+            }
         }
 
         public bool InRepository(string UUsername)
