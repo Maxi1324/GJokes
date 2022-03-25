@@ -49,7 +49,7 @@
         /// r == 1 hat funktioniert
         /// r == -1 Nutzer exestiert nicht
         /// </returns>
-        public int DeleteAccount(int UserID,string code);
+        public int DeleteAccount(int UserID);
 
         /// <summary>
         /// Retunrs the ID of user
