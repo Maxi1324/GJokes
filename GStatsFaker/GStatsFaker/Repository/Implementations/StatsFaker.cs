@@ -7,7 +7,7 @@ namespace GStatsFaker.Repository
     {
         public const string Repos = "Repos";
         public PowerShell PS { get; private set; }
-        public Pipeline PL { get; private set; }
+        public Runspace runspace { get; private set; }
 
         public string HomePath { get => ""+Directory.GetCurrentDirectory()+"\\Repos\\"+Username+"\\"+RepoName; }
 
@@ -23,9 +23,8 @@ namespace GStatsFaker.Repository
         public StatsFaker()
         {
             PS = PowerShell.Create();
-            var rs = RunspaceFactory.CreateRunspace();
-            rs.Open();
-            PL = rs.CreatePipeline();
+            runspace = RunspaceFactory.CreateRunspace();
+            runspace.Open();
         }
 
         public void InitRep(string RepoName)
@@ -79,9 +78,10 @@ namespace GStatsFaker.Repository
             }
             else
             {
-                PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
-                PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
-                PS.Invoke();
+                var PL = runspace.CreatePipeline();
+                PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
+                PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
+                var R = PL.Invoke();
                 return 1;
             }
         }
@@ -90,6 +90,7 @@ namespace GStatsFaker.Repository
         {
             PS.Commands.Clear();
             bool inRepo = false;
+            var PL = runspace.CreatePipeline();
             PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
             var R = PL.Invoke();
             if (R.Count == 0)

@@ -84,7 +84,7 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        [HttpGet("SendInvite")]
+        [HttpPost("SendInvite")]
         public Response SendInvite()
         {
             int R = Config.Invite(Config.FindUser(User));
