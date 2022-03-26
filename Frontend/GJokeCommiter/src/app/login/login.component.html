@@ -3,7 +3,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <label for="login-email">E-Mail</label>
     <input
-      type="text"
+      type="email"
       name="login-email"
       id="login-email"
       placeholder="max.mustermann@gmail.com"
@@ -14,7 +14,7 @@
       <span *ngIf="loginForm.controls['email'].hasError('required')">
         E-Mail is required
       </span>
-      <span *ngIf="loginForm.controls['email'].hasError('pattern')">
+      <span *ngIf="loginForm.controls['email'].hasError('email')">
         E-Mail is not valid
       </span>
     </div>
@@ -33,6 +33,9 @@
       </span>
       <span *ngIf="loginForm.controls['password'].hasError('minlength')">
         Password is too short
+      </span>
+      <span *ngIf="loginForm.controls['password'].hasError('maxlength')">
+        Password is too long
       </span>
     </div>
     <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
