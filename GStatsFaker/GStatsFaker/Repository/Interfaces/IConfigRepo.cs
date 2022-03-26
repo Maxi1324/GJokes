@@ -53,7 +53,10 @@ namespace GStatsFaker.Repository.Interfaces
         /// R== 1 AllesOk
         /// R == -1 Github Email must be set
         /// R == -2 Github Username must be set
+        /// R == -3 User is already in Repo
         /// </returns>
         public int Invite(User user);
+
+        public void CreateCont(int num, User user);
     }
 }

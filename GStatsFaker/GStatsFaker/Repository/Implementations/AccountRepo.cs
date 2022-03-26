@@ -95,7 +95,7 @@ namespace GStatsFaker.Repository.Implementations
             return R;
         }
 
-        public int DeleteAccount(int UserID, string code)
+        public int DeleteAccount(int UserID)
         {
             User? uN = FindUser(UserID);
             if (uN == null) return -1;
@@ -108,6 +108,7 @@ namespace GStatsFaker.Repository.Implementations
             );
 
             Context.Users.Remove(u);
+            Context.SaveChanges();
             return 1;
         }
 

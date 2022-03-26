@@ -16,11 +16,13 @@ namespace GStatsFaker.Controllers
     {
         public IJwtAuthenticationManager AuthenticationManager { get; set; }
         public IAccountRepo AccountRepo { get; set; }
+        public IConfigRepo Config { get; set; }
 
-        public AccountController(IJwtAuthenticationManager AuthenticationManager, IAccountRepo AccountRepo)
+        public AccountController(IJwtAuthenticationManager AuthenticationManager, IAccountRepo AccountRepo, IConfigRepo Config)
         {
             this.AuthenticationManager = AuthenticationManager;
             this.AccountRepo = AccountRepo;
+            this.Config = Config;
         }
 
         [AllowAnonymous]
@@ -99,6 +101,20 @@ namespace GStatsFaker.Controllers
             else
             {
                 return new Response() { Code = r, Desc = "There is no User with this Email" };
+            }
+        }
+
+        [HttpPost("DeleteAccount")]
+        public object DeleteUser()
+        {
+            int R = AccountRepo.DeleteAccount(Config.FindUser(User).Id);
+            switch (R)
+            {
+                case 1:
+                    return Ok(new Response() { Code = R, Desc = "Account has been Deleted" });
+                case -1:
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Nutzer exestiert nicht, was sehr komisch ist!" });
+                default: throw new Exception("Internal Server Error");
             }
         }
 

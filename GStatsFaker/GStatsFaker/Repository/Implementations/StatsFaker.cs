@@ -7,7 +7,7 @@ namespace GStatsFaker.Repository
     {
         public const string Repos = "Repos";
         public PowerShell PS { get; private set; }
-        public Pipeline PL { get; private set; }
+        public Runspace runspace { get; private set; }
 
         public string HomePath { get => ""+Directory.GetCurrentDirectory()+"\\Repos\\"+Username+"\\"+RepoName; }
 
@@ -23,9 +23,8 @@ namespace GStatsFaker.Repository
         public StatsFaker()
         {
             PS = PowerShell.Create();
-            var rs = RunspaceFactory.CreateRunspace();
-            rs.Open();
-            PL = rs.CreatePipeline();
+            runspace = RunspaceFactory.CreateRunspace();
+            runspace.Open();
         }
 
         public void InitRep(string RepoName)
@@ -41,6 +40,8 @@ namespace GStatsFaker.Repository
             string s = "cd " + Directory.GetCurrentDirectory();
             PS.AddScript("(cd " + Directory.GetCurrentDirectory() + $");(mkdir Repos)");
             PS.AddScript("(cd " + Directory.GetCurrentDirectory()+$"\\Repos);(mkdir " + $"{Username})");
+       
+
             PS.AddScript($"(cd {Directory.GetCurrentDirectory()+ "\\Repos\\" + Username+"\\"});(git clone https://{Token}@github.com/{Username}/{RepoName}.git)");
             PS.Invoke();
         }
@@ -68,17 +69,28 @@ namespace GStatsFaker.Repository
             }
         }
 
-        public void Invite(string UUserName)
+        public int Invite(string UUserName)
         {
             PS.Commands.Clear();
-            PS.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
-            PS.Invoke();
+            if (InRepository(UUserName))
+            {
+                return -1;
+            }
+            else
+            {
+                var PL = runspace.CreatePipeline();
+                PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
+                PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
+                var R = PL.Invoke();
+                return 1;
+            }
         }
 
         public bool InRepository(string UUsername)
         {
             PS.Commands.Clear();
             bool inRepo = false;
+            var PL = runspace.CreatePipeline();
             PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
             var R = PL.Invoke();
             if (R.Count == 0)

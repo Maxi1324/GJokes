@@ -97,8 +97,14 @@ namespace GStatsFaker.Repository.Implementations
             if(!AccountRepo.IsValidEmail(user.GithubEmail))return -1;
             if(user.GithubUsername == string.Empty)return -2;
             IStatsFaker Faker = ContManager.GetStatsFaker(user);
-            Faker.Invite(user.GithubUsername);
+            int R = Faker.Invite(user.GithubUsername);
+            if (R == -1) return -3;
             return 1;
+        }
+
+        public void CreateCont(int num, User user)
+        {
+            ContManager.GetStatsFaker(user).AddActivity(num);
         }
     }
 }

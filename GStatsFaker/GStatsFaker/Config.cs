@@ -16,8 +16,8 @@
 
         public const int MaxCont = 50;
 
-        public const string GToken = "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";
+        public const string GToken = "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";
 
-        public const string GAccountName = "Dingsi";
+        public const string GAccountName = "Dingsi1";
     }
 }

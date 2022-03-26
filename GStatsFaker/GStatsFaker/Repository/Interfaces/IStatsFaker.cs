@@ -18,7 +18,15 @@ namespace GStatsFaker.Repository
 
         public void AddActivity(int n = 1);
 
-        public void Invite(string Username);
+        /// <summary>
+        /// Invites an User if it the user is not in the Repo
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <returns>
+        /// R == 1 Alles OK
+        /// R == -1 User is already in Repo
+        /// </returns>
+        public int Invite(string Username);
 
         public bool InRepository(string Username);
 

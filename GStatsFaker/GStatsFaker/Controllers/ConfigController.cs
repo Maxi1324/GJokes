@@ -43,7 +43,7 @@ namespace GStatsFaker.Controllers
                 case (1):
                     return Ok(new Response(R, "Alles OK"));
                 case (-1):
-                    return UnprocessableEntity(new Response() { Code = R, Desc = "MinCon oder MaxCon sind kleiner als 0" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "MinCon oder MaxCon sind kleiner als 0 oder grpßer als Max Contributions" });
 
                 case (-2):
                     return UnprocessableEntity(new Response() { Code = R, Desc = "Min Con ist größergleich MaxCon" });
@@ -67,7 +67,7 @@ namespace GStatsFaker.Controllers
         }
 
        [HttpPost("SetGithubAccountSettings")]
-        public object SetGAS(GithubAccountSettings GAS)
+        public object SetGAS([FromBody] GithubAccountSettings GAS)
         {
             //Überprüfen ob der Nutzer so verwendet werden kann.
            
@@ -84,7 +84,7 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        [HttpGet("SendInvite")]
+        [HttpPost("SendInvite")]
         public Response SendInvite()
         {
             int R = Config.Invite(Config.FindUser(User));
@@ -97,9 +97,23 @@ namespace GStatsFaker.Controllers
                     return new Response(R, "Github Email must be set");
 
                 case (-2):
-                    return new Response(R, "Github Username must be set");
+                    return new Response(R, "Github Username must is not set");
+                case -3:
+                    return new Response(R, "User already in Repo");
                 default: throw new Exception("Internal Server Error");
             }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GenCons")]
+        public Response GenerateConts()
+        {
+            Faker.InitRep("Dummy");
+           //Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
+           Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
+            Faker.AddActivity(20);
+           // Config.CreateCont(5, Config.FindUser(User));
+            return new Response(1, "Alles OK");
         }
     }
     //SetRepoName mehr testen
