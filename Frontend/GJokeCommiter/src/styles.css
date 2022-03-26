@@ -3,11 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
+body {
   @apply bg-2;
 }
 
-#cover{
+#cover {
   @apply z-40;
   @apply fixed;
   @apply inset-0;
@@ -18,7 +18,7 @@ body{
   @apply items-center;
   @apply justify-center;
 }
-.login-form{
+.login-form {
   @apply z-50;
   @apply fixed;
   @apply mx-auto;
@@ -35,18 +35,18 @@ body{
   @apply justify-start;
 }
 
-.bg-1{
+.bg-1 {
   @apply bg-blue-400;
 }
-.bg-2{
+.bg-2 {
   @apply bg-blue-500;
 }
 
-.hidden-strong{
+.hidden-strong {
   display: none !important;
 }
 
-.input{
+.input {
   @apply p-2;
   @apply rounded-lg;
   @apply border-2;
@@ -55,7 +55,7 @@ body{
   @apply focus:outline-none;
   @apply w-full;
 }
-.button{
+.button {
   @apply p-2;
   @apply rounded-lg;
   @apply border-2;
@@ -68,7 +68,8 @@ body{
   @apply hover:bg-blue-600;
 }
 
-.btn-register, .btn-login{
+.btn-register,
+.btn-login {
   @apply p-2;
   @apply rounded-lg;
   @apply border-2;
@@ -82,4 +83,18 @@ body{
   @apply hover:bg-blue-500;
   @apply transition;
   @apply mt-2;
+  @apply disabled:opacity-50;
+}
+
+.status-message {
+  @apply mb-2;
+  @apply text-gray-600;
+  @apply text-sm;
+}
+
+.invalid-input {
+  @apply mb-2;
+  @apply border-red-500;
+  @apply text-red-500;
+  @apply text-sm;
 }

@@ -1,23 +1,46 @@
 <div id="login" class="login-form hidden-strong">
-    <h2 class="text-2xl text-blue-400 mx-auto mb-5">Login</h2>
+  <h2 class="text-2xl text-blue-400 mx-auto mb-5">Login</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
     <label for="login-email">E-Mail</label>
     <input
-        type="text"
-        name="login-email"
-        id="login-email"
-        placeholder="max.mustermann@gmail.com"
-        class="input"
+      type="text"
+      name="login-email"
+      id="login-email"
+      placeholder="max.mustermann@gmail.com"
+      class="input"
+      formControlName="email"
     />
+    <div class="invalid-input">
+      <span *ngIf="loginForm.controls['email'].hasError('required')">
+        E-Mail is required
+      </span>
+      <span *ngIf="loginForm.controls['email'].hasError('pattern')">
+        E-Mail is not valid
+      </span>
+    </div>
     <label for="login-password">Password</label>
     <input
-        type="password"
-        name="login-password"
-        id="login-password"
-        placeholder="******"
-        class="input"
+      type="password"
+      name="login-password"
+      id="login-password"
+      placeholder="******"
+      class="input"
+      formControlName="password"
     />
-    <button class="btn-login">Login</button>
-    <p>
-        Don't have an account? <a routerLink="/register" class="underline">Register</a>
-    </p>
+    <div class="invalid-input">
+      <span *ngIf="loginForm.controls['password'].hasError('required')">
+        Password is required
+      </span>
+      <span *ngIf="loginForm.controls['password'].hasError('minlength')">
+        Password is too short
+      </span>
+    </div>
+    <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+      Login
+    </button>
+  </form>
+  <p>
+    Don't have an account?
+    <a routerLink="/register" class="underline">Register</a>
+  </p>
 </div>
