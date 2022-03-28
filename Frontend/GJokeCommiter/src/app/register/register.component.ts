@@ -16,6 +16,11 @@ export class RegisterComponent implements OnInit {
     if(localStorage.getItem('GJokes-Mail') != null){
       window.location.href = '/';
     }
+    //Make Register Visible
+    if (window.location.pathname == '/register'){
+      document.getElementById("register")?.classList.remove("hidden-strong");
+      document.getElementById("cover")?.classList.remove("hidden-strong");
+    }
   }
 
   /*

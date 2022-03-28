@@ -18,17 +18,6 @@ export class HomepageComponent implements OnInit {
     cover?.addEventListener("click", function() {
       route.navigate(['/']);
     });
-    
-    //If Path is register show cover and register div
-    if (window.location.pathname == "/register") {
-      document.getElementById("cover")?.classList.remove("hidden-strong");
-      document.getElementById("register")?.classList.remove("hidden-strong");
-    }
-    //If Path is login show cover and login div
-    if (window.location.pathname == "/login") {
-      document.getElementById("cover")?.classList.remove("hidden-strong");
-      document.getElementById("login")?.classList.remove("hidden-strong");
-    }
   }
 
 }

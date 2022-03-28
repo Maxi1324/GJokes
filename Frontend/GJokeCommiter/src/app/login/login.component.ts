@@ -17,7 +17,17 @@ import { HttpClient } from '@angular/common/http';
 export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //If the user is already logged in, redirect to homepage
+    if(localStorage.getItem('GJokes-Mail') != null){
+      window.location.href = '/';
+    }
+    //Make Login Visible
+    if (window.location.pathname == '/login'){
+      document.getElementById("login")?.classList.remove("hidden-strong");
+      document.getElementById("cover")?.classList.remove("hidden-strong");
+    }
+  }
 
   loginForm = this.fb.group({
     email: ['', [Validators.required, this.email_valid()]],
