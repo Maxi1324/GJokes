@@ -109,10 +109,23 @@ namespace GStatsFaker.Controllers
         public Response GenerateConts()
         {
             Faker.InitRep("Dummy");
-           //Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
-           Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
-            Faker.AddActivity(20);
-           // Config.CreateCont(5, Config.FindUser(User));
+          // Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
+          Faker.SetUpCredentials("maxi151234567890@gmail.com", "Dingsi");
+            Faker.AddActivity(30);
+           //Config.CreateCont(5, Config.FindUser(User));
+            return new Response(1, "Alles OK");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GenConsÜast")]
+        public Response GenerateContsPast()
+        {
+            Faker.InitRep("Dummy");
+            // Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
+            // Faker.SetUpCredentials("maxi151234567890@gmail.com", "Dingsi");
+            Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
+            Faker.AddActivityPast(400);
+            //Config.CreateCont(5, Config.FindUser(User));
             return new Response(1, "Alles OK");
         }
     }

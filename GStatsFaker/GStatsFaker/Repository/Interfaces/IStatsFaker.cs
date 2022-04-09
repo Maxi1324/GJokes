@@ -16,7 +16,8 @@ namespace GStatsFaker.Repository
 
         public void SetUpCredentials(string Email, string Username);
 
-        public void AddActivity(int n = 1);
+        public void AddActivityPast(int LetztenTage, int n = 1);
+        public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true);
 
         /// <summary>
         /// Invites an User if it the user is not in the Repo

@@ -67,6 +67,10 @@ namespace GStatsFaker.Repository.Implementations
             {
                 R = - 3;
             }
+            else if (Password.Length > 20)
+            {
+                R = -5;
+            }
             else if (Context.Users.Any(u => u.Email == Email))
             {
                 R = - 1;
@@ -97,6 +101,7 @@ namespace GStatsFaker.Repository.Implementations
 
         public int DeleteAccount(int UserID)
         {
+
             User? uN = FindUser(UserID);
             if (uN == null) return -1;
             User u = uN ?? default!;

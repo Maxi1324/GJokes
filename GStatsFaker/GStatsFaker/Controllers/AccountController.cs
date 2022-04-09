@@ -47,6 +47,8 @@ namespace GStatsFaker.Controllers
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Email is not valid" });
                 case -3:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Password is to short, must be longer than 5 chars" });
+                case -5:
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist to long, must be shorter than 20" });
                 case -4:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 default:
