@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'GJokes';
+  constructor() { 
+    sessionStorage.setItem('BackendRoute', 'https://localhost:7099/');
+  }
 }

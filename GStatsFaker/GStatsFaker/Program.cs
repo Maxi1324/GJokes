@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -39,27 +41,35 @@ builder.Services.AddAuthentication(x =>
     x.SaveToken = true;
     x.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidateIssuerSigningKey = true, 
+        ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Config.key)),
         ValidateIssuer = false,
         ValidateAudience = false
     };
 });
 
+builder.Services.AddCors(
+    option => option.AddDefaultPolicy(
+        builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod()
+        )
+    ); ;
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseRouting();
+    app.UseCors();
     app.UseSwagger();
     app.UseSwaggerUI();
     app.UseAuthentication();
-
-
     app.UseAuthorization();
 }
 
-app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors();
 
 app.UseAuthorization();
 

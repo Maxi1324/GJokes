@@ -12,6 +12,7 @@ import { AmbienceComponent } from './ambience/ambience.component';
 import { AboutComponent } from './about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SendcodeComponent } from './sendcode/sendcode.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     RegisterComponent,
     LoginComponent,
     AmbienceComponent,
-    AboutComponent
+    AboutComponent,
+    SendcodeComponent
   ],
   imports: [
     BrowserModule,

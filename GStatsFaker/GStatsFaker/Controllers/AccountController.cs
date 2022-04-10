@@ -2,6 +2,7 @@
 using GStatsFaker.Repository;
 using GStatsFaker.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.PowerShell.Commands;
@@ -12,6 +13,7 @@ namespace GStatsFaker.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors()]
     public class AccountController : ControllerBase
     {
         public IJwtAuthenticationManager AuthenticationManager { get; set; }
@@ -34,6 +36,7 @@ namespace GStatsFaker.Controllers
             return Unauthorized();
         }
 
+        [EnableCors()]
         [AllowAnonymous]
         [HttpPost("CreateAccount")]
         public object Registrieren([FromBody] UserCred userCred)
@@ -46,9 +49,9 @@ namespace GStatsFaker.Controllers
                 case -2:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Email is not valid" });
                 case -3:
-                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password is to short, must be longer than 5 chars" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password is too short, must be longer than 5 chars" });
                 case -5:
-                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist to long, must be shorter than 20" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist too long, must be shorter than 20" });
                 case -4:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 default:

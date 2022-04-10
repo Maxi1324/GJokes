@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2n5cqOMHgi+4nORrEv+qRu/IMrmQ+s4u779uaV/Ku5YF9z/X60iuYmTOgNMTQoPwJeIY7guViyk9Dt4OTermIA==",
+  "dgSpecHash": "xlZ2lacFWGJqGx6lyetpOFXA7rbIIvsLY243jthapJyH7urCopkuK0mbmOKW1KRT4Hkii07kTz0UOHnEwzERAA==",
   "success": true,
   "projectFilePath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.3\\microsoft.aspnetcore.authentication.jwtbearer.6.0.3.nupkg.sha512",
+    "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.cors\\2.2.0\\microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\2.2.0\\microsoft.aspnetcore.cryptography.internal.2.2.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.dataprotection\\2.2.0\\microsoft.aspnetcore.dataprotection.2.2.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.aspnetcore.dataprotection.abstractions\\2.2.0\\microsoft.aspnetcore.dataprotection.abstractions.2.2.0.nupkg.sha512",

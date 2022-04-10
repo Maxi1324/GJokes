@@ -1,3 +1,4 @@
+import { SendcodeComponent } from './sendcode/sendcode.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: 'config', component: AmbienceComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: HomepageComponent },
+  { path: 'SendEmailVer', component: SendcodeComponent },
   { path: 'login', component: HomepageComponent },
 ];
 
