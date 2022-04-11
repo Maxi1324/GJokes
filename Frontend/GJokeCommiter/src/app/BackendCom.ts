@@ -84,8 +84,8 @@ export interface ConRange {
 }
 
 export interface GithubAccountSettings {
-    githubEmail: number,
-    githubUserName: number
+    githubEmail: string,
+    githubUserName: string
 }
 
 export interface RepoName {

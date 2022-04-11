@@ -1,5 +1,6 @@
+import { UserCred } from './../BackendCom';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -22,6 +23,9 @@ export class LoginComponent implements OnInit {
   hidden: string = "hidden";
 
   active:boolean = true;
+
+  @ViewChild('email') Email!: any;;
+  @ViewChild('password') Password1!: any;;
 
   constructor(private fb: FormBuilder, private http: HttpClient, private route:Router) {}
 
@@ -60,8 +64,6 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.active = false;
-    console.log(this.loginForm.value);
-
     let LC:LoginComponent = this;
 
     let Callback = function(res:Response){
@@ -69,6 +71,7 @@ export class LoginComponent implements OnInit {
         case 1:
           LC.ErrorMessage = "";
           LC.hidden = "hidden";
+          sessionStorage.setItem("JWTToken", res.desc);
           LC.route.navigateByUrl('/config');
           break;
         case -1:
@@ -79,6 +82,10 @@ export class LoginComponent implements OnInit {
       LC.active = true;
     }
 
-    SendPost("api/Account/Login",this.loginForm.value,Callback,false)
+    let body = {
+      email : this.Email.nativeElement.value,
+      password : this.Password1.nativeElement.value
+    }
+    SendPost("api/Account/Login",body,Callback,false)
   }
 }

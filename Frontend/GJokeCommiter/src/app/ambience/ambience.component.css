@@ -7,8 +7,8 @@
     @apply border-2;
     @apply border-gray-200;
     @apply mt-4;
-    @apply focus-within:border-pink-400;
-    @apply hover:border-pink-400;
+    @apply focus-within:border-blue-200;
+    @apply hover:border-blue-200;
 }
 
 .settings-title{

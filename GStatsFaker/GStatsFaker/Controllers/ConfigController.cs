@@ -41,12 +41,12 @@ namespace GStatsFaker.Controllers
             switch (R)
             {
                 case (1):
-                    return Ok(new Response(R, "Alles OK"));
+                    return Ok(new Response(R, "All the Changes were successfully saved"));
                 case (-1):
-                    return UnprocessableEntity(new Response() { Code = R, Desc = "MinCon oder MaxCon sind kleiner als 0 oder grpßer als Max Contributions" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Min Jokes or Max Jokes is less than 0 or greater than 50" });
 
                 case (-2):
-                    return UnprocessableEntity(new Response() { Code = R, Desc = "Min Con ist größergleich MaxCon" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Min Jokes is greater than Max Jokes" });
 
                 default:throw new Exception("Internal Server Error");
             }
@@ -75,11 +75,11 @@ namespace GStatsFaker.Controllers
             switch (R)
             {
                 case (1):
-                    return Ok(new Response(R, "Alles OK"));
+                    return Ok(new Response(R, "All the Changes were successfully saved"));
                 case (-1):
-                    return UnprocessableEntity(new Response() { Code = R, Desc = "EmailNotValid" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "The entered Email is not valid" });
                 case -2:
-                    return UnprocessableEntity(new Response() { Code = R, Desc = "No Username was entered" });
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "The entered Username is not valid" });
                 default: throw new Exception("Internal Server Error");
             }
         }

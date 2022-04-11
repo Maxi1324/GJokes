@@ -8,18 +8,18 @@
       </p>
       <div class="grid sm:grid-cols-2 grid-cols-1">
         <div class="mx-2">
-          <label for="github-username">GitHub Username</label
-          ><input id="github-username" name="github-username" type="text" class="input" value="{{ gusername }}" />
+          <label for="github-username">GitHub Username</label><input id="github-username" name="github-username"
+            type="text" #Username class="input" value="{{ gusername }}" />
         </div>
         <div class="mx-2">
-          <label for="">GitHub E-Mail</label
-          ><input id="github-email" name="github-email" type="email" class="input" value="{{ gemail }}" />
+          <label for="">GitHub E-Mail</label>
+          <input #Email1 id="github-email" name="github-email" type="email" class="input" value="{{ gemail }}" />
         </div>
       </div>
-      <button class="button" (click)="save_github_settings($event, gusername, gemail)">Save Changes</button>
+      <button class="button" (click)="SaveUserGithub()" [disabled]="!GSActive"> Save Changes </button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
-        <b class="text-green-500">GitHub is working!</b>
+        <b class="text-{{color1}}-500">{{GSFeedback}}</b>
       </div>
     </div>
     <div class="settings-group xl:w-1/2 w-full mx-2">
@@ -29,17 +29,18 @@
       </p>
       <div class="grid sm:grid-cols-2 grid-cols-1">
         <div class="mx-2">
-          <label for="j-min">Jokes Min</label
-          ><input id="j-min" name="j-min" type="number" class="input" min="0" value="{{ jmin }}" />
+          <label for="j-min">Jokes Min</label>
+          <input #minCon id="j-min" name="j-min" type="number" class="input" min="0" value="{{ jmin }}" />
         </div>
         <div class="mx-2">
-          <label for="j-max">Jokes Max</label><input id="j-max" name="j-max" type="number" class="input" min="0" value="{{ jmax }}"/>
+          <label for="j-max">Jokes Max</label>
+          <input #maxCon id="j-max" name="j-max" type="number" class="input" min="0" value="{{ jmax }}" />
         </div>
       </div>
-      <button class="button" (click)="save_jokes_settings($event, jmin, jmax)">Save Changes</button>
+      <button class="button" (click)="SaveCons()" [disabled]="!ConActive">Save Changes</button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
-        <b class="text-green-500">Setting Saved!</b>
+        <b class="text-{{color2}}-500">{{ConFeedback}}</b>
       </div>
     </div>
     <div class="settings-group xl:w-1/2 w-full mx-2">
@@ -58,8 +59,7 @@
         <p></p>
         <div>
           <label for="">Password</label><input type="text" class="input" />
-          <label for="">Type: "Gitty" to confirm.</label
-          ><input type="text" class="input" />
+          <label for="">Type: "Gitty" to confirm.</label><input type="text" class="input" />
           <button class="button">Delete Account</button>
         </div>
       </div>

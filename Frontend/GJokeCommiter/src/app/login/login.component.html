@@ -9,6 +9,7 @@
       placeholder="max.mustermann@gmail.com"
       class="input"
       formControlName="email"
+      #email
     />
     <div class="invalid-input hidden-strong">
       <span *ngIf="loginForm.controls['email'].hasError('required')">
@@ -26,6 +27,7 @@
       placeholder="******"
       class="input"
       formControlName="password"
+      #password
     />
     <div class="invalid-input hidden-strong">
       <span *ngIf="loginForm.controls['password'].hasError('required')">
