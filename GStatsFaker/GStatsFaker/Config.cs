@@ -12,7 +12,7 @@
 
         public const string Mail = "gjokesapi@gmail.com";
 
-        public const int MaxMailRequests = 10;
+        public const int MaxMailRequests = 15;
 
         public const int MaxCont = 50;
 

@@ -29,11 +29,17 @@ namespace GStatsFaker.Controllers
 
         [AllowAnonymous]
         [HttpPost("Login")]
-        public IActionResult Authenticate([FromBody] UserCred userCred)
+        public object Authenticate([FromBody] UserCred userCred)
         {
             string? token = AuthenticationManager.Authenticate(userCred.Email, userCred.Password);
-            if (token != null) return Ok(token);
-            return Unauthorized();
+            if (token != null)
+            {
+                return Ok(new Response() { Code = 1 ,Desc = token}) ;
+            }
+            else
+            {
+                return Ok(new Response() { Code = -1, Desc = "Password or Email is wrong" });
+            }
         }
 
         [EnableCors()]
@@ -45,7 +51,7 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case -1:
-                    return UnprocessableEntity(new Response() { Code = r, Desc = "Email is already in use" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Email already in use, but not verified" });
                 case -2:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Email is not valid" });
                 case -3:
@@ -54,6 +60,8 @@ namespace GStatsFaker.Controllers
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist too long, must be shorter than 20" });
                 case -4:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
+                case -6:
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Email is already in use" });
                 default:
                     return Ok(new Response() { Code = r, Desc = "Alles ok returned UserID" });
             }
@@ -83,7 +91,9 @@ namespace GStatsFaker.Controllers
             switch (r)
             {
                 case 1:
-                    return Ok(new Response() { Code = r, Desc = "Account has been Activated Repository" });
+#pragma warning disable CS8602 // Dereferenzierung eines möglichen Nullverweises.
+                    return Ok(new Response() { Code = r, Desc = AuthenticationManager.GenToken(AccountRepo.FindUser(UInfo.UserId).Email) });
+#pragma warning restore CS8602 // Dereferenzierung eines möglichen Nullverweises.
                 case -2:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Code invalid" });
                 case -3:

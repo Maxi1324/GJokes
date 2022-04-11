@@ -26,29 +26,34 @@ namespace GStatsFaker.Repository.Implementations
             User u = u1 ?? default!;
             bool PasswordCorrect = SecurePasswordHasher.Verify(password, u.Password);
             if (PasswordCorrect&& GSFContext.Users.Include(u=>u.EmalVerifikations).Any((u=>u.EmalVerifikations.Any(e => e.IsVerifiziert)))) 
-            { 
-                JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
-              
-                byte[] tokenKey = Encoding.ASCII.GetBytes(Config.key);
-                SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[] {
-                        new Claim(ClaimTypes.Email, Email)
-                    }),
-                    Expires = DateTime.UtcNow.AddHours(Config.JWTExpireTime),
-                    SigningCredentials = new SigningCredentials(
-                        new SymmetricSecurityKey(tokenKey),
-                        SecurityAlgorithms.HmacSha256Signature
-                        )
-                };
-                
-                SecurityToken token = Handler.CreateToken(tokenDescriptor);
-                return Handler.WriteToken(token);
+            {
+                return GenToken(Email);
             }
             else
             {
                 return null;
             }
+        }
+
+        public string GenToken(string Email)
+        {
+            JwtSecurityTokenHandler Handler = new JwtSecurityTokenHandler();
+
+            byte[] tokenKey = Encoding.ASCII.GetBytes(Config.key);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[] {
+                        new Claim(ClaimTypes.Email, Email)
+                    }),
+                Expires = DateTime.UtcNow.AddHours(Config.JWTExpireTime),
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(tokenKey),
+                    SecurityAlgorithms.HmacSha256Signature
+                    )
+            };
+
+            SecurityToken token = Handler.CreateToken(tokenDescriptor);
+            return Handler.WriteToken(token);
         }
     }
 }

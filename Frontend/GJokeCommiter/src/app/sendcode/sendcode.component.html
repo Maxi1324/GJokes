@@ -1,23 +1,16 @@
-<div id="register" class="login-form hidden-strong">
-    <h2 class="text-2xl text-blue-400 mx-auto mb-5">Register</h2>
-    <label for="register-email">E-Mail</label>
-    <input type="text" name="register-email" id="register-email" placeholder="max.mustermann@gmail.com" class="input"
-      #email />
-    <label for="register-password">Password</label>
-    <input type="password" name="register-password" id="register-password" placeholder="******" class="input"
-      #password1 />
-    <label for="register-password-confirm">Confirm Password</label>
-    <input type="password" name="register-password-confirm" id="register-password-confirm" placeholder="******"
-      class="input" #password2 />
-    <div class="flex align-center">
-      <input type="checkbox" #check name="register-agreement-confirm" id="register-agreement-confirm" class="my-auto mr-1" />
-      <label for="register-agreement-confirm">I hereby agree to the terms and conditions stated in
-        <a routerLink="/about" class="underline">About Us</a> of GJokes.</label>
-    </div>
-  
-    <p>
-      Already have an account? <a routerLink="/login" class="underline">Login</a>
-    </p>
-  
-  
-  </div>
+<div   id="SendCode" class="login-form ">
+  <h2 class="text-2xl text-blue-400 mx-auto mb-5">Email Verification</h2>
+
+  <p class="text-xl text-black mx-auto mb-2">We've sent you a Verification Token.</p>
+
+  <p class="bg-green-600 rounded-md p-1 w-full mt-2 mb-2 text-center text-white {{hidden2}}">
+   {{Message}}
+  </p>
+
+  <input type="text" id="AuthToken" placeholder="0000000000wow" class="input" #Token />
+
+  <p class="bg-red-600 rounded-md p-1 w-full mt-2 text-center text-white {{hidden}}">
+    {{ErrorMessage}}
+  </p>
+  <button (click)="SendToken()" class="btn-register" [disabled]="!active">Verify Token</button>
+</div>

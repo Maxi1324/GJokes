@@ -1,4 +1,6 @@
-﻿namespace GStatsFaker.Repository.Interfaces
+﻿using GStatsFaker.Model;
+
+namespace GStatsFaker.Repository.Interfaces
 {
     public interface IAccountRepo
     {
@@ -13,6 +15,8 @@
         /// r == -2 Mail is not valid
         /// r == -3 Password kürzer als 5
         /// r == -4 Email || Password ist null
+        /// r == -5 Password is to long > 20
+        /// r == -6 Email already in use
         /// </returns>
         public int CreateAccount(string Email, string Password);
 
@@ -66,5 +70,7 @@
         /// </summary>
         /// <param name="UserID"></param>
         public bool CheckIfUserSD(int UserID);
+
+        public User? FindUser(int UserID, bool Include = false);
     }
 }

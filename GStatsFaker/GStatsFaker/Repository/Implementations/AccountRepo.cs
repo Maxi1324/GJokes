@@ -11,13 +11,15 @@ namespace GStatsFaker.Repository.Implementations
 
         public GSFContext Context { get; set; } 
         public IMailManager MailManager { get; set; }
-        public IContManager ContManager;
+        public IContManager ContManager { get; private set; }
+        public IJwtAuthenticationManager JWM { get; private set; }
 
-        public AccountRepo(GSFContext Context,IMailManager MailManager, IContManager ContManager)
+        public AccountRepo(GSFContext Context,IMailManager MailManager, IContManager ContManager,IJwtAuthenticationManager JWM)
         {
             this.Context = Context; 
             this.MailManager = MailManager;
             this.ContManager = ContManager;
+            this.JWM = JWM;
         }
 
         public int ActivateAccount(int UserID, string code)
@@ -48,6 +50,7 @@ namespace GStatsFaker.Repository.Implementations
 
             IStatsFaker Faker = ContManager.GetStatsFaker(user);
 
+
             Context.SaveChanges();
             return 1;
         }
@@ -55,25 +58,34 @@ namespace GStatsFaker.Repository.Implementations
         public int CreateAccount(string Email, string Password)
         {
             int R = 0;
+            User? user = Context.Users.Include(u => u.EmalVerifikations).FirstOrDefault(u => u.Email == Email);
             if (Email == null || Password == null)
             {
-                R = - 4;
+                R = -4;
             }
             else if (!IsValidEmail(Email))
             {
-                R = - 2;
+                R = -2;
             }
             else if (Password.Length < 5)
             {
-                R = - 3;
+                R = -3;
             }
             else if (Password.Length > 20)
             {
                 R = -5;
             }
-            else if (Context.Users.Any(u => u.Email == Email))
+            else if (user != null)
             {
-                R = - 1;
+                User u = user ?? default!;
+                if (u.EmalVerifikations.Any(e => e.IsVerifiziert))
+                {
+                    R = -6;
+                }
+                else
+                {
+                    R = -1;
+                }
             }
             else
             {
@@ -82,10 +94,10 @@ namespace GStatsFaker.Repository.Implementations
                 Random Rand = new Random();
                 int ID = 0;
                 int MaxTries = 10;
-                for(int i = 0; i < MaxTries; i++)
+                for (int i = 0; i < MaxTries; i++)
                 {
                     ID = Rand.Next();
-                    if(Context.Users.FirstOrDefault(u=> u.Id == ID)== null)
+                    if (Context.Users.FirstOrDefault(u => u.Id == ID) == null)
                     {
                         break;
                     }

@@ -1,8 +1,10 @@
-import { Response, UserCred } from './../BackendCom';
+import { EmailVerDataService } from './../email-ver-data.service';
+import { Response, SendEmailVerification, SendGet, UserCred, UserInfo } from './../BackendCom';
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { SendPost } from '../BackendCom';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +20,9 @@ export class RegisterComponent implements OnInit {
   ErrorMessage: string = "";
   hidden: string = "hidden";
 
+  active:boolean = true;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private router: Router, private EVDS:EmailVerDataService ) { }
 
   ngOnInit(): void {
     //If the user is already logged in, redirect to homepage
@@ -37,30 +40,66 @@ export class RegisterComponent implements OnInit {
     if (this.Password1.nativeElement.value != this.Password2.nativeElement.value) {
       this.ErrorMessage = "Passwords do not match"
       this.hidden = "";
-    } 
-    else if (!this.check.nativeElement.checked){
+    }
+    else if (!this.check.nativeElement.checked) {
       this.ErrorMessage = "You must accept our Terms of Service"
       this.hidden = "";
     }
     else {
+      this.active = false;
       let uc = {
         Email: this.Email.nativeElement.value,
         Password: this.Password1.nativeElement.value
       }
       var Callback = (res: Response) => {
         if (res.code >= 0) {
-          this.hidden = "hidden";
-          sessionStorage.setItem("UserId",res.code.toString());
-          console.log("Successfully registered");
+          this.SendToken(res.code,false);
+        }else if (res.code == -1){
+          this.GetUserIdAndSendToken();
         }
         else {
+          this.active = true;
           this.ErrorMessage = res.desc;
           this.hidden = "";
+          this.router.navigateByUrl('/register');
         }
       }
-
       SendPost("api/Account/CreateAccount", uc, Callback, false);
     }
+  }
+
+  SendToken(UserID:number, wasReSent:boolean= false){
+   const RC :RegisterComponent = this;
+    const Callback = function(r:Response){
+      switch(r.code){ 
+        case 1:
+          RC.EVDS.changeCUserID(UserID)
+          RC.EVDS.changeWasresent(wasReSent);
+          RC.hidden = "hidden";
+          RC.router.navigateByUrl('/VerifyCode');
+          break;
+        case -1:
+          console.error("User not found");
+          break;
+        case -2:
+          RC.ErrorMessage = "Email is blocked, due to too many requests";
+          RC.hidden = "";
+          break;
+      }
+      RC.active = true;
+    }
+    SendEmailVerification(UserID,Callback)
+  }
+
+  GetUserIdAndSendToken(){
+    let RegisterComponent = this;
+    var Callback2 = function(res: Response){
+      RegisterComponent.SendToken(res.code,true);
+    }
+    var Parameter ={
+        Mail: this.Email.nativeElement.value
+    }
+    SendGet("api/Account/GetUserIdFromMail",Callback2,false,Parameter)
   }
 
   /*

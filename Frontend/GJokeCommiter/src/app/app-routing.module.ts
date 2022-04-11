@@ -10,8 +10,9 @@ const routes: Routes = [
   { path: 'config', component: AmbienceComponent },
   { path: 'about', component: AboutComponent },
   { path: 'register', component: HomepageComponent },
-  { path: 'SendEmailVer', component: SendcodeComponent },
+  { path: 'VerifyCode', component: SendcodeComponent },
   { path: 'login', component: HomepageComponent },
+
 ];
 
 @NgModule({

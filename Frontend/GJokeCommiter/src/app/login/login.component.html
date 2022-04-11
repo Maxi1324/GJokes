@@ -1,6 +1,6 @@
 <div id="login" class="login-form hidden-strong">
   <h2 class="text-2xl text-blue-400 mx-auto mb-5">Login</h2>
-  <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <form (ngSubmit)="login()">
     <label for="login-email">E-Mail</label>
     <input
       type="email"
@@ -10,7 +10,7 @@
       class="input"
       formControlName="email"
     />
-    <div class="invalid-input">
+    <div class="invalid-input hidden-strong">
       <span *ngIf="loginForm.controls['email'].hasError('required')">
         E-Mail is required
       </span>
@@ -27,7 +27,7 @@
       class="input"
       formControlName="password"
     />
-    <div class="invalid-input">
+    <div class="invalid-input hidden-strong">
       <span *ngIf="loginForm.controls['password'].hasError('required')">
         Password is required
       </span>
@@ -38,7 +38,10 @@
         Password is too long
       </span>
     </div>
-    <button type="submit" class="btn-login" [disabled]="!loginForm.valid">
+    <p class="bg-red-600 rounded-md p-1 w-full mt-2 text-center text-white {{hidden}}">
+      {{ErrorMessage}}
+    </p>
+    <button (click) = "login()"type="submit" [disabled]="!active" class="btn-login" >
       Login
     </button>
   </form>

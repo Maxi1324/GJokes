@@ -24,7 +24,7 @@ import { SendcodeComponent } from './sendcode/sendcode.component';
     LoginComponent,
     AmbienceComponent,
     AboutComponent,
-    SendcodeComponent
+    SendcodeComponent,
   ],
   imports: [
     BrowserModule,

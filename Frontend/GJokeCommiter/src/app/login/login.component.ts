@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -8,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Response, SendPost } from '../BackendCom';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,13 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private fb: FormBuilder, private http: HttpClient) {}
+
+  ErrorMessage: string = "";
+  hidden: string = "hidden";
+
+  active:boolean = true;
+
+  constructor(private fb: FormBuilder, private http: HttpClient, private route:Router) {}
 
   ngOnInit(): void {
     //If the user is already logged in, redirect to homepage
@@ -51,12 +59,26 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.active = false;
     console.log(this.loginForm.value);
 
-    this.http
-      .post('http://localhost:3000/login', this.loginForm.value)
-      .subscribe((res) => {
-        console.log(res);
-      });
+    let LC:LoginComponent = this;
+
+    let Callback = function(res:Response){
+      switch(res.code){
+        case 1:
+          LC.ErrorMessage = "";
+          LC.hidden = "hidden";
+          LC.route.navigateByUrl('/config');
+          break;
+        case -1:
+          LC.ErrorMessage = res.desc;
+          LC.hidden = "";
+          break;
+      }
+      LC.active = true;
+    }
+
+    SendPost("api/Account/Login",this.loginForm.value,Callback,false)
   }
 }
