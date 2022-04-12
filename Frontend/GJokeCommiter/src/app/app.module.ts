@@ -13,6 +13,7 @@ import { AboutComponent } from './about/about.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SendcodeComponent } from './sendcode/sendcode.component';
+import { AccountDeletedComponent } from './account-deleted/account-deleted.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SendcodeComponent } from './sendcode/sendcode.component';
     AmbienceComponent,
     AboutComponent,
     SendcodeComponent,
+    AccountDeletedComponent,
   ],
   imports: [
     BrowserModule,

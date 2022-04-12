@@ -49,18 +49,30 @@
       <div>
         <h2 class="settings-title-2">Change Password</h2>
         <div>
-          <label for="">Old Password</label><input type="text" class="input" />
+          <label for="">Old Password</label>
+          <input #OldPassword type="text" class="input" />
         </div>
         <div>
-          <label for="">New Password</label><input type="text" class="input" />
+          <label for="">New Password</label>
+          <input #NewPassword type="text" class="input" />
         </div>
-        <button class="button">Change Password</button>
+        <button (click)= "ChangePassword()"  [disabled]="!ChActive" class="button">Change Password</button>
+        <div class="flex">
+          <p class="mr-1">Feedback:</p>
+          <b class="text-{{color3}}-500">{{ChFeedback}}</b>
+        </div>
         <h2 class="settings-title-2">Delete Account</h2>
         <p></p>
         <div>
-          <label for="">Password</label><input type="text" class="input" />
-          <label for="">Type: "Gitty" to confirm.</label><input type="text" class="input" />
-          <button class="button">Delete Account</button>
+          <label for="">Password</label>
+          <input #DelPasswort type="text" class="input" />
+          <label for="">Type: "Gitty" to confirm.</label>
+          <input #DelConfirm type="text" class="input" />
+          <button class="button" (click)="DeleteACcount()" [disabled]="!DelActive">Delete Account</button>
+          <div class="flex">
+            <p class="mr-1">Feedback:</p>
+            <b class="text-red-500">{{DelFeedback}}</b>
+          </div>
         </div>
       </div>
     </div>

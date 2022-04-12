@@ -59,6 +59,9 @@ namespace GStatsFaker.Repository.Implementations
         {
             int R = 0;
             User? user = Context.Users.Include(u => u.EmalVerifikations).FirstOrDefault(u => u.Email == Email);
+
+            int pState = CheckPassword(Password);
+
             if (Email == null || Password == null)
             {
                 R = -4;
@@ -67,13 +70,9 @@ namespace GStatsFaker.Repository.Implementations
             {
                 R = -2;
             }
-            else if (Password.Length < 5)
+            else if(pState != 1)
             {
-                R = -3;
-            }
-            else if (Password.Length > 20)
-            {
-                R = -5;
+                return pState;
             }
             else if (user != null)
             {
@@ -103,7 +102,7 @@ namespace GStatsFaker.Repository.Implementations
                     }
                 }
 
-                User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next() };
+                User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next(), GithubUsername = Email.Split("@")[0],GithubEmail = Email, MaxCon = 5 };
                 Context.Users.Add(u);
                 Context.SaveChanges();
                 R = u.Id;
@@ -111,22 +110,44 @@ namespace GStatsFaker.Repository.Implementations
             return R;
         }
 
-        public int DeleteAccount(int UserID)
+        private int CheckPassword(string Password)
         {
+            if(Password == null)
+            {
+                return -4;
+            }else if(Password.Length < 5)
+            {
+                return -3;
+            }else if (Password.Length > 20)
+            {
+                return -5;
+            }
+            return 1;
+        }
 
+        public int DeleteAccount(int UserID, string Password)
+        {
             User? uN = FindUser(UserID);
             if (uN == null) return -1;
             User u = uN ?? default!;
 
-            Context.EmalVerifikations.RemoveRange(
-                Context.EmalVerifikations.Where(
-                    e => e.UserId == u.Id
-                ).ToList()
-            );
+            bool PasswordCorrect = SecurePasswordHasher.Verify(Password, u.Password);
+            if (PasswordCorrect)
+            {
+                Context.EmalVerifikations.RemoveRange(
+                    Context.EmalVerifikations.Where(
+                        e => e.UserId == u.Id
+                    ).ToList()
+                );
 
-            Context.Users.Remove(u);
-            Context.SaveChanges();
-            return 1;
+                Context.Users.Remove(u);
+                Context.SaveChanges();
+                return 1;
+            }
+            else
+            {
+                return -2;
+            }
         }
 
         public int FindUserId(string Email)
@@ -186,6 +207,23 @@ namespace GStatsFaker.Repository.Implementations
             {
                 return false;
             }
+        }
+
+        public int ChangePassword(User user,string oldPassword, string newPassword)
+        {
+            bool PasswordCorrect = SecurePasswordHasher.Verify(oldPassword, user.Password);
+            if (PasswordCorrect)
+            {
+                int Pstate = CheckPassword(newPassword);
+                if(Pstate != 1)
+                {
+                    return Pstate;
+                }
+                user.Password = SecurePasswordHasher.Hash(newPassword);
+                Context.SaveChanges();
+                return 1;
+            }
+            return -1;
         }
     }
 }

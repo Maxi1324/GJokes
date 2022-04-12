@@ -1,4 +1,5 @@
-import { ConRange } from './../BackendCom';
+import { Router } from '@angular/router';
+import { ConRange, UserCred } from './../BackendCom';
 import { Component, Input, OnInit, NgModule, ViewChild } from '@angular/core';
 import { ConfigInfos, GithubAccountSettings, Response, SendGet, SendPost } from '../BackendCom';
 
@@ -8,8 +9,6 @@ import { ConfigInfos, GithubAccountSettings, Response, SendGet, SendPost } from 
   styleUrls: ['./ambience.component.css']
 })
 export class AmbienceComponent implements OnInit {
-
-  constructor() { }
 
   @Input()
   public jmin: number = 0;
@@ -23,26 +22,33 @@ export class AmbienceComponent implements OnInit {
   @ViewChild('Username') Username!: any;
   @ViewChild('Email1') Email!: any;
 
-  GSFeedback:string = "";
+  GSFeedback:string = " ";
   color1:string = "green";
   GSActive:boolean = true
 
   color2:string = "green";
-  ConFeedback:string = "";
+  ConFeedback:string = " ";
   ConActive:boolean = true
 
+  @ViewChild('DelPasswort') DelPassword!: any;
+  @ViewChild('DelConfirm') DelConfirm!: any;
+  DelFeedback:string = " ";
+  DelActive:boolean = true
 
+  @ViewChild('OldPassword') OldPassword!: any;
+  @ViewChild('NewPassword') NewPassword!: any;
+  ChFeedback:string = " ";
+  ChActive:boolean = true
+  color3:string = "green";
+
+  constructor(private route: Router) { }
 
   public save_github_settings( event: Event, gusername: string, gemail: string): void {
     console.log("Saving github settings");
-    console.log(gusername);
-    console.log(gemail);
   }
 
   public save_jokes_settings( event: Event, jmin: number, jmax: number): void {
     console.log("Saving jokes settings");
-    console.log(jmin);
-    console.log(jmax);
   }
   
   ngOnInit(): void {
@@ -52,7 +58,6 @@ export class AmbienceComponent implements OnInit {
   FetchData():void{
     let AC:AmbienceComponent = this;
     const Callback=function(CI:ConfigInfos){
-      console.log(CI);
       AC.jmax = CI.maxCon;
       AC.jmin = CI.minCon;
       AC.gemail = CI.githubEmail;
@@ -86,6 +91,7 @@ export class AmbienceComponent implements OnInit {
 
 
   SaveCons():void{
+    console.log(this.color2);
     this.ConFeedback = "";
     this.ConActive = false;
     let body:ConRange = {
@@ -106,5 +112,60 @@ export class AmbienceComponent implements OnInit {
       AC.ConActive = true;
     }
     SendPost("api/Config/SetConRange",body,Callback,true)
+  }
+
+  DeleteACcount():void{
+    let AC:AmbienceComponent = this;
+    AC.DelActive = false;
+
+    this.DelFeedback = "";
+
+    let con:string = this.DelConfirm.nativeElement.value;
+    if(con != "Gitty"){
+      this.DelFeedback = "Pleace type Gitty in the confirmation field";
+      AC.DelActive = true;
+      return;
+    }
+
+    let body:any={
+      password:this.DelPassword.nativeElement.value,
+    }
+
+    const Callback = function(res:Response){
+      if(res.code == 1){
+        AC.DelFeedback = res.desc
+        AC.DelActive = true;
+        AC.route.navigateByUrl('/DeletedAccount');
+      }
+      else{
+        AC.DelFeedback = res.desc
+        AC.DelActive = true;
+      }
+    }
+    SendPost("api/Account/DeleteAccount",body,Callback,true);
+  }
+
+  ChangePassword():void{
+    this.ChActive = false;
+
+    let body:any={
+      OldPassword:this.OldPassword.nativeElement.value,
+      NewPassword:this.NewPassword.nativeElement.value
+    }
+    let AC:AmbienceComponent = this
+    const Callback = function(res:Response){
+      if(res.code == 1){
+        AC.ChFeedback = res.desc
+        AC.color3 = "green"
+        AC.OldPassword.nativeElement.value = "";
+        AC.NewPassword.nativeElement.value = "";
+      }
+      else{
+        AC.ChFeedback = res.desc
+        AC.color3= "red";
+      }
+      AC.ChActive = true;
+    }
+    SendPost("api/Account/ChangePassword",body,Callback,true);
   }
 }

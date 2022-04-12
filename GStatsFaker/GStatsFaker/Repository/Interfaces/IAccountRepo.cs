@@ -53,7 +53,7 @@ namespace GStatsFaker.Repository.Interfaces
         /// r == 1 hat funktioniert
         /// r == -1 Nutzer exestiert nicht
         /// </returns>
-        public int DeleteAccount(int UserID);
+        public int DeleteAccount(int UserID, string Password);
 
         /// <summary>
         /// Retunrs the ID of user
@@ -72,5 +72,20 @@ namespace GStatsFaker.Repository.Interfaces
         public bool CheckIfUserSD(int UserID);
 
         public User? FindUser(int UserID, bool Include = false);
+
+        /// <summary>
+        /// Ändert das Passwort lol
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="oldPassword"></param>
+        /// <param name="newPassword"></param>
+        /// <returns>
+        /// R== 1 Alles ok
+        /// R == -1 Passwort ist falsch
+        /// R == -4 Passwort ist null
+        /// R == -3 Passwort ist < 5
+        /// R == -5 Passwort ist > 20
+        /// </returns>
+        public int ChangePassword(User user, string oldPassword, string newPassword);
     }
 }

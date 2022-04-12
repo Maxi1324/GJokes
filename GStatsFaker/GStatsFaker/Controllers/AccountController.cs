@@ -60,9 +60,9 @@ namespace GStatsFaker.Controllers
                 case -2:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Email is not valid" });
                 case -3:
-                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password is too short, must be longer than 5 chars" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password is too short, must be longer than 4 chars" });
                 case -5:
-                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist too long, must be shorter than 20" });
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "Password ist too long, must be shorter than 21" });
                 case -4:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 case -6:
@@ -125,16 +125,39 @@ namespace GStatsFaker.Controllers
         }
 
         [HttpPost("DeleteAccount")]
-        public object DeleteUser()
+        public object DeleteUser(UserCred UC)
         {
-            int R = AccountRepo.DeleteAccount(Config.FindUser(User).Id);
+            int R = AccountRepo.DeleteAccount(Config.FindUser(User).Id, UC.Password);
             switch (R)
             {
                 case 1:
                     return Ok(new Response() { Code = R, Desc = "Account has been Deleted" });
                 case -1:
                     return UnprocessableEntity(new Response() { Code = R, Desc = "Nutzer exestiert nicht, was sehr komisch ist!" });
+                case -2:
+                    return UnprocessableEntity(new Response() { Code = R, Desc = "Password is wrong" });
                 default: throw new Exception("Internal Server Error");
+            }
+        }
+
+        [HttpPost("ChangePassword")]
+        public object ChangePassword(ChangePassword CP)
+        {
+            int R = AccountRepo.ChangePassword(Config.FindUser(User),CP.OldPassword,CP.NewPassword);
+            switch (R)
+            {
+                case 1:
+                    return new Response() { Code = R, Desc = "Password successfully changed" };
+                case -1:
+                    return new Response() { Code = R, Desc = "The old password is not correct" };
+                case -4:
+                    return new Response() { Code = R, Desc = "The old password is null" };
+                case -3:
+                    return new Response() { Code = R, Desc = "The new password is too short, must be longer than 4" };
+                case -5:
+                    return new Response() { Code = R, Desc = "The new password is too long, must be shorter than 21" };
+                default:
+                    throw new Exception("internal Server error");
             }
         }
 

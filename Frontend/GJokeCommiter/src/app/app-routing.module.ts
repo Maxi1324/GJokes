@@ -1,3 +1,4 @@
+import { AccountDeletedComponent } from './account-deleted/account-deleted.component';
 import { SendcodeComponent } from './sendcode/sendcode.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -12,7 +13,7 @@ const routes: Routes = [
   { path: 'register', component: HomepageComponent },
   { path: 'VerifyCode', component: SendcodeComponent },
   { path: 'login', component: HomepageComponent },
-
+  { path: 'DeletedAccount', component: AccountDeletedComponent }
 ];
 
 @NgModule({
