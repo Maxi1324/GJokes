@@ -32,13 +32,18 @@ namespace GStatsFaker.Controllers
         public object Authenticate([FromBody] UserCred userCred)
         {
             string? token = AuthenticationManager.Authenticate(userCred.Email, userCred.Password);
+            if (token == "lol")
+            {
+                return UnprocessableEntity(new Response() { Code = -2, Desc = "Your Account has't been Email verified" });
+            }
+            else
             if (token != null)
             {
-                return Ok(new Response() { Code = 1 ,Desc = token}) ;
+                return Ok(new Response() { Code = 1, Desc = token });
             }
             else
             {
-                return Ok(new Response() { Code = -1, Desc = "Password or Email is wrong" });
+                return UnprocessableEntity(new Response() { Code = -1, Desc = "Password or Email is wrong" });
             }
         }
 

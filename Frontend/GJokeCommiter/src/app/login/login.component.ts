@@ -1,4 +1,5 @@
-import { UserCred } from './../BackendCom';
+import { EmailVerDataService } from './../email-ver-data.service';
+import { SendEmailVerification, SendGet, UserCred } from './../BackendCom';
 import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
@@ -22,20 +23,20 @@ export class LoginComponent implements OnInit {
   ErrorMessage: string = "";
   hidden: string = "hidden";
 
-  active:boolean = true;
+  active: boolean = true;
 
   @ViewChild('email') Email!: any;;
   @ViewChild('password') Password1!: any;;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private route:Router) {}
+  constructor(private fb: FormBuilder, private http: HttpClient, private route: Router, private EVDS: EmailVerDataService) { }
 
   ngOnInit(): void {
     //If the user is already logged in, redirect to homepage
-    if(localStorage.getItem('GJokes-Mail') != null){
+    if (localStorage.getItem('GJokes-Mail') != null) {
       window.location.href = '/';
     }
     //Make Login Visible
-    if (window.location.pathname == '/login'){
+    if (window.location.pathname == '/login') {
       document.getElementById("login")?.classList.remove("hidden-strong");
       document.getElementById("cover")?.classList.remove("hidden-strong");
     }
@@ -64,10 +65,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.active = false;
-    let LC:LoginComponent = this;
+    let LC: LoginComponent = this;
 
-    let Callback = function(res:Response){
-      switch(res.code){
+    let Callback = function (res: Response) {
+      switch (res.code) {
         case 1:
           LC.ErrorMessage = "";
           LC.hidden = "hidden";
@@ -78,14 +79,53 @@ export class LoginComponent implements OnInit {
           LC.ErrorMessage = res.desc;
           LC.hidden = "";
           break;
+        case -2:
+          LC.GetUserIdAndSendToken();
+          break;
       }
       LC.active = true;
     }
 
     let body = {
-      email : this.Email.nativeElement.value,
-      password : this.Password1.nativeElement.value
+      email: this.Email.nativeElement.value,
+      password: this.Password1.nativeElement.value
     }
-    SendPost("api/Account/Login",body,Callback,false)
+    SendPost("api/Account/Login", body, Callback, false)
+  }
+
+
+  SendToken(UserID: number, wasReSent: boolean = false) {
+    const RC: LoginComponent = this;
+    const Callback = function (r: Response) {
+      switch (r.code) {
+        case 1:
+          RC.EVDS.changeCUserID(UserID)
+          RC.EVDS.changeWasresent(wasReSent);
+          RC.hidden = "hidden";
+          RC.route.navigateByUrl('/VerifyCode');
+          break;
+        case -1:
+          console.error("User not found");
+          break;
+        case -2:
+          RC.ErrorMessage = "Email is blocked, due to too many requests";
+          RC.hidden = "";
+          break;
+      }
+      RC.active = true;
+    }
+    SendEmailVerification(UserID, Callback)
+  }
+
+  GetUserIdAndSendToken() {
+    let RegisterComponent = this;
+    this.active = false;
+    var Callback2 = function (res: Response) {
+      RegisterComponent.SendToken(res.code, true);
+    }
+    var Parameter = {
+      Mail: this.Email.nativeElement.value
+    }
+    SendGet("api/Account/GetUserIdFromMail", Callback2, false, Parameter)
   }
 }
