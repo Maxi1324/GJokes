@@ -174,5 +174,10 @@ namespace GStatsFaker.Repository
                 return null;
             }
         }
+
+        public void GenContText(string text)
+        {
+
+        }
     }
 }

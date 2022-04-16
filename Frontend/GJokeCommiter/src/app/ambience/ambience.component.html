@@ -16,7 +16,20 @@
           <input #Email1 id="github-email" name="github-email" type="email" class="input" value="{{ gemail }}" />
         </div>
       </div>
-      <button class="button" (click)="SaveUserGithub()" [disabled]="!GSActive"> Save Changes </button>
+
+      <div class="mx-2">
+        <label for="">Github Repository name</label>
+        <input #RepoName id="github-email btn-register" class="input"
+          />
+      </div>
+
+      <button class="button  btn-register" (click)="SaveGithubSettings()" [disabled]="!GSActive"> Save Changes </button>
+
+      <button
+        class="button  btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700  "
+        (click)="SendInvite()" [disabled]="!GSActive"> Send Github invite
+      </button>
+
       <div class="flex">
         <p class="mr-1">Feedback:</p>
         <b class="text-{{color1}}-500">{{GSFeedback}}</b>
@@ -37,7 +50,7 @@
           <input #maxCon id="j-max" name="j-max" type="number" class="input" min="0" value="{{ jmax }}" />
         </div>
       </div>
-      <button class="button" (click)="SaveCons()" [disabled]="!ConActive">Save Changes</button>
+      <button class="button  btn-register" (click)="SaveCons()" [disabled]="!ConActive">Save Changes</button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
         <b class="text-{{color2}}-500">{{ConFeedback}}</b>
@@ -56,7 +69,7 @@
           <label for="">New Password</label>
           <input #NewPassword type="text" class="input" />
         </div>
-        <button (click)= "ChangePassword()"  [disabled]="!ChActive" class="button">Change Password</button>
+        <button (click)="ChangePassword()" [disabled]="!ChActive" class="button  btn-register">Change Password</button>
         <div class="flex">
           <p class="mr-1">Feedback:</p>
           <b class="text-{{color3}}-500">{{ChFeedback}}</b>
@@ -68,7 +81,7 @@
           <input #DelPasswort type="text" class="input" />
           <label for="">Type: "Gitty" to confirm.</label>
           <input #DelConfirm type="text" class="input" />
-          <button class="button" (click)="DeleteACcount()" [disabled]="!DelActive">Delete Account</button>
+          <button class="button btn-register" (click)="DeleteACcount()" [disabled]="!DelActive">Delete Account</button>
           <div class="flex">
             <p class="mr-1">Feedback:</p>
             <b class="text-red-500">{{DelFeedback}}</b>

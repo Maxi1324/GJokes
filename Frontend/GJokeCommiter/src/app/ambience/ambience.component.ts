@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { ConRange, UserCred } from './../BackendCom';
+import { ConRange, UserCred, RepoName } from './../BackendCom';
 import { Component, Input, OnInit, NgModule, ViewChild } from '@angular/core';
 import { ConfigInfos, GithubAccountSettings, Response, SendGet, SendPost } from '../BackendCom';
 
@@ -18,9 +18,10 @@ export class AmbienceComponent implements OnInit {
 
   @ViewChild('minCon') minCon!: any;
   @ViewChild('maxCon') maxCon!: any;
-
+  
   @ViewChild('Username') Username!: any;
   @ViewChild('Email1') Email!: any;
+  @ViewChild('RepoName') RepoName!: any;
 
   GSFeedback:string = " ";
   color1:string = "green";
@@ -41,6 +42,8 @@ export class AmbienceComponent implements OnInit {
   ChActive:boolean = true
   color3:string = "green";
 
+  CI = {};
+
   constructor(private route: Router) { }
 
   public save_github_settings( event: Event, gusername: string, gemail: string): void {
@@ -58,15 +61,17 @@ export class AmbienceComponent implements OnInit {
   FetchData():void{
     let AC:AmbienceComponent = this;
     const Callback=function(CI:ConfigInfos){
+      AC.CI = CI
       AC.jmax = CI.maxCon;
       AC.jmin = CI.minCon;
       AC.gemail = CI.githubEmail;
       AC.gusername = CI.githubUsername;
+      AC.RepoName.nativeElement.value = CI.repoName;
     }
     SendGet("api/Config/GetUserInfo",Callback,true,{});
   }
 
-  SaveUserGithub():void{
+  SaveUserGithub(func:any):void{
     this.GSFeedback = "";
     this.GSActive = false;
     let body:GithubAccountSettings = {
@@ -76,15 +81,14 @@ export class AmbienceComponent implements OnInit {
 
     let AC:AmbienceComponent = this;
     const Callback = function(res:Response){
-      AC.FetchData();
-      AC.GSFeedback = res.desc
       if(res.code== 1){
         AC.color1="green"
       }
       else{
         AC.color1 = "red"
+        AC.GSFeedback = res.desc
       }
-      AC.GSActive = true;
+      func();
     }
     SendPost("api/Config/SetGithubAccountSettings",body,Callback,true)
   }
@@ -112,6 +116,33 @@ export class AmbienceComponent implements OnInit {
       AC.ConActive = true;
     }
     SendPost("api/Config/SetConRange",body,Callback,true)
+  }
+
+  SaveRepoName():void{
+    let AC:AmbienceComponent = this;
+    AC.GSFeedback = "";
+    AC.GSActive = false;
+    let body:any={
+      name:this.RepoName.nativeElement.value
+    }
+
+    const Callback = function(res:Response){
+      AC.GSFeedback = res.desc
+      if(res.code== 1){
+        AC.color1="green"
+      }
+      else{
+        AC.color1 = "red"
+      }
+      AC.GSActive = true;
+    }
+    SendPost("api/Config/SetRepoName",body,Callback,true)
+  }
+
+  SaveGithubSettings():void{
+    let AC:AmbienceComponent = this;
+    this.SaveUserGithub(()=>{
+    AC.SaveRepoName();});
   }
 
   DeleteACcount():void{
@@ -167,5 +198,24 @@ export class AmbienceComponent implements OnInit {
       AC.ChActive = true;
     }
     SendPost("api/Account/ChangePassword",body,Callback,true);
+  }
+
+  SendInvite():void{
+    let AC:AmbienceComponent = this;
+
+    AC.ChFeedback = "";
+    this.GSActive = false;
+    const Callback = function(res:Response){
+      console.log(res);
+      if(res.code == 1){
+        AC.color1 = "green"
+      }
+      else{
+        AC.color1 = "red"
+      }
+      AC.GSFeedback = res.desc
+      AC.GSActive = true
+    }
+    SendPost("api/Config/SendInvite",{},Callback,true)
   }
 }

@@ -91,13 +91,13 @@ namespace GStatsFaker.Controllers
             switch (R)
             {
                 case (1):
-                    return new Response(R, "AllesOK");
+                    return new Response(R, "The Invite was successfully sent");
 
                 case (-1):
                     return new Response(R, "Github Email must be set");
 
                 case (-2):
-                    return new Response(R, "Github Username must is not set");
+                    return new Response(R, "Github Username is not set");
                 case -3:
                     return new Response(R, "User already in Repo");
                 default: throw new Exception("Internal Server Error");
