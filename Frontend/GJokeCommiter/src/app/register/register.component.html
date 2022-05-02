@@ -17,7 +17,7 @@
   <p class="bg-red-600 rounded-md p-1 w-full mt-2 text-center text-white {{hidden}}">
     {{ErrorMessage}}
   </p>
-  <button (click)="Register()" class="btn-register disabled" [disabled]="!false">Register</button>
+  <button (click)="Register()" class="btn-register disabled" [disabled]="!active">Register</button>
   <p>
     Already have an account? <a routerLink="/login" class="underline">Login</a>
   </p>
