@@ -1,5 +1,6 @@
 ﻿using GStatsFaker.DBContexts;
 using GStatsFaker.Model;
+using GStatsFaker.Repository.Implementations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,14 @@ namespace GStatsFaker.Controllers
         } 
 
         [EnableCors()]
-        [HttpPost("BloackPerson")]
+        [HttpPost("BlockPerson")]
         public object BlockPerson(UserInfo UI)
         {
             User? u = Context.Users.SingleOrDefault((u)=> u.Id == UI.UserId);
             if(u != null)
             {
-
             }
-            return null;
+            return  -1;
         }
     }
 }

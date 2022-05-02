@@ -127,27 +127,31 @@ namespace GStatsFaker.Repository.Implementations
 
         public int DeleteAccount(int UserID, string Password)
         {
-            User? uN = FindUser(UserID);
-            if (uN == null) return -1;
-            User u = uN ?? default!;
-
             bool PasswordCorrect = SecurePasswordHasher.Verify(Password, u.Password);
             if (PasswordCorrect)
             {
-                Context.EmalVerifikations.RemoveRange(
-                    Context.EmalVerifikations.Where(
-                        e => e.UserId == u.Id
-                    ).ToList()
-                );
-
-                Context.Users.Remove(u);
-                Context.SaveChanges();
-                return 1;
+                return DeleteAcccountBase(UserID);
             }
             else
             {
                 return -2;
             }
+        }
+
+        public int DeleteAcccountBase(int UserID)
+        {
+            User? uN = FindUser(UserID);
+            if (uN == null) return -1;
+            User u = uN ?? default!;
+            Context.EmalVerifikations.RemoveRange(
+                   Context.EmalVerifikations.Where(
+                       e => e.UserId == u.Id
+                   ).ToList()
+               );
+
+            Context.Users.Remove(u);
+            Context.SaveChanges();
+            return 1;
         }
 
         public int FindUserId(string Email)

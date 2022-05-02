@@ -7,6 +7,7 @@ namespace GStatsFaker.DBContexts
     {
         public DbSet<User> Users => Set<User>();
         public DbSet<EmalVerifikation> EmalVerifikations => Set<EmalVerifikation>();
+        public DbSet<Blocked> BlockList => Set<Blocked>();
         public GSFContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
