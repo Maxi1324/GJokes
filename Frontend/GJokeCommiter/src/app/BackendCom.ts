@@ -22,7 +22,7 @@ export function SendPost(Route: string, body1: any, Callback: any, Authenticate:
         .catch(error => console.log('error', error));
 }
 
-export function SendGet(Route: string, Callback: any, Authenticate: boolean = true, Parameter: any = {}) {
+export function SendGet(Route: string, Callback: any, Authenticate: boolean = true, Parameter: any = {}, ErrorCallback: any = null) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -52,7 +52,7 @@ export function SendGet(Route: string, Callback: any, Authenticate: boolean = tr
     fetch(sessionStorage.getItem("BackendRoute") + Route+str, requestOptions)
         .then(response => response.json())
         .then(Callback)
-        .catch(error => console.log('error', error));
+        .catch(ErrorCallback ?? (error => console.log(error)));
 }
 
 export function SendEmailVerification(UserId: number, Callback: any) {

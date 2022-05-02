@@ -63,11 +63,11 @@
         <h2 class="settings-title-2">Change Password</h2>
         <div>
           <label for="">Old Password</label>
-          <input #OldPassword type="text" class="input" />
+          <input #OldPassword type="password" class="input" />
         </div>
         <div>
           <label for="">New Password</label>
-          <input #NewPassword type="text" class="input" />
+          <input #NewPassword type="password" class="input" />
         </div>
         <button (click)="ChangePassword()" [disabled]="!ChActive" class="button  btn-register">Change Password</button>
         <div class="flex">
@@ -78,7 +78,7 @@
         <p></p>
         <div>
           <label for="">Password</label>
-          <input #DelPasswort type="text" class="input" />
+          <input #DelPasswort type="password" class="input" />
           <label for="">Type: "Gitty" to confirm.</label>
           <input #DelConfirm type="text" class="input" />
           <button class="button btn-register" (click)="DeleteACcount()" [disabled]="!DelActive">Delete Account</button>

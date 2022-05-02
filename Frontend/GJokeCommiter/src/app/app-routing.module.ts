@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './homepage/homepage.component';
 import { AmbienceComponent } from './ambience/ambience.component';
 import { AboutComponent } from './about/about.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'register', component: HomepageComponent },
   { path: 'VerifyCode', component: SendcodeComponent },
   { path: 'login', component: HomepageComponent },
-  { path: 'DeletedAccount', component: AccountDeletedComponent }
+  { path: 'DeletedAccount', component: AccountDeletedComponent },
+  { path: 'admin', component: AdminComponent }
 ];
 
 @NgModule({

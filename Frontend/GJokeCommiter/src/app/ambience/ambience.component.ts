@@ -68,7 +68,14 @@ export class AmbienceComponent implements OnInit {
       AC.gusername = CI.githubUsername;
       AC.RepoName.nativeElement.value = CI.repoName;
     }
-    SendGet("api/Config/GetUserInfo",Callback,true,{});
+    const ErrorCallback = function(Reps:any){
+      //Check if status code is 401
+      //If so, redirect to login
+      if(Reps.status == 401){
+        AC.route.navigateByUrl("/login")
+      }
+    }
+    SendGet("api/Config/GetUserInfo",Callback,true,{}, ErrorCallback);
   }
 
   SaveUserGithub(func:any):void{
@@ -153,7 +160,7 @@ export class AmbienceComponent implements OnInit {
 
     let con:string = this.DelConfirm.nativeElement.value;
     if(con != "Gitty"){
-      this.DelFeedback = "Pleace type Gitty in the confirmation field";
+      this.DelFeedback = "Please type Gitty in the confirmation field";
       AC.DelActive = true;
       return;
     }

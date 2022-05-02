@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SendcodeComponent } from './sendcode/sendcode.component';
 import { AccountDeletedComponent } from './account-deleted/account-deleted.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AccountDeletedComponent } from './account-deleted/account-deleted.compo
     AboutComponent,
     SendcodeComponent,
     AccountDeletedComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,
