@@ -52,7 +52,7 @@ export function SendGet(Route: string, Callback: any, Authenticate: boolean = tr
     fetch(sessionStorage.getItem("BackendRoute") + Route+str, requestOptions)
         .then(response => response.json())
         .then(Callback)
-        .catch(ErrorCallback ?? (error => console.log(error)));
+        .catch(ErrorCallback);
 }
 
 export function SendEmailVerification(UserId: number, Callback: any) {

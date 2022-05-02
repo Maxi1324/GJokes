@@ -68,12 +68,8 @@ export class AmbienceComponent implements OnInit {
       AC.gusername = CI.githubUsername;
       AC.RepoName.nativeElement.value = CI.repoName;
     }
-    const ErrorCallback = function(Reps:any){
-      //Check if status code is 401
-      //If so, redirect to login
-      if(Reps.status == 401){
-        AC.route.navigateByUrl("/login")
-      }
+    const ErrorCallback = function(err:any){
+      AC.route.navigateByUrl("/")
     }
     SendGet("api/Config/GetUserInfo",Callback,true,{}, ErrorCallback);
   }
