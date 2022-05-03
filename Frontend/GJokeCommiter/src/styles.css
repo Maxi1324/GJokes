@@ -18,7 +18,7 @@ body {
   @apply items-center;
   @apply justify-center;
 }
-.login-form {
+.login-form, .register-form {
   @apply z-50;
   @apply fixed;
   @apply mx-auto;
@@ -97,4 +97,11 @@ body {
   @apply border-red-500;
   @apply text-red-500;
   @apply text-sm;
+}
+
+.form-group {
+  @apply flex;
+  @apply flex-col;
+  @apply items-start;
+  @apply justify-start;
 }
