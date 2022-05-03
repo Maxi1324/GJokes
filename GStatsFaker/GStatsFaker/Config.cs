@@ -19,5 +19,9 @@
         public const string GToken = "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";
 
         public const string GAccountName = "Dingsi1";
+
+        public const string AdminPassword = "Maxistcool";
+
+        public const int PageSize = 30;
     }
 }

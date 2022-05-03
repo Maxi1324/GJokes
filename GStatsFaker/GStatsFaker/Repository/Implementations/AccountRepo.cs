@@ -85,6 +85,9 @@ namespace GStatsFaker.Repository.Implementations
                 {
                     R = -1;
                 }
+            } else if (Context.BlockList.Any((b)=>b.Email == Email)) 
+            {
+                R = -7;
             }
             else
             {
@@ -130,24 +133,31 @@ namespace GStatsFaker.Repository.Implementations
             User? uN = FindUser(UserID);
             if (uN == null) return -1;
             User u = uN ?? default!;
-
             bool PasswordCorrect = SecurePasswordHasher.Verify(Password, u.Password);
             if (PasswordCorrect)
             {
-                Context.EmalVerifikations.RemoveRange(
-                    Context.EmalVerifikations.Where(
-                        e => e.UserId == u.Id
-                    ).ToList()
-                );
-
-                Context.Users.Remove(u);
-                Context.SaveChanges();
-                return 1;
+                return DeleteAcccountBase(UserID);
             }
             else
             {
                 return -2;
             }
+        }
+
+        public int DeleteAcccountBase(int UserID)
+        {
+            User? uN = FindUser(UserID);
+            if (uN == null) return -1;
+            User u = uN ?? default!;
+            Context.EmalVerifikations.RemoveRange(
+                   Context.EmalVerifikations.Where(
+                       e => e.UserId == u.Id
+                   ).ToList()
+               );
+
+            Context.Users.Remove(u);
+            Context.SaveChanges();
+            return 1;
         }
 
         public int FindUserId(string Email)

@@ -87,5 +87,7 @@ namespace GStatsFaker.Repository.Interfaces
         /// R == -5 Passwort ist > 20
         /// </returns>
         public int ChangePassword(User user, string oldPassword, string newPassword);
+
+        public int DeleteAcccountBase(int UserID);
     }
 }

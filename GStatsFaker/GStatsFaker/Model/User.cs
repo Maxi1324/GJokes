@@ -8,7 +8,6 @@ namespace GStatsFaker.Model
         public string Password { get; set; } = string.Empty;
 
 
-
         private int _MinCon;
 
         public int MinCon
