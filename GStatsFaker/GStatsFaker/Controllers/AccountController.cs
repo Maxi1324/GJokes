@@ -36,6 +36,10 @@ namespace GStatsFaker.Controllers
             {
                 return UnprocessableEntity(new Response() { Code = -2, Desc = "Your Account has't been Email verified" });
             }
+            if(token == "blocked")
+            {
+                return UnprocessableEntity(new Response() { Code = -3, Desc = "Your Account has been blocked by an Admin" });
+            }
             else
             if (token != null)
             {
@@ -67,6 +71,8 @@ namespace GStatsFaker.Controllers
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Body is wrong, Email or Password is null" });
                 case -6:
                     return UnprocessableEntity(new Response() { Code = r, Desc = "Email is already in use" });
+                case -7:
+                    return UnprocessableEntity(new Response() { Code = r, Desc = "This Email has been blocked by an Admin" });
                 default:
                     return Ok(new Response() { Code = r, Desc = "Alles ok returned UserID" });
             }

@@ -25,10 +25,16 @@ namespace GStatsFaker.Repository.Implementations
             if (u1 == null) return null;
             User u = u1 ?? default!;
             bool PasswordCorrect = SecurePasswordHasher.Verify(password, u.Password);
+
+            bool Blocked = GSFContext.BlockList.Any((b) => b.Email == u.Email);
             if (GSFContext.Users.Include(u => u.EmalVerifikations).Any((u => u.Email == Email&&u.EmalVerifikations.Any(e => e.IsVerifiziert))))
             {
                 if (PasswordCorrect)
                 {
+                    if (Blocked)
+                    {
+                        return "blocked";
+                    }
                     return GenToken(Email);
                 }
             }
