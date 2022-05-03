@@ -59,7 +59,6 @@ namespace GStatsFaker.Repository
         public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true)
         {
             string s = "cd " + HomePath;
-            PS.Commands.Clear();
             for (int i = 0; i < n; i++)
             {
                 int r = new Random().Next(2000000);
@@ -72,8 +71,8 @@ namespace GStatsFaker.Repository
             if (directPush)
             {
                 PS.AddScript($"{s};git push https://{Token}@github.com/{Username}/{RepoName}.git");
+                PS.Invoke();
             }
-            PS.Invoke();
         }
 
         public int Invite(string UUserName)
@@ -130,9 +129,11 @@ namespace GStatsFaker.Repository
             for (int i = 0; i < LetztenTage; i++)
             {
                 DateTimeOffset yesterday = today.AddDays(-1);
-                if (CountActivity(FCC, yesterday) == 0)
+                if (CountActivity(FCC, yesterday) < 15)
                 {
-                    AddActivity(new Random().Next(10) + 3, $" --date '{yesterday}'", false);
+                    float rand = new Random().Next(30)+35;
+                    int count = (int)Math.Pow(3,rand*0.1);
+                    AddActivity(count, $" --date '{yesterday}'", false);
                 }
                 if (i % 30 == 0)
                 {
@@ -177,7 +178,14 @@ namespace GStatsFaker.Repository
 
         public void GenContText(string text)
         {
+            var myBitmap = new System.Drawing.Bitmap(@"input.png");
 
+            for (int x = 0; x < myBitmap.Width; x++)
+                for (int y = 0; y < myBitmap.Height; y++)
+                {
+                   // Color pixelColor = myBitmap.GetPixel(x, y);
+                    // things we do with pixelColor
+                }
         }
     }
 }
