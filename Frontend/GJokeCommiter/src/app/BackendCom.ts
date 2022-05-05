@@ -150,3 +150,8 @@ export interface GetAdminUserInfos{
     F:Filter,
     password:string
 }
+
+export interface BlockUser{
+    password:string,
+    userId:number
+}

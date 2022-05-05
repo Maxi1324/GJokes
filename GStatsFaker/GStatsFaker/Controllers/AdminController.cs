@@ -24,8 +24,9 @@ namespace GStatsFaker.Controllers
         public AdminController(IAdminRepo AC)
         {
             AR = AC;
-        } 
+        }
 
+        [AllowAnonymous]
         [HttpPost("BlockPerson")]
         public object BlockPerson(BlockUser UI)
         {
@@ -45,7 +46,7 @@ namespace GStatsFaker.Controllers
             }
         }
 
-
+        [AllowAnonymous]
         [HttpPost("UnblockPerson")]
         public object UnblockPerson(BlockUser UI)
         {
