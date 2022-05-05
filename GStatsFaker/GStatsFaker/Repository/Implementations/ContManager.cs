@@ -46,10 +46,10 @@ namespace GStatsFaker.Repository.Implementations
                 Random random = new Random();
                 GSFContext Context = scope.ServiceProvider.GetService<GSFContext>() ?? default!;
                 if (Context == null) throw new Exception("Funktioniert nicht");
-                    Context.Users.AsEnumerable().ToList().ForEach(u =>
+                    Context.Users.Include(u=>u.ConSettings).AsEnumerable().ToList().ForEach(u =>
                     {
                         IStatsFaker Faker = GetStatsFaker(u);
-                        int Conts = random.Next(u.MaxCon - u.MinCon) + u.MinCon;
+                        int Conts = random.Next(u.ConSettings.MaxCon - u.ConSettings.MinCon) + u.ConSettings.MinCon;
                         Faker.AddActivity(Conts);
                     });
             }
@@ -65,10 +65,10 @@ namespace GStatsFaker.Repository.Implementations
             }
             else
             {
-                Faker = new StatsFaker(u.RepoName);
+                Faker = new StatsFaker(u.ConSettings.RepoName);
                 Fakers.Add(u.Id, Faker);
             }
-            Faker.SetUpCredentials(u.GithubEmail, u.GithubUsername);
+            Faker.SetUpCredentials(u.ConSettings.GithubEmail, u.ConSettings.GithubUsername);
             return Faker;
         }
     }

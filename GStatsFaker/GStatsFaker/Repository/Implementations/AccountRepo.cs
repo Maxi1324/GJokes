@@ -38,12 +38,12 @@ namespace GStatsFaker.Repository.Implementations
 
             Random Rand = new Random();
             
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 100; i++)
             {
                 string Name = Rand.Next() + "";
-                if (!Context.Users.Any((u) => u.RepoName == Name))
+                if (!Context.Users.Any((u) => u.ConSettings.RepoName == Name))
                 {
-                    user.RepoName = Name;
+                    user.ConSettings.RepoName = Name;
                     break;
                 }
             }
@@ -95,7 +95,7 @@ namespace GStatsFaker.Repository.Implementations
 
                 Random Rand = new Random();
                 int ID = 0;
-                int MaxTries = 10;
+                int MaxTries = 1000;
                 for (int i = 0; i < MaxTries; i++)
                 {
                     ID = Rand.Next();
@@ -105,7 +105,8 @@ namespace GStatsFaker.Repository.Implementations
                     }
                 }
 
-                User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = new Random().Next(), GithubUsername = Email.Split("@")[0],GithubEmail = Email, MaxCon = 5 };
+                ConSettings CSettings = new ConSettings() { GithubUsername = Email.Split("@")[0], GithubEmail = Email, MaxCon = 5 };
+                User u = new User() { Created = DateTime.Now, Email = Email, Password = Hash, Id = ID, ConSettings = CSettings };
                 Context.Users.Add(u);
                 Context.SaveChanges();
                 R = u.Id;
@@ -196,7 +197,7 @@ namespace GStatsFaker.Repository.Implementations
 
         public User? FindUser(int UserID, bool Include = false)
         {
-            return (Include)?Context.Users.Include(u=>u.EmalVerifikations).FirstOrDefault(u => u.Id == UserID) : Context.Users.FirstOrDefault(u=>u.Id == UserID);
+            return (Include)?Context.Users.Include(u => u.ConSettings).Include(u=>u.EmalVerifikations).FirstOrDefault(u => u.Id == UserID) : Context.Users.Include(u => u.ConSettings).FirstOrDefault(u=>u.Id == UserID);
         }
 
         //kopiert von https://stackoverflow.com/questions/1365407/c-sharp-code-to-validate-email-address

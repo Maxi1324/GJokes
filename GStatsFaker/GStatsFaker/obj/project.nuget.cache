@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "xlZ2lacFWGJqGx6lyetpOFXA7rbIIvsLY243jthapJyH7urCopkuK0mbmOKW1KRT4Hkii07kTz0UOHnEwzERAA==",
+  "dgSpecHash": "Y2ir78ZBh5JAeucFG9NXgHGkYR1B5ayi1dcGkFDSzbc1aBhWRwBxARH01EV/714hH4xBRtCzwP2pyABEQDab3A==",
   "success": true,
   "projectFilePath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\maxie\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\markdig.signed\\0.22.0\\markdig.signed.0.22.0.nupkg.sha512",
     "C:\\Users\\maxie\\.nuget\\packages\\microsoft.applicationinsights\\2.18.0\\microsoft.applicationinsights.2.18.0.nupkg.sha512",

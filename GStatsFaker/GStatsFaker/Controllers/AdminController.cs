@@ -62,7 +62,7 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        [HttpPost("UnblockPerson")]
+        [HttpPost("GetUsers")]
         public object GetUsers(int Page, OrderBy OB, Filter F, string password)
         {
             return AR.GetUsers(Page, OB, F, password);

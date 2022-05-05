@@ -1356,3 +1356,4 @@ C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\re
 C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GStatsFaker.pdb
 C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GStatsFaker.genruntimeconfig.cache
 C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\ref\GStatsFaker.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Bogus.dll
