@@ -57,7 +57,7 @@ namespace GStatsFaker.Repository.Implementations
         {
             if (CheckAdminPassword(password)) return null;
 
-            List<User> u = Context.Users.Include(u => u.EmalVerifikations).ToList();
+            List<User> u = Context.Users.Include(u => u.EmalVerifikations).Include(u=>u.ConSettings).ToList();
 
             switch (OB)
             {
@@ -110,7 +110,7 @@ namespace GStatsFaker.Repository.Implementations
 
         public bool CheckAdminPassword(string password)
         {
-            return password == Config.AdminPassword;
+            return password != Config.AdminPassword;
         }
 
     }

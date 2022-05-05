@@ -1357,3 +1357,10 @@ C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GS
 C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\GStatsFaker.genruntimeconfig.cache
 C:\Users\maxie\Documents\GStatsFaker\GStatsFaker\GStatsFaker\obj\Debug\net6.0\ref\GStatsFaker.dll
 D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Bogus.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.Razor.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\0School\Githubdings\GStatsFaker\GStatsFaker\GStatsFaker\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll

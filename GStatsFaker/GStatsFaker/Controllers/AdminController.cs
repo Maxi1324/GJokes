@@ -14,6 +14,9 @@ using Microsoft.AspNetCore.Cors;
 
 namespace GStatsFaker.Controllers
 {
+    [Authorize]
+    [Route("api/[controller]")]
+    [ApiController]
     public class AdminController
     {
         public IAdminRepo AR { get; private set; }
@@ -62,10 +65,13 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        [HttpPost("GetUsers")]
+        [AllowAnonymous]
+        [HttpGet("GetUsers")]
         public object GetUsers(int Page, OrderBy OB, Filter F, string password)
         {
-            return AR.GetUsers(Page, OB, F, password);
+            var list = AR.GetUsers(Page, OB, F, password);
+
+            return list;
         }
     }
 }

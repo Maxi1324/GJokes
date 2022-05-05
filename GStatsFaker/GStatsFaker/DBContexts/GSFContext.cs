@@ -12,7 +12,6 @@ namespace GStatsFaker.DBContexts
         public GSFContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
-           Seed();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

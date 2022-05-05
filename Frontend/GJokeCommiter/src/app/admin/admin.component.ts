@@ -1,4 +1,6 @@
+import { HoleUserInfos, ConfigInfos, OrderBy, Filter, GetAdminUserInfos } from './../BackendCom';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { SendGet } from '../BackendCom';
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +9,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  //Rendered Component should update when array changes
-  //https://angular.io/guide/component-interaction#!#parent-and-children-communicate-via-a-service
-  users: User[] = [];
+  users: HoleUserInfos[] = [];
 
   @ViewChild('email') email!: any;;
   
@@ -20,32 +20,17 @@ export class AdminComponent implements OnInit {
   }
 
   loadUsers() {
-    let tmp = [];
-    //TODO: Load users from backend
-    //Test Data
-    for (let i = 0; i < 10; i++) {
-      //give user random email
-      let email = "";
-      for (let j = 0; j < Math.floor(Math.random() * 10) + 5; j++) {
-        email += String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-      }
-      email += "@gmail.com";
-      tmp.push(new User(i, email, new Date()));
+    let RequestParameter : GetAdminUserInfos = {
+      Page:0,
+      OB:OrderBy.Id,
+      F:Filter.Authenticated,
+      password:"Maxistcool"
+    };
+    const Callback = (res: any) => {
+      this.users = res as HoleUserInfos[];
     }
-    this.users = tmp;
+
+    SendGet("api/Admin/GetUsers",Callback,false,RequestParameter)
+    
   }
-}
-
-interface User {
-  id: number;
-  email: string;
-  joined: Date;
-}
-
-class User implements User {
-  constructor(
-    public id: number,
-    public email: string,
-    public joined: Date
-  ) {}
 }

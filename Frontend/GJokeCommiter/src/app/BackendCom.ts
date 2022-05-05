@@ -110,3 +110,43 @@ export interface ActivateAccountInfo {
     userId: number,
     code: string
 }
+
+export interface ConfigInfos{
+    minCon: number,
+    maxCon: number,
+    repoName: string,
+    erstellung: Date,
+    githubEmail: string,
+    githubUsername: string
+}
+
+export interface HoleUserInfos{
+    configInfos: ConfigInfos,
+    realEmail: string,
+    userId: number,
+    blocked:boolean,
+    verified:boolean
+}
+
+export enum Filter {
+    All,
+    Blocked,
+    NotBlocked,
+    NotAuthenticated,
+    Authenticated
+}
+
+export enum OrderBy
+{
+    Email,
+    Id,
+    Joined,
+    JoinedDesc
+}
+
+export interface GetAdminUserInfos{
+    Page:number,
+    OB:OrderBy,
+    F:Filter,
+    password:string
+}

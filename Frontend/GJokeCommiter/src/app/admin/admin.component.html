@@ -13,9 +13,9 @@
   </div>
   <ul>
     <li class="user-card" *ngFor="let user of users">
-      <h3>{{ user.id }}</h3>
-      <h4 class="card-email">{{ user.email }}</h4>
-      <p class="card-joined">{{ user.joined.toLocaleString("de-DE", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</p>
+      <h3>{{ user.userId }}</h3>
+      <h4 class="card-email">{{ user.realEmail }}</h4>
+      <p class="card-joined">{{ user.configInfos.erstellung.toLocaleString("de-DE", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</p>
     </li>
   </ul>
 </div>
