@@ -11,11 +11,17 @@
       <input #email id="filter-by-name" type="text" class="input" (input)="loadUsers()"/>
     </div>
   </div>
-  <ul>
-    <li class="user-card" *ngFor="let user of users">
-      <h3>{{ user.userId }}</h3>
-      <h4 class="card-email">{{ user.realEmail }}</h4>
-      <p class="card-joined">{{ user.configInfos.erstellung.toLocaleString("de-DE", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</p>
-    </li>
-  </ul>
+  <div class="grid grid-cols-2">
+    <ul class="h-screen overflow-scroll">
+      <li class="user-card" *ngFor="let user of users">
+        <h3>{{ user.userId }}</h3>
+        <h4 class="card-email">{{ user.realEmail }}</h4>
+        <p class="card-joined">{{ user.configInfos.erstellung.toLocaleString("de-DE", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</p>
+      </li>
+    </ul>
+    <div id="user-info">
+      <h2>User info</h2>
+      
+    </div>
+  </div>
 </div>

@@ -11,6 +11,12 @@ import { Call } from '@angular/compiler';
 export class AdminComponent implements OnInit {
 
   users: HoleUserInfos[] = [];
+  //selectedUser: 
+  /*HoleUserInfos = {
+    Id:0,
+    Email:"",
+  }*/
+
 
   @ViewChild('email') email!: any;;
   
