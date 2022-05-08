@@ -65,7 +65,8 @@ namespace GStatsFaker.Repository.Implementations
             }
             else
             {
-                Faker = new StatsFaker(u.ConSettings.RepoName);
+                Faker = new StatsFaker();
+                Faker.InitRep(u.ConSettings.RepoName);
                 Fakers.Add(u.Id, Faker);
             }
             Faker.SetUpCredentials(u.ConSettings.GithubEmail, u.ConSettings.GithubUsername);

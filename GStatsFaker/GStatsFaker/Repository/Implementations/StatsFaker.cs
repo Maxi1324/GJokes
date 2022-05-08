@@ -36,14 +36,15 @@ namespace GStatsFaker.Repository
             this.RepoName = RepoName;
             this.Token = Config.GToken;
 
-            PS.AddScript($"cd {HomePath};.\\gh.exe repo create {RepoName} --private");
+            string s5 = $"cd {Directory.GetCurrentDirectory()};.\\gh.exe repo create {RepoName} --private";
+            PS.AddScript(s5);
             PS.Invoke();
 
             string s = "cd " + Directory.GetCurrentDirectory();
             PS.AddScript("(cd " + Directory.GetCurrentDirectory() + $");(mkdir Repos)");
             PS.AddScript("(cd " + Directory.GetCurrentDirectory() + $"\\Repos);(mkdir " + $"{Username})");
 
-
+            string s6 = $"(cd {Directory.GetCurrentDirectory() + "\\Repos\\" + Username + "\\"});(git clone https://{Token}@github.com/{Username}/{RepoName}.git)";
             PS.AddScript($"(cd {Directory.GetCurrentDirectory() + "\\Repos\\" + Username + "\\"});(git clone https://{Token}@github.com/{Username}/{RepoName}.git)");
             PS.Invoke();
         }

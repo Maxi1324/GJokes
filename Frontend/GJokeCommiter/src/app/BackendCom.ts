@@ -5,7 +5,7 @@ export function SendPost(Route: string, body1: any, Callback: any, Authenticate:
     myHeaders.append("Content-Type", "application/json");
 
     if (Authenticate) {
-        myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("JWTToken"));
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("JWTToken"));
     }
 
     var raw = JSON.stringify(body1);
@@ -27,7 +27,7 @@ export function SendGet(Route: string, Callback: any, Authenticate: boolean = tr
     myHeaders.append("Content-Type", "application/json");
 
     if (Authenticate) {
-        myHeaders.append("Authorization", "Bearer " + sessionStorage.getItem("JWTToken"));
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem("JWTToken"));
     }
 
     var requestOptions: any = {

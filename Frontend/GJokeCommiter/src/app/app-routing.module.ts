@@ -1,3 +1,4 @@
+import { GenerateContComponent } from './generate-cont/generate-cont.component';
 import { AccountDeletedComponent } from './account-deleted/account-deleted.component';
 import { SendcodeComponent } from './sendcode/sendcode.component';
 import { NgModule } from '@angular/core';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'VerifyCode', component: SendcodeComponent },
   { path: 'login', component: HomepageComponent },
   { path: 'DeletedAccount', component: AccountDeletedComponent },
-  { path: 'admin', component: AdminComponent }
+  { path: 'admin', component: AdminComponent },
+  { path: 'GenerateCont', component: GenerateContComponent }
 ];
 
 @NgModule({

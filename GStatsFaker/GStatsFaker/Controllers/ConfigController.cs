@@ -20,11 +20,13 @@ namespace GStatsFaker.Controllers
     {
         public IConfigRepo Config { get; set; }
         public IStatsFaker Faker;
+        public GSFContext DBContexts { get; set; }
 
-        public ConfigController(IConfigRepo Config, IStatsFaker Faker)
+        public ConfigController(IConfigRepo Config, IStatsFaker Faker, GSFContext context)
         {
             this.Config = Config;
             this.Faker = Faker;
+            DBContexts = context;
         }
 
         [HttpGet("GetUserInfo")]
@@ -126,6 +128,14 @@ namespace GStatsFaker.Controllers
             Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
             Faker.AddActivityPast(400);
             //Config.CreateCont(5, Config.FindUser(User));
+            return new Response(1, "Alles OK");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("Seed")]
+        public Response Seed()
+        {
+            DBContexts.Seed();
             return new Response(1, "Alles OK");
         }
     }

@@ -54,7 +54,7 @@ export class SendcodeComponent implements OnInit {
         if (res.code == 1) {
           this.ErrorMessage = ""
           this.hidden = "hidden";
-          sessionStorage.setItem("JWTToken", res.desc);
+          localStorage.setItem("JWTToken", res.desc);
           this.router.navigateByUrl('/config');
         } else {
           this.hidden = "";
