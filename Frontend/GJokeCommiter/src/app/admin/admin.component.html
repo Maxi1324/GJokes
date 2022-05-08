@@ -3,6 +3,7 @@
   <div class="form-group">
     <label for="password">Password</label>
     <input #password id="password" type="password" class="input" (input)="loadUsers()" />
+    <b class="text-red-500">{{APWrong}}</b>
   </div>
   <div class="flex justify-center sm:flex-row flex-col gap-4 mb-4">
     <div class="form-group">

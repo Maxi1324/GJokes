@@ -36,16 +36,15 @@ export class AdminComponent implements OnInit {
   @ViewChild('orderBy') orderBy: any;
   @ViewChild('pageValue') pageValue: any;
 
+  APWrong:string = "";
+
   constructor() {}
 
   ngOnInit(): void {}
 
   loadUsers():void {
-    //Get Page Parameter
     let Page:number = this.pageValue.nativeElement.value;
-    //Get OrderBy Parameter
     let ob = this.orderBy.nativeElement.value;
-    //Convert OrderBy to OrderByEnum
     let OB:OrderBy = OrderBy.Joined;
     switch(ob){
       case "Email":
@@ -88,13 +87,19 @@ export class AdminComponent implements OnInit {
       F:F,
       password: this.password.nativeElement.value
     };
+    let AC = this;
     const Callback = (res: any) => {
+      AC.APWrong = "";
       this.users = res as HoleUserInfos[];
       this.users.forEach(user => {
         user.configInfos.erstellung = new Date(user.configInfos.erstellung);
       });
     }
-    SendGet("api/Admin/GetUsers",Callback,false,RequestParameter)
+
+    const ErrorCallback = (res: any) => {
+      AC.APWrong = "The Admin Password is wrong";
+    }
+    SendGet("api/Admin/GetUsers",Callback,false,RequestParameter, ErrorCallback)
   }
 
   BlockUser():void{
