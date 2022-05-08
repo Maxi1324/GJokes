@@ -10,3 +10,16 @@
     margin: 20px;
     border-radius: 10px;
 }
+
+.user-card
+{
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    @apply hover:bg-gray-200;
+    @apply focus:bg-gray-200;
+    @apply border-2 border-gray-200;
+    @apply mt-4;
+}
