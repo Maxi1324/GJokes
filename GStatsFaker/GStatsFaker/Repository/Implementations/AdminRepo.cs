@@ -62,16 +62,16 @@ namespace GStatsFaker.Repository.Implementations
             switch (OB)
             {
                 case OrderBy.Joined:
-                    u.OrderBy(u => u.Created);
+                    u = u.OrderBy(u => u.Created).ToList();
                     break;
                 case OrderBy.JoinedDesc:
-                    u.OrderByDescending(u => u.Created);
+                    u.OrderByDescending(u => u.Created).ToList();
                     break;
                 case OrderBy.Email:
-                    u.OrderBy(u => u.Email);
+                    u.OrderBy(u => u.Email).ToList();
                     break;
                 case OrderBy.Id:
-                    u.OrderBy(u => u.Id);
+                    u.OrderBy(u => u.Id).ToList();
                     break;
             }
 
