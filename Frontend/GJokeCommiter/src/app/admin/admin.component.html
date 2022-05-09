@@ -2,13 +2,13 @@
   <h1 class="text-4xl">Admin</h1>
   <div class="form-group">
     <label for="password">Password</label>
-    <input #password id="password" type="password" class="input" (input)="loadUsers()" />
+    <input #password id="password" type="password" class="input"/>
     <b class="text-red-500">{{APWrong}}</b>
   </div>
   <div class="flex justify-center sm:flex-row flex-col gap-4 mb-4">
     <div class="form-group">
       <label for="filter-by">Filter by</label>
-      <select id="filter-by" class="input" #filterBy (change)="loadUsers()">
+      <select id="filter-by" class="input" #filterBy>
         <option value="All">All</option>
         <option value="Blocked">Blocked</option>
         <option value="NotBlocked">NotBlocked</option>
@@ -18,7 +18,7 @@
     </div>
     <div class="form-group">
       <label for="order-by">Order by</label>
-      <select id="order-by" class="input" #orderBy (change)="loadUsers()">
+      <select id="order-by" class="input" #orderBy>
         <option value="Id">Id</option>
         <option value="Email">Email</option>
         <option value="Joined">Joined</option>
@@ -27,9 +27,10 @@
     </div>
     <div class="form-group">
       <label for="page-value">Page</label>
-      <input id="page-value" type="number" class="input" step="1" min="0" value="0" #pageValue (change)="loadUsers()" />
+      <input id="page-value" type="number" class="input" step="1" min="0" value="0" #pageValue />
     </div>
   </div>
+  <button class="w-full border-2 border-gray-400 p-2 rounded-md mb-4" (click)="loadUsers()">Load</button>
   <div class="grid sm:grid-cols-2 grid-cols-1 w-full">
     <ul class="sm:h-screen h-96 overflow-y-scroll border-2 border-gray-300 rounded-md px-4 pb-4">
       <li class="user-card" *ngFor="let user of users;let indexOfelement=index;" (click)="SelectUser(user)">
@@ -39,8 +40,8 @@
       </li>
     </ul>
     <div id="user-info">
-      <h2>User info</h2>
-      <div>
+      <h2 class="text-lg">User info</h2>
+      <div class="w-full">
         <h3>User id</h3>
         <p>{{ selectedUser.userId }}</p>
 

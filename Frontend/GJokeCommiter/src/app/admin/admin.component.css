@@ -23,3 +23,13 @@
     @apply border-2 border-gray-200;
     @apply mt-4;
 }
+
+#user-info{
+    @apply p-2;
+    @apply border-2 border-gray-200;
+    @apply rounded-lg;
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+}
+

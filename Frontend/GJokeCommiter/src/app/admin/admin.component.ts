@@ -87,6 +87,7 @@ export class AdminComponent implements OnInit {
       F:F,
       password: this.password.nativeElement.value
     };
+    console.log(RequestParameter);
     let AC = this;
     const Callback = (res: any) => {
       AC.APWrong = "";
