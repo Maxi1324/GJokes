@@ -33,3 +33,9 @@
     @apply items-center;
 }
 
+#user-info h3{
+    @apply font-bold;
+    @apply text-xl;
+    @apply mb-2;
+}
+

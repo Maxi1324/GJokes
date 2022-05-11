@@ -37,6 +37,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('pageValue') pageValue: any;
 
   APWrong:string = "";
+  ARMessage:string = "";
 
   constructor() {}
 
@@ -103,36 +104,40 @@ export class AdminComponent implements OnInit {
     SendGet("api/Admin/GetUsers",Callback,false,RequestParameter, ErrorCallback)
   }
 
-  BlockUser():void{
+  BlockUser(id: number):void{
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User blocked");
+          this.ARMessage = `User ${id} blocked`;
         } 
         else{
           console.log("Error: " + res.desc);
+          this.ARMessage = "Error: " + res.desc;
         }
     }
 
     const body:BlockUser = {
       password : this.password.nativeElement.value,
-      userId : 0
+      userId : id
     }
     SendPost("api/Admin/BlockPerson",body,Callback,false)
   }
 
-  UnBlockUser():void{
+  UnBlockUser(id: number):void{
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User Unblocked");
+          this.ARMessage = `User ${id} Unblocked`;
         } 
         else{
           console.log("Error: " + res.desc);
+          this.ARMessage = "Error: " + res.desc;
         }
     }
 
     const body:BlockUser = {
       password : this.password.nativeElement.value,
-      userId : 0
+      userId : id
     }
     SendPost("api/Admin/UnblockPerson",body,Callback,false)
   }
