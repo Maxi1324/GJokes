@@ -16,20 +16,7 @@ export class AdminComponent implements OnInit {
     Id:0,
     Email:"",
   }*/
-  selectedUser: HoleUserInfos = {
-    configInfos: {
-      minCon: 0,
-      maxCon: 0,
-      repoName: "",
-      erstellung: new Date(),
-      githubEmail: "",
-      githubUsername: ""
-    },
-    realEmail: "",
-    userId: 0,
-    blocked: false,
-    verified: false
-  };
+  selectedUser: HoleUserInfos = this.ResetSelectedUser();
   
   @ViewChild('password') password: any;
   @ViewChild('filterBy') filterBy: any;
@@ -44,6 +31,9 @@ export class AdminComponent implements OnInit {
   ngOnInit(): void {}
 
   loadUsers():void {
+    //set selectedUser to null
+    this.selectedUser = this.ResetSelectedUser();
+
     let Page:number = this.pageValue.nativeElement.value;
     let ob = this.orderBy.nativeElement.value;
     let OB:OrderBy = OrderBy.Joined;
@@ -122,6 +112,8 @@ export class AdminComponent implements OnInit {
       userId : id
     }
     SendPost("api/Admin/BlockPerson",body,Callback,false)
+
+    this.loadUsers();
   }
 
   UnBlockUser(id: number):void{
@@ -141,9 +133,28 @@ export class AdminComponent implements OnInit {
       userId : id
     }
     SendPost("api/Admin/UnblockPerson",body,Callback,false)
+
+    this.loadUsers();
   }
 
   SelectUser(user: HoleUserInfos): void {
     this.selectedUser = user;
-  }    
+  }
+
+  ResetSelectedUser(): HoleUserInfos {
+    return {
+      configInfos: {
+        minCon: 0,
+        maxCon: 0,
+        repoName: "",
+        erstellung: new Date(),
+        githubEmail: "",
+        githubUsername: ""
+      },
+      realEmail: "",
+      userId: 0,
+      blocked: false,
+      verified: false
+    };
+  }
 }

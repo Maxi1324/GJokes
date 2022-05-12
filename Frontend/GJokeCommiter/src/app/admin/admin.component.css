@@ -39,3 +39,6 @@
     @apply mb-2;
 }
 
+.bg-grey{
+    background-color: rgb(156 163 175 / var(--tw-bg-opacity)) !important;
+}
