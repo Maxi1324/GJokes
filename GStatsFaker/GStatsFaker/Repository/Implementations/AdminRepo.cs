@@ -31,6 +31,7 @@ namespace GStatsFaker.Repository.Implementations
                 }
                 Blocked b = new Blocked() { BlockTime = DateTime.Now, Email = u.Email };
                 Context.BlockList.Add(b);
+                Context.SaveChanges();
                 return 1;
             }
             return -2;
@@ -48,6 +49,7 @@ namespace GStatsFaker.Repository.Implementations
                     return -3;
                 }
                 Context.BlockList.Remove(b);
+                Context.SaveChanges();
                 return 1;
             }
             return -2;

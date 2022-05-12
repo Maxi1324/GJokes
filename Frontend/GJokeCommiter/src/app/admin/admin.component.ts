@@ -105,6 +105,7 @@ export class AdminComponent implements OnInit {
   }
 
   BlockUser(id: number):void{
+    console.log("hi")
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User blocked");
