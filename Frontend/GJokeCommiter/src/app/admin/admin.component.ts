@@ -16,60 +16,145 @@ export class AdminComponent implements OnInit {
     Id:0,
     Email:"",
   }*/
-
-
-  @ViewChild('email') email!: any;;
+  selectedUser: HoleUserInfos = this.ResetSelectedUser();
   
+  @ViewChild('password') password: any;
+  @ViewChild('filterBy') filterBy: any;
+  @ViewChild('orderBy') orderBy: any;
+  @ViewChild('pageValue') pageValue: any;
+
+  APWrong:string = "";
+  ARMessage:string = "";
+
   constructor() {}
 
-  ngOnInit(): void {
-    this.loadUsers();
-  }
+  ngOnInit(): void {}
 
   loadUsers():void {
-    let RequestParameter : GetAdminUserInfos = {
-      Page:0,
-      OB:OrderBy.Id,
-      F:Filter.Authenticated,
-      password:"Maxistcool"
-    };
-    const Callback = (res: any) => {
-      this.users = res as HoleUserInfos[];
+    //set selectedUser to null
+    this.selectedUser = this.ResetSelectedUser();
+
+    let Page:number = this.pageValue.nativeElement.value;
+    let ob = this.orderBy.nativeElement.value;
+    let OB:OrderBy = OrderBy.Joined;
+    switch(ob){
+      case "Email":
+        OB = OrderBy.Email;
+        break;
+      case "Id":
+        OB = OrderBy.Id;
+        break;
+      case "Joined":
+        OB = OrderBy.Joined;
+        break;
+      case "JoinedDesc":
+        OB = OrderBy.JoinedDesc;
+        break;
     }
-    SendGet("api/Admin/GetUsers",Callback,false,RequestParameter)
+    //Get Filter Parameter
+    let f = this.filterBy.nativeElement.value;
+    //Convert Filter to FilterEnum
+    let F:Filter = Filter.All;
+    switch(f){
+      case "All":
+        F = Filter.All;
+        break;
+      case "Blocked":
+        F = Filter.Blocked;
+        break;
+      case "NotBlocked":
+        F = Filter.NotBlocked;
+        break;
+      case "NotAuthenticated":
+        F = Filter.NotAuthenticated;
+        break;
+      case "Authenticated":
+        F = Filter.Authenticated;
+        break;
+    }
+    let RequestParameter : GetAdminUserInfos = {
+      Page:Page,
+      OB:OB,
+      F:F,
+      password: this.password.nativeElement.value
+    };
+    console.log(RequestParameter);
+    let AC = this;
+    const Callback = (res: any) => {
+      AC.APWrong = "";
+      this.users = res as HoleUserInfos[];
+      this.users.forEach(user => {
+        user.configInfos.erstellung = new Date(user.configInfos.erstellung);
+      });
+    }
+
+    const ErrorCallback = (res: any) => {
+      AC.APWrong = "The Admin Password is wrong";
+    }
+    SendGet("api/Admin/GetUsers",Callback,false,RequestParameter, ErrorCallback)
   }
 
-  BlockUser():void{
+  BlockUser(id: number):void{
+    console.log("hi")
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User blocked");
+          this.ARMessage = `User ${id} blocked`;
         } 
         else{
           console.log("Error: " + res.desc);
+          this.ARMessage = "Error: " + res.desc;
         }
     }
 
     const body:BlockUser = {
-      password : "Maxistcool",
-      userId : 0
+      password : this.password.nativeElement.value,
+      userId : id
     }
     SendPost("api/Admin/BlockPerson",body,Callback,false)
+
+    this.loadUsers();
   }
 
-  UnBlockUser():void{
+  UnBlockUser(id: number):void{
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User Unblocked");
+          this.ARMessage = `User ${id} Unblocked`;
         } 
         else{
           console.log("Error: " + res.desc);
+          this.ARMessage = "Error: " + res.desc;
         }
     }
 
     const body:BlockUser = {
-      password : "Maxistcool",
-      userId : 0
+      password : this.password.nativeElement.value,
+      userId : id
     }
     SendPost("api/Admin/UnblockPerson",body,Callback,false)
+
+    this.loadUsers();
+  }
+
+  SelectUser(user: HoleUserInfos): void {
+    this.selectedUser = user;
+  }
+
+  ResetSelectedUser(): HoleUserInfos {
+    return {
+      configInfos: {
+        minCon: 0,
+        maxCon: 0,
+        repoName: "",
+        erstellung: new Date(),
+        githubEmail: "",
+        githubUsername: ""
+      },
+      realEmail: "",
+      userId: 0,
+      blocked: false,
+      verified: false
+    };
   }
 }

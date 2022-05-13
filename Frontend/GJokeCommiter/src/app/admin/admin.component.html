@@ -2,26 +2,141 @@
   <h1 class="text-4xl">Admin</h1>
   <div class="form-group">
     <label for="password">Password</label>
-    <input id="password" type="password" class="input" />
+    <input #password id="password" type="password" class="input" />
+    <span class="text-red-500 font-bold">{{ APWrong }}</span>
   </div>
-  <div>
-    <h2>Filter</h2>
+  <div class="flex justify-center sm:flex-row flex-col gap-4 mb-4">
     <div class="form-group">
-      <label for="filter-by-name">Filter by email</label>
-      <input #email id="filter-by-name" type="text" class="input" (input)="loadUsers()"/>
+      <label for="filter-by">Filter by</label>
+      <select id="filter-by" class="input" #filterBy (change)="loadUsers()">
+        <option value="All">All</option>
+        <option value="Blocked">Blocked</option>
+        <option value="NotBlocked">NotBlocked</option>
+        <option value="NotAuthenticated">NotAuthenticated</option>
+        <option value="Authenticated">Authenticated</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="order-by">Order by</label>
+      <select id="order-by" class="input" #orderBy (change)="loadUsers()">
+        <option value="Id">Id</option>
+        <option value="Email">Email</option>
+        <option value="Joined">Joined</option>
+        <option value="JoinedDesc">Joined Desc</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="page-value">Page</label>
+      <input
+        id="page-value"
+        type="number"
+        class="input"
+        step="1"
+        min="0"
+        value="0"
+        #pageValue
+      />
     </div>
   </div>
-  <div class="grid grid-cols-2">
-    <ul class="h-screen overflow-scroll">
-      <li class="user-card" *ngFor="let user of users">
-        <h3>{{ user.userId }}</h3>
-        <h4 class="card-email">{{ user.realEmail }}</h4>
-        <p class="card-joined">{{ user.configInfos.erstellung.toLocaleString("de-DE", { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}) }}</p>
+  <button
+    class="w-full border-2 border-gray-400 p-2 rounded-md mb-4"
+    (click)="loadUsers()"
+  >
+    Load
+  </button>
+  <span class="font-bold mx-auto mb-4 text-4xl">{{ ARMessage }}</span>
+  <div class="grid sm:grid-cols-2 grid-cols-1 w-full gap-4">
+    <ul
+      class="sm:h-screen h-96 overflow-y-scroll border-2 border-gray-300 rounded-md px-4 pb-4"
+    >
+      <li
+        class="{{ user.userId == selectedUser.userId ? 'bg-grey' : '' }} user-card"
+        *ngFor="let user of users; let indexOfelement = index"
+        (click)="SelectUser(user)"
+      >
+        <h3>Id: {{ user.userId }}</h3>
+        <h4 class="card-email">Email: {{ user.realEmail }}</h4>
+        <p class="card-joined">
+          Joined:
+          {{
+            user.configInfos.erstellung.toLocaleString("de-DE", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit"
+            })
+          }}
+        </p>
       </li>
     </ul>
     <div id="user-info">
-      <h2>User info</h2>
-      
+      <div
+        class="w-full text-center"
+        *ngIf="selectedUser.userId != 0"
+      >
+        <h2 class="text-2xl mx-auto font-bold">User info</h2>
+        <div class="w-full text-left">
+          <h3>User id</h3>
+          <p>{{ selectedUser.userId }}</p>
+
+          <h3>Email</h3>
+          <p>{{ selectedUser.realEmail }}</p>
+
+          <h3>Joined</h3>
+          <p>
+            {{
+              selectedUser.configInfos.erstellung.toLocaleString("de-DE", {
+                year: "numeric",
+                month: "numeric",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+              })
+            }}
+          </p>
+
+          <h3>Blocked</h3>
+          <p>{{ selectedUser.blocked ? "Yes" : "No" }}</p>
+
+          <h3>Verified</h3>
+          <p>{{ selectedUser.verified ? "Yes" : "No" }}</p>
+        </div>
+        <h2 class="text-2xl font-bold">Config info</h2>
+        <div class="w-full text-left">
+          <h3>Min Config</h3>
+          <p>{{ selectedUser.configInfos.minCon }}</p>
+
+          <h3>Max Config</h3>
+          <p>{{ selectedUser.configInfos.maxCon }}</p>
+
+          <h3>Repo Name</h3>
+          <p>{{ selectedUser.configInfos.repoName }}</p>
+
+          <h3>Github Email</h3>
+          <p>{{ selectedUser.configInfos.githubEmail }}</p>
+
+          <h3>Github Username</h3>
+          <p>{{ selectedUser.configInfos.githubUsername }}</p>
+        </div>
+        <button
+          *ngIf="selectedUser.blocked"
+          class="w-full border-2 border-gray-400 p-2 rounded-md"
+          (click)="UnBlockUser(selectedUser.userId)"
+        >
+          Unblock
+        </button>
+        <button
+          *ngIf="!selectedUser.blocked"
+          class="w-full border-2 border-gray-400 p-2 rounded-md"
+          (click)="BlockUser(selectedUser.userId)"
+        >
+          Block
+        </button>
+      </div>
+      <div *ngIf="selectedUser.userId == 0">
+        <h2 class="text-lg">No user selected</h2>
+      </div>
     </div>
   </div>
 </div>

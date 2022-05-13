@@ -10,3 +10,35 @@
     margin: 20px;
     border-radius: 10px;
 }
+
+.user-card
+{
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    @apply hover:bg-gray-200;
+    @apply focus:bg-gray-200;
+    @apply border-2 border-gray-200;
+    @apply mt-4;
+}
+
+#user-info{
+    @apply p-2;
+    @apply border-2 border-gray-200;
+    @apply rounded-lg;
+    @apply flex;
+    @apply flex-col;
+    @apply items-center;
+}
+
+#user-info h3{
+    @apply font-bold;
+    @apply text-xl;
+    @apply mb-2;
+}
+
+.bg-grey{
+    background-color: rgb(156 163 175 / var(--tw-bg-opacity)) !important;
+}

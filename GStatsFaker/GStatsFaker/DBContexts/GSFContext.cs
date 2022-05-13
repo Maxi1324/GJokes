@@ -1,5 +1,6 @@
 ﻿using Bogus;
 using GStatsFaker.Model;
+using GStatsFaker.Repository.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 namespace GStatsFaker.DBContexts
@@ -30,12 +31,12 @@ namespace GStatsFaker.DBContexts
             var Users1 = new Faker<User>()
                 .RuleFor(u => u.Email, (f, u) => u.Email = f.Internet.Email())
                 .RuleFor(u => u.Created, (f, u) => u.Created = f.Date.Between(DateTime.Now, DateTime.Now.AddMonths(-100)))
-                .RuleFor(u => u.Password, (f, u) => u.Password = f.Internet.Password(100))
+                .RuleFor(u => u.Password, (f, u) => u.Password = SecurePasswordHasher.Hash(Config.AdminPassword))
                 .RuleFor(u => u.Id, (f, u) => u.Id = f.UniqueIndex)
                 .RuleFor(u => u.ConSettings, (f, u) => new ConSettings()
                 {
                     GithubEmail = f.Internet.Email(),
-                    RepoName = f.Random.String(20),
+                    RepoName = f.Random.String2(20),
                     GithubUsername = f.Name.FirstName(),
                     MaxCon = f.Random.Int(20, 30),
                     MinCon = f.Random.Int(0, 10)
