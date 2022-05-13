@@ -1,6 +1,7 @@
 ﻿using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Linq;
+using System;
 
 namespace GStatsFaker.Repository
 {
@@ -123,17 +124,21 @@ namespace GStatsFaker.Repository
             PS.Invoke();
         }
 
-        public void AddActivityPast(int LetztenTage, int n = 1)
+        public void AddActivityPast(int LetztenTage, int offset, int MinRange, int MaxRange)
         {
+            Random rand = new Random();
             var FCC = ArrayFetchCommitCount();
-            DateTimeOffset today = System.DateTime.Now;
-            for (int i = 0; i < LetztenTage; i++)
+            DateTimeOffset today = System.DateTime.Now.AddDays(-offset);
+            for (int i = offset; i < LetztenTage; i++)
             {
                 DateTimeOffset yesterday = today.AddDays(-1);
                 if (CountActivity(FCC, yesterday) < 15)
                 {
-                    float rand = new Random().Next(30)+35;
-                    int count = (int)Math.Pow(3,rand*0.1);
+                    //float rand = new Random().Next(30)+35;
+                    //int count = (int)Math.Pow(3,rand*0.1);
+                    
+                    int count = rand.Next(MinRange, MaxRange);
+
                     AddActivity(count, $" --date '{yesterday}'", false);
                 }
                 if (i % 30 == 0)
@@ -144,6 +149,20 @@ namespace GStatsFaker.Repository
                 }
                 today = yesterday;
             }
+        }
+
+        public void AddActivityPast(DateTime SD, DateTime ED, int MinCont, int MaxCont)
+        {
+            if (ED < SD)
+            {
+                DateTime ED1 = ED;
+                ED = SD;
+                SD = ED1;
+            }
+            int totalDays = (int)Math.Ceiling((DateTime.Now- SD).TotalDays);
+            int offset = (int)Math.Ceiling((DateTime.Now-ED).TotalDays);
+
+            AddActivityPast(totalDays, offset, MinCont, MaxCont);
         }
 
         public int CountActivity(System.Collections.ObjectModel.Collection<PSObject>? FCC, DateTimeOffset DTO)

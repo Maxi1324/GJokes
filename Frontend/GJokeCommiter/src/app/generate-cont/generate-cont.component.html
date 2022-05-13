@@ -29,7 +29,7 @@
       </button>
       <div class="flex">
         <p class="mr-1">Feedback:</p>
-        <b class="text-red-500">{{GJN}}</b>
+        <b class="text-red-500">{{ GJN }}</b>
       </div>
     </div>
 
@@ -39,12 +39,15 @@
         <p class="settings-text">
           Here you can generate jokes manually, for a date Range.
         </p>
-     
-        <mat-form-field class="w-100 ml-3 mr-3 mb-3" style="width:95% !important">
+
+        <mat-form-field
+          class="w-100 ml-3 mr-3 mb-3"
+          style="width: 95% !important"
+        >
           <mat-label class="">Enter a date range</mat-label>
           <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" />
-            <input matEndDate placeholder="End date" />
+            <input #SD matStartDate placeholder="Start date" />
+            <input #ED matEndDate placeholder="End date" />
           </mat-date-range-input>
           <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
@@ -57,23 +60,37 @@
         <div class="grid sm:grid-cols-2 grid-cols-1">
           <div class="mx-2">
             <label for="j-min">Jokes Min</label>
-            <input #minCon id="j-min" name="j-min" type="number" class="input" min="0" />
+            <input
+              #minCon
+              id="j-min"
+              name="j-min"
+              type="number"
+              class="input"
+              min="0"
+            />
           </div>
           <div class="mx-2">
             <label for="j-max">Jokes Max</label>
-            <input #maxCon id="j-max" name="j-max" type="number" class="input" min="0" />
+            <input
+              #maxCon
+              id="j-max"
+              name="j-max"
+              type="number"
+              class="input"
+              min="0"
+            />
           </div>
         </div>
 
-     
-
         <button
           class="button btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700"
+          [disabled]="!GJPActive" (click)="GenContRange()"
         >
           Generate
         </button>
         <div class="flex">
           <p class="mr-1">Feedback:</p>
+          <b class="text-red-500">{{ GJP }}</b>
         </div>
       </div>
     </div>

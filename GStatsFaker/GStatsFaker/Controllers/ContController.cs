@@ -47,5 +47,25 @@ namespace GStatsFaker.Controllers
                     throw new Exception("Internal Server error");
             }
         }
+
+        [HttpGet("GenerateContsPast")]
+        public Response GenerateContsPast(string StartDate = "", string EndDate = "", int MinCont = 0, int MaxCont = 0)
+        {
+            User u = configRepo.FindUser(User);
+            GenerateJokeResult GJR = contRepo.GenerateJokes(u, contManager, StartDate, EndDate, MinCont, MaxCont);
+            switch (GJR)
+            {
+                case GenerateJokeResult.Success:
+                    return new Response((int)GJR,"Conts created");
+                case GenerateJokeResult.ZuVieleConts:
+                    return new Response((int)GJR, "Can't generate more than "+Config.MaxCont+" each day");
+                case GenerateJokeResult.WenigerAls0Conts:
+                    return new Response((int)GJR, "You can't generate less than zero Jokes each day");
+                case GenerateJokeResult.DateRangeNotSet:
+                    return new Response((int)GJR, "You must set a Daterange");
+                default:
+                    throw new Exception("Internal Server error");
+            }
+        }
     }
 }

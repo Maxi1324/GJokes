@@ -16,7 +16,8 @@ namespace GStatsFaker.Repository
 
         public void SetUpCredentials(string Email, string Username);
 
-        public void AddActivityPast(int LetztenTage, int n = 1);
+        public void AddActivityPast(DateTime SD, DateTime ED, int MinCont, int MaxCont);
+        public void AddActivityPast(int LetztenTage, int offset, int MinRange, int MaxRange);
         public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true);
 
         /// <summary>

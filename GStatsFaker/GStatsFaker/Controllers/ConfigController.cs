@@ -123,10 +123,10 @@ namespace GStatsFaker.Controllers
         public Response GenerateContsPast()
         {
             Faker.InitRep("Dummy");
-            // Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
+            Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
             // Faker.SetUpCredentials("maxi151234567890@gmail.com", "Dingsi");
-            Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
-            Faker.AddActivityPast(400);
+          //  Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
+           // Faker.AddActivityPast(10);
             //Config.CreateCont(5, Config.FindUser(User));
             return new Response(1, "Alles OK");
         }
