@@ -105,3 +105,6 @@ body {
   @apply items-start;
   @apply justify-start;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

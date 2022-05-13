@@ -1,0 +1,98 @@
+<div class="p-4">
+  <h1 class="text-center text-4xl font-bold text-white">Generate Jokes</h1>
+  <div class="flex flex-col justify-center">
+    <div class="settings-group xl:w-1/2 w-full mx-2">
+      <h2 class="settings-title">Generate Jokes</h2>
+      <p class="settings-text">
+        Here you can generate jokes manually, for today.
+      </p>
+      <div class="mx-2">
+        <label for="">Jokes amount</label>
+        <input
+          #Cons1
+          id="j-min"
+          name="j-min"
+          type="number"
+          class="input"
+          min="0"
+        />
+      </div>
+
+      <button class="hidden button btn-register">generate jokes</button>
+
+      <button
+        (click)="GenContToday()"
+        [disabled]="!GJNActive"
+        class="button btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700"
+      >
+        Generate
+      </button>
+      <div class="flex">
+        <p class="mr-1">Feedback:</p>
+        <b class="text-red-500">{{ GJN }}</b>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <div class="settings-group xl:w-1/2 w-full mx-2">
+        <h2 class="settings-title">Generate Jokes in range</h2>
+        <p class="settings-text">
+          Here you can generate jokes manually, for a date Range.
+        </p>
+
+        <mat-form-field
+          class="w-100 ml-3 mr-3 mb-3"
+          style="width: 95% !important"
+        >
+          <mat-label class="">Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input #SD matStartDate placeholder="Start date" />
+            <input #ED matEndDate placeholder="End date" />
+          </mat-date-range-input>
+          <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <div class="grid sm:grid-cols-2 grid-cols-1">
+          <div class="mx-2">
+            <label for="j-min">Jokes Min</label>
+            <input
+              #minCon
+              id="j-min"
+              name="j-min"
+              type="number"
+              class="input"
+              min="0"
+            />
+          </div>
+          <div class="mx-2">
+            <label for="j-max">Jokes Max</label>
+            <input
+              #maxCon
+              id="j-max"
+              name="j-max"
+              type="number"
+              class="input"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <button
+          class="button btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700"
+          [disabled]="!GJPActive" (click)="GenContRange()"
+        >
+          Generate
+        </button>
+        <div class="flex">
+          <p class="mr-1">Feedback:</p>
+          <b class="text-red-500">{{ GJP }}</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
