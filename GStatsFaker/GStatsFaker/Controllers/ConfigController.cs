@@ -107,30 +107,6 @@ namespace GStatsFaker.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("GenCons")]
-        public Response GenerateConts()
-        {
-            Faker.InitRep("Dummy");
-          // Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
-          Faker.SetUpCredentials("maxi151234567890@gmail.com", "Dingsi");
-            Faker.AddActivity(30);
-           //Config.CreateCont(5, Config.FindUser(User));
-            return new Response(1, "Alles OK");
-        }
-
-        [AllowAnonymous]
-        [HttpGet("GenConsÜast")]
-        public Response GenerateContsPast()
-        {
-            Faker.InitRep("Dummy");
-            // Faker.SetUpCredentials("adrian.schauer@aon.at", "LuckForce");
-            // Faker.SetUpCredentials("maxi151234567890@gmail.com", "Dingsi");
-            Faker.SetUpCredentials("maxi1234567890fischer@gmail.com", "Maxi1324");
-            //Config.CreateCont(5, Config.FindUser(User));
-            return new Response(1, "Alles OK");
-        }
-
-        [AllowAnonymous]
         [HttpGet("SeedDb")]
         public Response SeedDb(int num = 100)
         {
@@ -138,7 +114,4 @@ namespace GStatsFaker.Controllers
             return new Response() { Code = 1, Desc ="dings" };
         }
     }
-    //SetRepoName mehr testen
-    //Sichtbarmachen
-
 }
