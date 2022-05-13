@@ -68,11 +68,9 @@ namespace GStatsFaker.Controllers
 
         [AllowAnonymous]
         [HttpGet("GetUsers")]
-        public object GetUsers(int Page, OrderBy OB, Filter F, string password)
+        public object GetUsers(int Page, OrderBy OB, Filter F, string Search, string password)
         {
-            var list = AR.GetUsers(Page, OB, F, password);
-
-            return list;
+            return AR.GetUsers(Page, OB, F, Search, password); ;
         }
     }
 }

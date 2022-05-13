@@ -24,7 +24,7 @@ namespace GStatsFaker.Repository.Interfaces
         public int BlockPerson(BlockUser UI);
         public int UnblockPerson(BlockUser UI);
 
-        public List<HoleUserInfos> GetUsers(int Page, OrderBy OB, Filter F, string password);
+        public List<HoleUserInfos> GetUsers(int Page, OrderBy OB, Filter F, string search, string password);
         public bool CheckAdminPassword(string password);
 
     }

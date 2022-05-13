@@ -55,65 +55,103 @@ namespace GStatsFaker.Repository.Implementations
             return -2;
         }
 
-        public List<HoleUserInfos> GetUsers(int Page, OrderBy OB, Filter F, string password)
+        public List<HoleUserInfos> GetUsers(int Page, OrderBy OB, Filter F,string search, string password)
         {
             if (CheckAdminPassword(password)) return null;
 
-            List<User> u = Context.Users.Include(u => u.EmalVerifikations).Include(u=>u.ConSettings).ToList();
+            var Abfrage = Context.Users.Include(u => u.EmalVerifikations)
+                .Include(u => u.ConSettings)
+                .Include(u => u.EmalVerifikations)
+                .Where(u =>
+                F == Filter.All || (
+                F == Filter.Authenticated && u.EmalVerifikations.Any(e => e.IsVerifiziert)) || (
+                F == Filter.NotAuthenticated && !u.EmalVerifikations.Any(e => e.IsVerifiziert)) || (
+                F == Filter.Blocked && Context.BlockList.Any(b1 => b1.Email == u.Email)) || (
+                F == Filter.NotBlocked && !Context.BlockList.Any(b1 => b1.Email == u.Email)))
+                ;
 
+            //var Search = Abfrage.OrderBy(u => search == "-"?0 :Context.LevenshteinDistance(search,u.Email));
+
+            List<User> u = Abfrage.ToList();
+            var Search = u.OrderBy(u => search == "-" ? 0 : LevenshteinDistance(search, u.Email));
+                 
             switch (OB)
             {
                 case OrderBy.Joined:
-                    u = u.OrderBy(u => u.Created).ToList();
+                    Search = Search.ThenBy(u => u.Created);
                     break;
                 case OrderBy.JoinedDesc:
-                    u =  u.OrderByDescending(u => u.Created).ToList();
+                    Search = Search.ThenByDescending(u => u.Created);
                     break;
                 case OrderBy.Email:
-                    u= u.OrderBy(u => u.Email).ToList();
+                    Search = Search.ThenBy(u => u.Email);
                     break;
                 case OrderBy.Id:
-                    u= u.OrderBy(u => u.Id).ToList();
+                    Search = Search.ThenBy(u => u.Id);
                     break;
             }
 
-            List<Blocked> b = Context.BlockList.ToList();
+            u = Search
+                .Skip(Config.PageSize * Page)
+                .Take(Config.PageSize)
+                .ToList();
 
-            int iStart = Page * Config.PageSize;
-
-            List<HoleUserInfos> uList = new List<HoleUserInfos>();
-            int APS = 0;
-            for (int i = iStart; i < u.Count && i < iStart + Config.PageSize + APS; i++)
+            List<HoleUserInfos> holeUsers = new List<HoleUserInfos>();
+            foreach(User u1 in u)
             {
-
-                User u1 = u[i];
                 HoleUserInfos HUI = new HoleUserInfos();
 
-                bool Blocked = b.Any(b => b.Email == u1.Email);
+                bool Blocked = Context.BlockList.Any(b => b.Email == u1.Email);
                 bool Verified = u1.EmalVerifikations.Any(e => e.IsVerifiziert);
 
-                if (F == Filter.All || (F == Filter.Authenticated && Verified) || (F == Filter.NotAuthenticated && !Verified) || (F == Filter.Blocked && Blocked) || (F == Filter.NotBlocked && !Blocked))
-                {
-                    HUI.UserId = u1.Id;
-                    HUI.RealEmail = u1.Email;
-                    HUI.Blocked = Blocked;
-                    HUI.Verified = Verified;
-                    HUI.ConfigInfos = ConfigRepo.GetUserConfigData(u1);
-                    uList.Add(HUI);
-                }
-                else
-                {
-                    APS++;
-                }
+                HUI.UserId = u1.Id;
+                HUI.RealEmail = u1.Email;
+                HUI.Blocked = Blocked;
+                HUI.Verified = Verified;
+                HUI.ConfigInfos = ConfigRepo.GetUserConfigData(u1);
 
+                holeUsers.Add(HUI);
             }
-            return uList;
+            return holeUsers;
+        }
+
+        /// <summary>
+        /// copyd from https://gist.github.com/Davidblkx/e12ab0bb2aff7fd8072632b396538560
+        /// </summary>
+        [DbFunction("CodeFirstDatabaseSchema", "LevenshteinDistance")]
+        public int LevenshteinDistance(string source1, string source2)
+        {
+            var source1Length = source1.Length;
+            var source2Length = source2.Length;
+
+            var matrix = new int[source1Length + 1, source2Length + 1];
+
+            if (source1Length == 0)
+                return source2Length;
+
+            if (source2Length == 0)
+                return source1Length;
+
+            for (var i = 0; i <= source1Length; matrix[i, 0] = i++) { }
+            for (var j = 0; j <= source2Length; matrix[0, j] = j++) { }
+
+            for (var i = 1; i <= source1Length; i++)
+            {
+                for (var j = 1; j <= source2Length; j++)
+                {
+                    var cost = (source2[j - 1] == source1[i - 1]) ? 0 : 1;
+
+                    matrix[i, j] = Math.Min(
+                        Math.Min(matrix[i - 1, j] + 1, matrix[i, j - 1] + 1),
+                        matrix[i - 1, j - 1] + cost);
+                }
+            }
+            return matrix[source1Length, source2Length];
         }
 
         public bool CheckAdminPassword(string password)
         {
             return password != Config.AdminPassword;
         }
-
     }
 }

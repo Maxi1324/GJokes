@@ -12,6 +12,6 @@ namespace GStatsFaker.Model
         public List<EmalVerifikation> EmalVerifikations { get; set; } = default!;
 
         public ConSettings ConSettings { get; set; } = default!;
-
     }
 }
+

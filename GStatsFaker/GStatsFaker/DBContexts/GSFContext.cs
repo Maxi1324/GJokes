@@ -20,7 +20,6 @@ namespace GStatsFaker.DBContexts
             base.OnConfiguring(optionsBuilder);
         }
 
-
         public void Seed(int n = 100)
         {
             var EmailVerifications = new Faker<EmalVerifikation>()

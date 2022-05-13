@@ -23,6 +23,9 @@ export class AdminComponent implements OnInit {
   @ViewChild('orderBy') orderBy: any;
   @ViewChild('pageValue') pageValue: any;
 
+  @ViewChild('SearchMail') SearchMail: any;
+
+
   APWrong:string = "";
   ARMessage:string = "";
 
@@ -76,7 +79,9 @@ export class AdminComponent implements OnInit {
       Page:Page,
       OB:OB,
       F:F,
-      password: this.password.nativeElement.value
+      password: this.password.nativeElement.value,
+      Search:(this.SearchMail.nativeElement.value == "")?"-":this.SearchMail.nativeElement.value
+      
     };
     console.log(RequestParameter);
     let AC = this;

@@ -148,7 +148,8 @@ export interface GetAdminUserInfos{
     Page:number,
     OB:OrderBy,
     F:Filter,
-    password:string
+    password:string,
+    Search:string
 }
 
 export interface BlockUser{
