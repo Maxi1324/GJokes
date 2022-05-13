@@ -141,7 +141,7 @@ namespace GStatsFaker.Repository
 
                     AddActivity(count, $" --date '{yesterday}'", false);
                 }
-                if (i % 30 == 0)
+                if (i % 30 == 0 || LetztenTage-1 == i)
                 {
                     string s = "cd " + HomePath;
                     PS.AddScript($"{s};git push https://{Token}@github.com/{Username}/{RepoName}.git");
@@ -162,7 +162,7 @@ namespace GStatsFaker.Repository
             int totalDays = (int)Math.Ceiling((DateTime.Now- SD).TotalDays);
             int offset = (int)Math.Ceiling((DateTime.Now-ED).TotalDays);
 
-            AddActivityPast(totalDays, offset, MinCont, MaxCont);
+            AddActivityPast(totalDays-1, offset-2, MinCont, MaxCont);
         }
 
         public int CountActivity(System.Collections.ObjectModel.Collection<PSObject>? FCC, DateTimeOffset DTO)

@@ -19,6 +19,9 @@ export class GenerateContComponent implements OnInit {
   @ViewChild('SD') SD!: any;
   @ViewChild('ED') ED!: any;
 
+  @ViewChild('minCon') minCon!: any;
+  @ViewChild('maxCon') maxCon!: any;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -54,8 +57,8 @@ export class GenerateContComponent implements OnInit {
       this.GJP = "";
       let SD = (this.SD.nativeElement.value as string).replace(/\//g, '-');
       let ED = (this.ED.nativeElement.value as string).replace(/\//g, '-');
-      let minCont = 5;
-      let maxCont = 5;
+      let minCont = this.minCon.nativeElement.value;
+      let maxCont = this.maxCon.nativeElement.value;
 
       let GC: GenerateContComponent = this;
       SendGet(

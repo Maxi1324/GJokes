@@ -1,5 +1,5 @@
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -20,6 +20,7 @@ import { AdminComponent } from './admin/admin.component';
 import { GenerateContComponent } from './generate-cont/generate-cont.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatHint } from '@angular/material/form-field';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,9 @@ import { MatHint } from '@angular/material/form-field';
     MatNativeDateModule,
     MatFormFieldModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
