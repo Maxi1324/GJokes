@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\adria\\Dropbox\\Adrian_und_Mami\\Adrian\\Github\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {}
+    "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\adria\\Dropbox\\Adrian_und_Mami\\Adrian\\Github\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {
+    "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\adria\\Dropbox\\Adrian_und_Mami\\Adrian\\Github\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
+        "projectUniqueName": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
         "projectName": "GStatsFaker",
-        "projectPath": "C:\\Users\\adria\\Dropbox\\Adrian_und_Mami\\Adrian\\Github\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
-        "packagesPath": "C:\\Users\\adria\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\adria\\Dropbox\\Adrian_und_Mami\\Adrian\\Github\\GStatsFaker\\GStatsFaker\\GStatsFaker\\obj\\",
+        "projectPath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\GStatsFaker.csproj",
+        "packagesPath": "C:\\Users\\maxie\\.nuget\\packages\\",
+        "outputPath": "D:\\0School\\Githubdings\\GStatsFaker\\GStatsFaker\\GStatsFaker\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\adria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\maxie\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

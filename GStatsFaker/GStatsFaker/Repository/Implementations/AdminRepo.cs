@@ -67,13 +67,13 @@ namespace GStatsFaker.Repository.Implementations
                     u = u.OrderBy(u => u.Created).ToList();
                     break;
                 case OrderBy.JoinedDesc:
-                    u.OrderByDescending(u => u.Created).ToList();
+                    u =  u.OrderByDescending(u => u.Created).ToList();
                     break;
                 case OrderBy.Email:
-                    u.OrderBy(u => u.Email).ToList();
+                    u= u.OrderBy(u => u.Email).ToList();
                     break;
                 case OrderBy.Id:
-                    u.OrderBy(u => u.Id).ToList();
+                    u= u.OrderBy(u => u.Id).ToList();
                     break;
             }
 
