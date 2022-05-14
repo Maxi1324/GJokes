@@ -99,7 +99,7 @@ namespace GStatsFaker.Repository
             PS.Commands.Clear();
             bool inRepo = false;
             var PL = runspace.CreatePipeline();
-            PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
+            PL.Commands.AddScript($"cd {Directory.GetCurrentDirectory()};.\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
             var R = PL.Invoke();
             if (R.Count == 0)
             {

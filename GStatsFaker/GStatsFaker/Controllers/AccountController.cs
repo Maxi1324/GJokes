@@ -167,6 +167,12 @@ namespace GStatsFaker.Controllers
             }
         }
 
+        [HttpGet("Loggedin")]
+        public bool Loggedin()
+        {
+            return true;
+        }
+
         //Passwort vergessen
     }
 }

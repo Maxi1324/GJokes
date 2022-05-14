@@ -1,15 +1,35 @@
 <nav class="bg-1 text-1 py-4 flex-row px-4">
-    <ul class="flex flex-row">
-        <li class="ml-2 my-auto w-full text-white">
-            <a routerLink="/">Home</a>
-        </li>
-        <div class="ml-auto flex flex-row space-x-5 min-w-[200px] align-right">
-            <li class="ml-auto">
-                <a routerLink="/about/" class="text-white">About Us</a>
-            </li>
-            <li>
-                <a routerLink="/{{link}}" class="text-white">{{content}}</a>
-            </li>
+  <ul class="flex flex-row">
+    <li class="ml-2 my-auto w-full text-white">
+      <a class="links" routerLink="/">Home</a>
+    </li>
+    <li class="min-w-[400px]">
+      <div [ngSwitch]="LogState" class="w-100">
+        <div *ngSwitchCase="1">
+          <li>
+            <a
+              routerLink="/config"
+              class="links float-right first-letter:text-white ml-4 mr-2"
+              >Config
+            </a>
+          </li>
+          <li>
+            <a routerLink="/GenerateCont" class="links float-right text-white"
+              >Generate Jokes Now</a
+            >
+          </li>
         </div>
-    </ul>
+        <div *ngSwitchCase="-1" lass="w-100">
+            <li>
+                <a
+                  routerLink="/register"
+                  class="links float-right first-letter:text-white ml-3 mr-2"
+                  >Register
+                </a>
+              </li>
+        </div>
+        
+      </div>
+    </li>
+  </ul>
 </nav>

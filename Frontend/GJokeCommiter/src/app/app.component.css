@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.links{
+    display:inline-block;
+    @apply rounded-lg;
+    @apply text-lg;
+    @apply   hover:scale-110;
+    @apply   text-white;
+}
