@@ -40,10 +40,11 @@
         Password is too long
       </span>
     </div>
-    <p class="bg-red-600 rounded-md p-1 w-full mt-2 text-center text-white {{hidden}}">
+    <div class="mt-3"></div>
+    <p class="bg-red-600 rounded-md p-1 w-full mt-5 text-center text-white {{hidden}}">
       {{ErrorMessage}}
     </p>
-    <button (click) = "login()"type="submit" [disabled]="!active" class="btn-login" >
+    <button (click) = "login()"type="submit" [disabled]="!active" class="btn-login mt-0" >
       Login
     </button>
   </form>

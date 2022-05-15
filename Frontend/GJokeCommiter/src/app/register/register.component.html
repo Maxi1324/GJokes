@@ -1,4 +1,4 @@
-<div id="register" class="register-form hidden-strong">
+<div id="register" class="login-form hidden-strong">
   <h2 class="text-2xl text-blue-400 mx-auto mb-5">Register</h2>
   <label for="register-email">E-Mail</label>
   <input type="text" name="register-email" id="register-email" placeholder="max.mustermann@gmail.com" class="input"
@@ -14,7 +14,8 @@
     <label for="register-agreement-confirm">I hereby agree to the terms and conditions stated in
       <a routerLink="/about" class="underline">About Us</a> of GJokes.</label>
   </div>
-  <p class="bg-red-600 rounded-md p-1 w-full mt-2 text-center text-white {{hidden}}">
+  <div class="mt-3"> </div>
+  <p class="bg-red-600 rounded-md p-1 w-full mt-40 text-center text-white {{hidden}}">
     {{ErrorMessage}}
   </p>
   <button (click)="Register()" class="btn-register disabled" [disabled]="!active">Register</button>

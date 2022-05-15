@@ -143,7 +143,7 @@ export class AmbienceComponent implements OnInit {
     if(body.name == this.CI?.repoName){
       AC.color1 = ' green ';
       AC.GSActive = true;
-      AC.GSFeedback = "No changes were found"
+      AC.GSFeedback = "Changes saved successfully";
       return;
     }
 
