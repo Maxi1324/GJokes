@@ -50,6 +50,8 @@ export class AdminComponent implements OnInit {
 
 
   loadUsers(page:number = -1):void {
+    this.users =[];
+
     window.scrollTo(0, 0); 
    if(this.listi !== undefined){ this.listi.nativeElement.scrollTop = 0;
   }

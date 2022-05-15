@@ -86,7 +86,7 @@
 
       <li>
         <button
-          *ngIf="!loggedinasAdming"
+          *ngIf="!loggedinasAdming && users.length != 0"
           class="loadButton btn-login"
           (click)="loadUsers()"
           type="submit"
@@ -156,7 +156,7 @@
           Block
         </button>
       </div>
-      <div *ngIf="selectedUser.userId == 0">
+      <div *ngIf="selectedUser.userId == 0 ">
         <h2 class="text-lg">No user selected</h2>
       </div>
     </div>
