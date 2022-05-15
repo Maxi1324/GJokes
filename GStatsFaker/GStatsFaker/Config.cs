@@ -23,5 +23,6 @@
         public const string AdminPassword = "Maxistcool";
 
         public const int PageSize = 30;
+        public const string JokesPath = "jokes.txt";
     }
 }

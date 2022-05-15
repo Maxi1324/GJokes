@@ -18,6 +18,10 @@ namespace GStatsFaker.Repository
         public string RepoName { get; private set; } = "";
         public string Token { get; private set; } = "";
 
+        private static List<string> Jokes = default!;
+
+        private Random rand = new Random();
+
         public StatsFaker(string RepoName) : this()
         {
             InitRep(RepoName);
@@ -25,9 +29,24 @@ namespace GStatsFaker.Repository
 
         public StatsFaker()
         {
+            if(Jokes == null)
+            {
+                LoadJokes();
+            }
+
             PS = PowerShell.Create();
             runspace = RunspaceFactory.CreateRunspace();
             runspace.Open();
+        }
+
+        public void LoadJokes()
+        {
+            Jokes = new List<string>();
+            string[] lines = File.ReadAllLines(Config.JokesPath);
+            foreach (string line in lines)
+            {
+                Jokes.Add(line.Replace("<>","\n"));
+            }
         }
 
         public void InitRep(string RepoName)
@@ -61,14 +80,15 @@ namespace GStatsFaker.Repository
         public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true)
         {
             string s = "cd " + HomePath;
+            int randi = rand.Next(9999);
             for (int i = 0; i < n; i++)
             {
-                int r = new Random().Next(2000000);
-                string file = $"{ HomePath }\\{ r}.txt";
-                PS.AddScript($"{s};echo JALOL > {file}");
+                string Joke = Jokes[rand.Next(Jokes.Count)];
+                string file = $"{ HomePath }\\{DateTime.Now.ToShortDateString()}-{i}-{randi}.txt";
+                PS.AddScript($"{s};echo \"{Joke}\" > {file}");
+                
                 PS.AddScript($"git add \"{file}\"");
-                string s11 = $"{s};git commit -m '{r}' " + AddToCommit;
-                PS.AddScript($"{s};git commit -m '{r}' " + AddToCommit);
+                PS.AddScript($"{s};git commit -m 'added a funny joke' " + AddToCommit);
             }
             if (directPush)
             {
