@@ -42,3 +42,17 @@
 .bg-grey{
     background-color: rgb(156 163 175 / var(--tw-bg-opacity)) !important;
 }
+
+.loadButton{
+    @apply p-5; 
+    @apply text-xl;
+}
+
+.col1{
+    background-color: rgba(0, 0, 0, 0.915);
+}
+
+
+.dings{
+    border-color: rgb(88, 183, 255) !important;
+}

@@ -1,14 +1,14 @@
 <div class="admin-form">
   <h1 class="text-4xl">Admin</h1>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input #password id="password" type="password" class="input" />
-    <span class="text-red-500 font-bold">{{ APWrong }}</span>
+  <div class="flex sm:flex-row flex-col gap-4 mr-auto ml-4 mt-10 mb-0">
+    <h2>Search Options:</h2>
   </div>
-  <div class="flex justify-center sm:flex-row flex-col gap-4 mb-4">
+  <div
+    class="flex sm:flex-row flex-col gap-4 min-w-full mb-4 mr-auto ml-4 mt-0"
+  >
     <div class="form-group">
       <label for="filter-by">Filter by</label>
-      <select id="filter-by" class="input" #filterBy (change)="loadUsers()">
+      <select id="filter-by" class="input" #filterBy (change)="loadUsers(0)">
         <option value="All">All</option>
         <option value="Blocked">Blocked</option>
         <option value="NotBlocked">NotBlocked</option>
@@ -18,24 +18,12 @@
     </div>
     <div class="form-group">
       <label for="order-by">Order by</label>
-      <select id="order-by" class="input" #orderBy (change)="loadUsers()">
+      <select id="order-by" class="input" #orderBy (change)="loadUsers(0)">
         <option value="Id">Id</option>
         <option value="Email">Email</option>
         <option value="Joined">Joined</option>
         <option value="JoinedDesc">Joined Desc</option>
       </select>
-    </div>
-    <div class="form-group">
-      <label for="page-value">Page</label>
-      <input
-        id="page-value"
-        type="number"
-        class="input"
-        step="1"
-        min="0"
-        value="0"
-        #pageValue
-      />
     </div>
 
     <div class="form-group">
@@ -45,22 +33,38 @@
         class="input"
         placeholder="search by mail"
         #SearchMail
+        (keydown.enter)="loadUsers(0)"
       />
     </div>
+
+    <div class=" ml-auto mt-3.5 mr-10">
+      <button 
+        class="border-black button dings btn-login"
+        (click)="loadUsers(0)"
+      >
+        Reload
+      </button>
+    </div>
   </div>
-  <button
-    class="w-full border-2 border-gray-400 p-2 rounded-md mb-4"
-    (click)="loadUsers()"
-  >
-    Load
-  </button>
+
   <span class="font-bold mx-auto mb-4 text-4xl">{{ ARMessage }}</span>
   <div class="grid sm:grid-cols-2 grid-cols-1 w-full gap-4">
     <ul
-      class="sm:h-screen h-96 overflow-y-scroll border-2 border-gray-300 rounded-md px-4 pb-4"
+      #listi
+      class="h-screen overflow-y-scroll border-2 border-gray-300 rounded-md px-4 pb-4"
     >
+      <button
+        *ngIf="Page != 0"
+        class="loadButton btn-login"
+        (click)="loadUsers(-2)"
+        type="submit"
+      >
+        <- go back
+      </button>
       <li
-        class="{{ user.userId == selectedUser.userId ? 'bg-grey' : '' }} user-card"
+        class="{{
+          user.userId == selectedUser.userId ? 'bg-grey' : ''
+        }} user-card"
         *ngFor="let user of users; let indexOfelement = index"
         (click)="SelectUser(user)"
       >
@@ -79,12 +83,20 @@
           }}
         </p>
       </li>
+
+      <li>
+        <button
+          *ngIf="!loggedinasAdming"
+          class="loadButton btn-login"
+          (click)="loadUsers()"
+          type="submit"
+        >
+          Load more ->
+        </button>
+      </li>
     </ul>
-    <div id="user-info">
-      <div
-        class="w-full text-center"
-        *ngIf="selectedUser.userId != 0"
-      >
+    <div *ngIf="this.selectedUser.userId != undefined" id="user-info">
+      <div class="w-full text-center" *ngIf="selectedUser.userId != 0">
         <h2 class="text-2xl mx-auto font-bold">User info</h2>
         <div class="w-full text-left">
           <h3>User id</h3>
@@ -147,6 +159,32 @@
       <div *ngIf="selectedUser.userId == 0">
         <h2 class="text-lg">No user selected</h2>
       </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="loggedinasAdming"
+    class="top w-screen col1 absolute left-0 top-0"
+    [style.height.px]="myInnerHeight"
+  >
+    <div class="md:w-5/12 w-11/12 ml-auto mr-auto text-white">
+      <div class="h-[15rem]"></div>
+      <label for="password" class="">Admin Password</label>
+      <input
+        #password
+        id="password"
+        type="password"
+        (keydown.enter)="loadUsers(0)"
+        class="input text-black"
+      />
+      <span class="text-red-500 font-bold">{{ APWrong }}</span>
+
+      <button
+        class="w-full border-black button dings btn-login"
+        (click)="loadUsers(0)"
+      >
+        Login as Admin
+      </button>
     </div>
   </div>
 </div>

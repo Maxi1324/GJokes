@@ -1,7 +1,7 @@
 import { HoleUserInfos, ConfigInfos,Response, OrderBy, Filter, GetAdminUserInfos, SendPost, BlockUser } from './../BackendCom';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { SendGet } from '../BackendCom';
-import { Call } from '@angular/compiler';
+import { AST, Call } from '@angular/compiler';
 
 @Component({
   selector: 'app-admin',
@@ -11,13 +11,10 @@ import { Call } from '@angular/compiler';
 export class AdminComponent implements OnInit {
 
   users: HoleUserInfos[] = [];
-  //selectedUser: 
-  /*HoleUserInfos = {
-    Id:0,
-    Email:"",
-  }*/
-  selectedUser: HoleUserInfos = this.ResetSelectedUser();
+  public selectedUser: HoleUserInfos = {} as HoleUserInfos
   
+  @ViewChild('listi') listi: any;
+
   @ViewChild('password') password: any;
   @ViewChild('filterBy') filterBy: any;
   @ViewChild('orderBy') orderBy: any;
@@ -25,72 +22,69 @@ export class AdminComponent implements OnInit {
 
   @ViewChild('SearchMail') SearchMail: any;
 
+  public loggedinasAdming = true;
+
+  public Page:number = 0;
+
+  public log(dings :any):string{
+    console.log(dings)
+    var re:any = OrderBy[parseInt(dings.keys)].toString();
+    console.log(re)
+    return re;
+  }
 
   APWrong:string = "";
   ARMessage:string = "";
 
-  constructor() {}
+  public myInnerHeight: number = 0;
 
-  ngOnInit(): void {}
+  constructor() {this.myInnerHeight= 0}
 
-  loadUsers():void {
-    //set selectedUser to null
-    this.selectedUser = this.ResetSelectedUser();
-
-    let Page:number = this.pageValue.nativeElement.value;
-    let ob = this.orderBy.nativeElement.value;
-    let OB:OrderBy = OrderBy.Joined;
-    switch(ob){
-      case "Email":
-        OB = OrderBy.Email;
-        break;
-      case "Id":
-        OB = OrderBy.Id;
-        break;
-      case "Joined":
-        OB = OrderBy.Joined;
-        break;
-      case "JoinedDesc":
-        OB = OrderBy.JoinedDesc;
-        break;
+  ngOnInit(): void {
+    window.addEventListener("resize", this.onResize.bind(this));
+    this.onResize(this);
+    if(sessionStorage.getItem("AdminPasswort") != null){
+      this.loggedinasAdming = true;
     }
-    //Get Filter Parameter
-    let f = this.filterBy.nativeElement.value;
-    //Convert Filter to FilterEnum
-    let F:Filter = Filter.All;
-    switch(f){
-      case "All":
-        F = Filter.All;
-        break;
-      case "Blocked":
-        F = Filter.Blocked;
-        break;
-      case "NotBlocked":
-        F = Filter.NotBlocked;
-        break;
-      case "NotAuthenticated":
-        F = Filter.NotAuthenticated;
-        break;
-      case "Authenticated":
-        F = Filter.Authenticated;
-        break;
+  }
+
+
+  loadUsers(page:number = -1):void {
+    window.scrollTo(0, 0); 
+   if(this.listi !== undefined){ this.listi.nativeElement.scrollTop = 0;
+  }
+    this.selectedUser = {} as HoleUserInfos
+    let AC:AdminComponent = this;
+
+    if(page == -1){
+      this.Page++;
+    }else if (page == -2){
+      this.Page--;
+      page = -1;
+    }else{
+      this.Page = 0;
     }
+
     let RequestParameter : GetAdminUserInfos = {
-      Page:Page,
-      OB:OB,
-      F:F,
-      password: this.password.nativeElement.value,
+      Page:(page == -1)?AC.Page:page,
+      OB:OrderBy[this.orderBy.nativeElement.value as keyof typeof OrderBy],
+      F:Filter[this.filterBy.nativeElement.value as keyof typeof Filter],
+      password: (this.password !== undefined)?this.password.nativeElement.value:sessionStorage.getItem('AdminPasswort'),
       Search:(this.SearchMail.nativeElement.value == "")?"-":this.SearchMail.nativeElement.value
-      
     };
-    console.log(RequestParameter);
-    let AC = this;
+
     const Callback = (res: any) => {
+      if(res != null){
       AC.APWrong = "";
+      if(this.password !== undefined){
+        sessionStorage.setItem("AdminPasswort", this.password.nativeElement.value )
+        this.loggedinasAdming = false;
+      }
       this.users = res as HoleUserInfos[];
       this.users.forEach(user => {
         user.configInfos.erstellung = new Date(user.configInfos.erstellung);
       });
+      }
     }
 
     const ErrorCallback = (res: any) => {
@@ -98,7 +92,6 @@ export class AdminComponent implements OnInit {
     }
     SendGet("api/Admin/GetUsers",Callback,false,RequestParameter, ErrorCallback)
   }
-
   BlockUser(id: number):void{
     console.log("hi")
     const Callback = (res: Response) => {
@@ -146,20 +139,8 @@ export class AdminComponent implements OnInit {
     this.selectedUser = user;
   }
 
-  ResetSelectedUser(): HoleUserInfos {
-    return {
-      configInfos: {
-        minCon: 0,
-        maxCon: 0,
-        repoName: "",
-        erstellung: new Date(),
-        githubEmail: "",
-        githubUsername: ""
-      },
-      realEmail: "",
-      userId: 0,
-      blocked: false,
-      verified: false
-    };
-  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event:any) {
+    this.myInnerHeight = window.innerHeight+1000;
+}
 }

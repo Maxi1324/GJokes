@@ -27,6 +27,13 @@ namespace GStatsFaker.Controllers
             this.Config = Config;
         }
 
+        [HttpGet("Loggedin")]
+        public bool Loggedin()
+        {
+            return true;
+        }
+
+
         [AllowAnonymous]
         [HttpPost("Login")]
         public object Authenticate([FromBody] UserCred userCred)
@@ -167,11 +174,6 @@ namespace GStatsFaker.Controllers
             }
         }
 
-        [HttpGet("Loggedin")]
-        public bool Loggedin()
-        {
-            return true;
-        }
 
         //Passwort vergessen
     }
