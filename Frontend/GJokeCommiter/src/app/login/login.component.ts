@@ -75,6 +75,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("JWTToken", res.desc);
           LC.route.navigateByUrl('/config');
           break;
+        case -3:
         case -1:
           LC.ErrorMessage = res.desc;
           LC.hidden = "";

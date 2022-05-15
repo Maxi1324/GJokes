@@ -54,7 +54,7 @@ namespace GStatsFaker.Controllers
             }
             else
             {
-                return UnprocessableEntity(new Response() { Code = -1, Desc = "Password or Email is wrong" });
+                return UnprocessableEntity(new Response() { Code = -1, Desc = "Your Password or Email is wrong" });
             }
         }
 
