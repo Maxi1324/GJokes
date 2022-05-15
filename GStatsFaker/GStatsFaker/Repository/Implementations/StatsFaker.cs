@@ -84,11 +84,11 @@ namespace GStatsFaker.Repository
             for (int i = 0; i < n; i++)
             {
                 string Joke = Jokes[rand.Next(Jokes.Count)];
-                string file = $"{ HomePath }\\{DateTime.Now.ToShortDateString()}-{i}-{randi}.txt";
+                string file = $"{DateTime.Now.ToShortDateString()}-{i}-{randi}.txt";
                 PS.AddScript($"{s};echo \"{Joke}\" > {file}");
                 
-                PS.AddScript($"git add \"{file}\"");
-                PS.AddScript($"{s};git commit -m 'added a funny joke' " + AddToCommit);
+                PS.AddScript($"git add '{file}'");
+                PS.AddScript($"{s};git commit -m AddedAFunnyJoke " + AddToCommit);
             }
             if (directPush)
             {
