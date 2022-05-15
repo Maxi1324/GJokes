@@ -94,8 +94,9 @@ export class AdminComponent implements OnInit {
     }
     SendGet("api/Admin/GetUsers",Callback,false,RequestParameter, ErrorCallback)
   }
-  BlockUser(id: number):void{
-    console.log("hi")
+  BlockUser():void{
+    let id:number = this.selectedUser.userId;
+    console.log(this.selectedUser)
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User blocked");
@@ -108,7 +109,7 @@ export class AdminComponent implements OnInit {
     }
 
     const body:BlockUser = {
-      password : this.password.nativeElement.value,
+      password :sessionStorage.getItem('AdminPasswort')??"",
       userId : id
     }
     SendPost("api/Admin/BlockPerson",body,Callback,false)
@@ -116,7 +117,10 @@ export class AdminComponent implements OnInit {
     this.loadUsers();
   }
 
-  UnBlockUser(id: number):void{
+  UnBlockUser():void{
+
+    console.log(this.selectedUser.userId)
+    let id:number = this.selectedUser.userId;
     const Callback = (res: Response) => {
         if(res.code == 1){
           console.log("User Unblocked");
@@ -129,11 +133,10 @@ export class AdminComponent implements OnInit {
     }
 
     const body:BlockUser = {
-      password : this.password.nativeElement.value,
-      userId : id
+      password : sessionStorage.getItem('AdminPasswort')??"",
+      userId : this.selectedUser.userId
     }
     SendPost("api/Admin/UnblockPerson",body,Callback,false)
-
     this.loadUsers();
   }
 

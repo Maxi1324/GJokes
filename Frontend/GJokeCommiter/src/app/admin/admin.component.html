@@ -143,17 +143,19 @@
         </div>
         <button
           *ngIf="selectedUser.blocked"
-          class="w-full border-2 border-gray-400 p-2 rounded-md"
-          (click)="UnBlockUser(selectedUser.userId)"
+          class="button  btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700  "
+          (click)="UnBlockUser()"
         >
-          Unblock
+          <div class="m-3 text-xl">Unblock</div>
         </button>
         <button
           *ngIf="!selectedUser.blocked"
-          class="w-full border-2 border-gray-400 p-2 rounded-md"
-          (click)="BlockUser(selectedUser.userId)"
+          class="button  btn-register mt-2 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 dark:bg-purple-600 dark:hover:bg-purple-700 "
+          (click)="BlockUser()"
         >
+        <div class="m-3 text-xl">
           Block
+         </div>
         </button>
       </div>
       <div *ngIf="selectedUser.userId == 0 ">
