@@ -100,18 +100,18 @@ namespace GStatsFaker.Repository
         public int Invite(string UUserName)
         {
             PS.Commands.Clear();
-            if (InRepository(UUserName))
+          /*  if (InRepository(UUserName))
             {
                 return -1;
-            }
-            else
-            {
+            }*/
+         //   else
+           // {
                 var PL = runspace.CreatePipeline();
                 PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
                 PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
                 var R = PL.Invoke();
                 return 1;
-            }
+           // }
         }
 
         public bool InRepository(string UUsername)

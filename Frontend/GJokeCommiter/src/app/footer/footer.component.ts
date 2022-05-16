@@ -9,6 +9,8 @@ export class FooterComponent implements OnInit {
 
   constructor() { }
 
+  public schwanz:string = "Hallo"
+
   ngOnInit(): void {
   }
 

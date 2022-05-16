@@ -17,7 +17,8 @@ const routes: Routes = [
   { path: 'login', component: HomepageComponent },
   { path: 'DeletedAccount', component: AccountDeletedComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'GenerateCont', component: GenerateContComponent }
+  {path:'GenerateCont', component:GenerateContComponent},
+  { path: ' ', component: GenerateContComponent }
 ];
 
 @NgModule({
