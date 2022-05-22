@@ -22,8 +22,8 @@
         <div *ngSwitchCase="-1" lass="w-100">
             <li>
                 <a
-                  routerLink="/register"
                   class="links float-right first-letter:text-white ml-3 mr-2"
+                  (click)="cr('/register')"
                   >Register
                 </a>
               </li>

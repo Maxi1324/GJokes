@@ -7,14 +7,16 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { AmbienceComponent } from './ambience/ambience.component';
 import { AboutComponent } from './about/about.component';
 import { AdminComponent } from './admin/admin.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'config', component: AmbienceComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'register', component: HomepageComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'VerifyCode', component: SendcodeComponent },
-  { path: 'login', component: HomepageComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'DeletedAccount', component: AccountDeletedComponent },
   { path: 'admin', component: AdminComponent },
   {path:'GenerateCont', component:GenerateContComponent},

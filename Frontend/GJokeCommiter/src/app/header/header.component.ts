@@ -22,6 +22,11 @@ export class HeaderComponent implements OnInit {
     this.href();
   }
 
+  cr(route:string):void{
+    console.log("nice")
+    this.router.navigateByUrl(route)
+  }
+
   href():void {
     let HC: HeaderComponent = this;
     const Callback = (data: any ) => {
