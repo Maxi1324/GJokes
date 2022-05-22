@@ -45,7 +45,7 @@ namespace GStatsFaker.Repository
             string[] lines = File.ReadAllLines(Config.JokesPath);
             foreach (string line in lines)
             {
-                Jokes.Add(line.Replace("<>","\n"));
+                Jokes.Add(line.Replace("<>","\n").Replace("\""," ").Replace("'"," "));
             }
         }
 
@@ -146,6 +146,7 @@ namespace GStatsFaker.Repository
 
         public void AddActivityPast(int LetztenTage, int offset, int MinRange, int MaxRange)
         {
+            PS.Commands.Clear();
             Random rand = new Random();
             var FCC = ArrayFetchCommitCount();
             DateTimeOffset today = System.DateTime.Now.AddDays(-offset);

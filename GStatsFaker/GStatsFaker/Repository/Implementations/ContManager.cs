@@ -50,6 +50,7 @@ namespace GStatsFaker.Repository.Implementations
                     {
                         IStatsFaker Faker = GetStatsFaker(u);
                         int Conts = random.Next(u.ConSettings.MaxCon - u.ConSettings.MinCon) + u.ConSettings.MinCon;
+                        Faker.PS.Commands.Clear();
                         Faker.AddActivity(Conts);
                     });
             }
