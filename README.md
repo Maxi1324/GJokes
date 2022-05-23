@@ -1,2 +1,6 @@
-# GStatsFaker
- GStatsFaker
+# GJokes
+ GJokes
+ 
+## Motivation
+
+## Arbeitsaufteilung
