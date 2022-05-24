@@ -45,7 +45,7 @@ namespace GStatsFaker.Repository
             string[] lines = File.ReadAllLines(Config.JokesPath);
             foreach (string line in lines)
             {
-                Jokes.Add(line.Replace("<>","\n").Replace("\""," ").Replace("'"," "));
+                Jokes.Add(line.Replace("<>"," ").Replace("\""," ").Replace("'"," "));
             }
         }
 
