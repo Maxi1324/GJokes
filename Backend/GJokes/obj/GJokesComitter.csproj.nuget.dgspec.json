@@ -1,27 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marko\\Documents\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj": {}
+    "D:\\0School\\Githubdings\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marko\\Documents\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj": {
+    "D:\\0School\\Githubdings\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marko\\Documents\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj",
+        "projectUniqueName": "D:\\0School\\Githubdings\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj",
         "projectName": "GJokesComitter",
-        "projectPath": "C:\\Users\\marko\\Documents\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj",
-        "packagesPath": "C:\\Users\\marko\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marko\\Documents\\GStatsFaker\\Backend\\GJokes\\obj\\",
+        "projectPath": "D:\\0School\\Githubdings\\GStatsFaker\\Backend\\GJokes\\GJokesComitter.csproj",
+        "packagesPath": "C:\\Users\\maxie\\.nuget\\packages\\",
+        "outputPath": "D:\\0School\\Githubdings\\GStatsFaker\\Backend\\GJokes\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\marko\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\maxie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -119,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

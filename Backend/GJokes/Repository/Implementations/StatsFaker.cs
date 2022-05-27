@@ -8,9 +8,15 @@ namespace GStatsFaker.Repository
     public class StatsFaker : IStatsFaker
     {
         public const string Repos = "Repos";
-        public PowerShell PS { get; private set; }
-        public Runspace runspace { get; private set; }
+        public PowerShell PS { get => PowerShell.Create(); }
+        public Runspace runspace { get {
+                Runspace runspace = RunspaceFactory.CreateRunspace();
+                runspace.Open();
+                return runspace;
+            }
+        }
 
+        
         public string HomePath { get => "" + Directory.GetCurrentDirectory() + "\\Repos\\" + Username + "\\" + RepoName; }
 
         public string Username { get; private set; } = "";
@@ -34,9 +40,8 @@ namespace GStatsFaker.Repository
                 LoadJokes();
             }
 
-            PS = PowerShell.Create();
-            runspace = RunspaceFactory.CreateRunspace();
-            runspace.Open();
+          
+            
         }
 
         public void LoadJokes()
@@ -51,7 +56,7 @@ namespace GStatsFaker.Repository
 
         public void InitRep(string RepoName)
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
             this.Username = Config.GAccountName;
             this.RepoName = RepoName;
             this.Token = Config.GToken;
@@ -71,14 +76,16 @@ namespace GStatsFaker.Repository
 
         public void SetUpCredentials(string Email, string UUsername)
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
             PS.AddScript($"cd {HomePath}; git config user.name \"{UUsername}\";git config user.email \"{Email}\"");
             this.Email = Email;
             PS.Invoke();
         }
 
-        public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true)
+        public void AddActivity(int n = 1, string AddToCommit = "", bool directPush = true, PowerShell? PS1 = null)
         {
+            PowerShell PS = PS1?? this.PS;
+
             string s = "cd " + HomePath;
             int randi = rand.Next(9999);
             for (int i = 0; i < n; i++)
@@ -99,14 +106,15 @@ namespace GStatsFaker.Repository
 
         public int Invite(string UUserName)
         {
-            PS.Commands.Clear();
-          /*  if (InRepository(UUserName))
-            {
-                return -1;
-            }*/
-         //   else
-           // {
-                var PL = runspace.CreatePipeline();
+            PowerShell PS = this.PS;
+
+            /*  if (InRepository(UUserName))
+              {
+                  return -1;
+              }*/
+            //   else
+            // {
+            var PL = runspace.CreatePipeline();
                 PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=DELETE");
                 PL.Commands.AddScript($".\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUserName} --method=PUT");
                 var R = PL.Invoke();
@@ -116,7 +124,8 @@ namespace GStatsFaker.Repository
 
         public bool InRepository(string UUsername)
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
+
             bool inRepo = false;
             var PL = runspace.CreatePipeline();
             PL.Commands.AddScript($"cd {Directory.GetCurrentDirectory()};.\\gh.exe api /repos/{Username}/{RepoName}/collaborators/{UUsername}");
@@ -131,7 +140,8 @@ namespace GStatsFaker.Repository
 
         public void Delete()
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
+
             PS.AddScript($"del {HomePath}");
             RepoName = string.Empty;
             PS.Invoke();
@@ -139,14 +149,16 @@ namespace GStatsFaker.Repository
 
         public void Rename(string Reponame)
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
+
             PS.AddScript($".\\gh.exe repo rename {Reponame} -R https://github.com/{Config.GAccountName}/{this.RepoName}");
             PS.Invoke();
         }
 
         public void AddActivityPast(int LetztenTage, int offset, int MinRange, int MaxRange)
         {
-            PS.Commands.Clear();
+            PowerShell PS = this.PS;
+
             Random rand = new Random();
             var FCC = ArrayFetchCommitCount();
             DateTimeOffset today = System.DateTime.Now.AddDays(-offset);
@@ -160,7 +172,7 @@ namespace GStatsFaker.Repository
                     
                     int count = rand.Next(MinRange, MaxRange);
 
-                    AddActivity(count, $" --date '{yesterday}'", false);
+                    AddActivity(count, $" --date '{yesterday}'", false,PS);
                 }
                 if (i % 30 == 0 || LetztenTage-1 == i)
                 {
@@ -204,7 +216,7 @@ namespace GStatsFaker.Repository
         {
             try
             {
-                PS.Commands.Clear();
+                PowerShell PS = this.PS;
                 var PL = runspace.CreatePipeline();
                 string s = "cd " + HomePath;
                 PL.Commands.AddScript($"{s}; git log --date=short --pretty=format:'%ad %ce'");
