@@ -1,6 +1,6 @@
 # GJokes
 
-This Project is a nice simple Website made with Angular and an ASP.Net backend. This Web-Site allows you hear funny jokes.
+This Project is a nice simple Website made with Angular and an ASP.Net backend. This Web-Site allows you hear funny jokes. 
 
 ## Table of Contents
 ### 1. [What was our motivation?](#what-was-our-motivation)
@@ -11,7 +11,7 @@ This Project is a nice simple Website made with Angular and an ASP.Net backend. 
 ### 7. [What did we learn?](#what-did-we-learn)
 ### 8. [What tools were used?](#what-tools-were-used)
 
-# What was our motivation?
+## What was our motivation?
 
 First of all, our motivation was school. It was a school project. Our task was to create an CRUD application. We had the freedom to choose the technology we wanted to use.
 Because we wanted to learn new skills, we decided to use technologies, which were new to us. So, our Motivation was school and our greed for knowledge.
