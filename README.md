@@ -4,13 +4,12 @@ This Project is a nice simple Website. This site allows you hear funny jokes.
 
 ## Table of Contents
 1. <a name="what-was-out-motivation">ads</a>
-2. [Technologies](#technologies)
+2. [Technologies](#what-was-out-motivation)
 3. [Installation](#installation)
 4. [Collaboration](#collaboration)
 5. [FAQs](#faqs)
 
 # What was our motivation
-***
 
 First of all, our motivation was school. It was a school project. Our task was to create an CRUD application. We had the freedom to choose the technology we wanted to use.
 Because we wanted to learn new skills, we decided to use technologies, which were new to us. So, our Motivation was school and our greed for knowledge.
