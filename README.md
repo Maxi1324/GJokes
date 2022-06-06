@@ -176,7 +176,7 @@ We know, that there are dozens of ways for doing this better, but we ran out of 
 There are a few fields needed to change:
 - MailPassword: The Password for the EMail
 - Mail: Email
-- GToken: The Github security token for the Github Account of the Application
+- GToken: The Github Personal Access token for the Github Account of the Application
 - GAccountName: The Name of the Github Profile of the Application
 - AdminPassword: The Password for the Admin
 - key: The secret for the JWT Tokens
