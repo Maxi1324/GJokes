@@ -3,10 +3,10 @@
 This Project is a nice simple Website. This site allows you hear funny jokes.
 
 ## Table of Contents
-### 1. [What was our motivation?](#what-was-out-motivation?)
-### 2. [What are the features of our Project?](#what-are-thefeature-of-our-project?)
-### 3. [Why is our Project currently not hosted on a Webserver?](#why-is-our-project-currently-not-hosted-on-a-webserver?)
-### 4. [How to install the Application?](#how-to-install-the-application?)
+### 1. [What was our motivation?](#what-was-out-motivation)
+### 2. [What are the features of our Project?](#what-are-thefeature-of-our-project)
+### 3. [Why is our Project currently not hosted on a Webserver?](#why-is-our-project-currently-not-hosted-on-a-webserver)
+### 4. [How to install the Application?](#how-to-install-the-application)
 ### 6. [Known limitations](#known-limitations)
 ### 7. [What did we learn?](#what-did-we-learn)
 ### 8. [What tools were used?](#what-tools-were-used)
