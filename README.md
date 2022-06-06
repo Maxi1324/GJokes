@@ -116,11 +116,12 @@ The Admin can view all registered Users. On each page are 30 Users shown. but th
     height: 14rem;">
 </p>  
 
- <p align="center">
+<p align="center">
 
 Filterby             |  Orderby| Search
 :-------------------------:|:-------------------------:|:-------------------------:
 <img src="Images/Filterby.png"  style="border-radius:0.4rem">  |  <img src="Images/Orderby.png"  style="border-radius:0.4rem"> |  <img src="Images/Search.PNG"  style="border-radius:0.4rem">
+
 </p>
 
 The Search algorithm uses the levinstein distance to order the Users Email by there similarity to the entered search Mail. 
