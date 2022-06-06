@@ -1,6 +1,6 @@
 # GJokes
 
-This Project is a nice simple Website. This site allows you hear funny jokes.
+This Project is a nice simple Website made with Angular and an ASP.Net backend. This Web-Site allows you hear funny jokes.
 
 ## Table of Contents
 ### 1. [What was our motivation?](#what-was-our-motivation)
